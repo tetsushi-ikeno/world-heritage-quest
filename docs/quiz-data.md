@@ -2,11 +2,16 @@
 
 ## 対象ファイル
 
-`data/sekaken_4_2024_03_rpg.json`
+- `data/sekaken_4_2024_03_rpg.json`
+  - 世界遺産検定4級・2024年3月実施分
+  - 全50問、RPG利用対象47問
+  - 除外: 元問題番号 `19`, `37`, `44`
+- `data/sekaken_4_2024_07_rpg.json`
+  - 世界遺産検定4級・2024年7月実施分
+  - 全50問、RPG利用対象48問
+  - 除外: 元問題番号 `41`, `42`
 
-提供された紙面画像から、世界遺産検定4級・2024年3月実施分の50問をRPG用のJSONデータに整理したものです。
-
-※ 当初「2025年3月実施」として扱う案がありましたが、解答・正答率ページに「2024年3月」と明記されていたため、データ上の出典は `世界遺産検定4級 2024年3月実施` としています。
+提供された紙面画像から、世界遺産検定4級の過去問題をRPG用のJSONデータに整理しています。
 
 ## 基本方針
 
@@ -18,9 +23,8 @@ RPGでは各問題を単独で出題できるよう、次の方針で整理し�
 - 前段の文章がないと成立しない問題は、必要な情報だけを問題文へ移植
 - 空欄補充問題は、同じ知識を直接問う4択問題へ変更
 - 写真に名称が添えられており、文字選択肢に置き換えても同じ知識を問えるものは文字化
+- 写真の特徴を文章へ移しても、元と同じ知識を問える場合はテキスト問題へ改定
 - 地図・写真そのものの識別が問題の本質であるものは `採用: false` として除外
-
-今回の除外対象は元問題番号 `19`, `37`, `44` です。
 
 ## JSON構造
 
@@ -58,16 +62,27 @@ RPGでは各問題を単独で出題できるよう、次の方針で整理し�
 ## JavaScriptでの読み込み例
 
 ```js
-const response = await fetch('./data/sekaken_4_2024_03_rpg.json');
-const data = await response.json();
+const files = [
+  './data/sekaken_4_2024_03_rpg.json',
+  './data/sekaken_4_2024_07_rpg.json'
+];
 
-// RPGで利用可能な問題だけ取得
-const usableQuestions = data.問題.filter(q => q.採用);
+const datasets = await Promise.all(
+  files.map(async file => {
+    const response = await fetch(file);
+    return response.json();
+  })
+);
 
-// 例: 日本の文化遺産・難易度2だけ抽出
+// 複数回の問題を1つの問題プールに統合し、RPG利用可能な問題だけ取得
+const usableQuestions = datasets
+  .flatMap(data => data.問題)
+  .filter(q => q.採用);
+
+// 例: 日本の自然遺産・難易度2だけ抽出
 const filtered = usableQuestions.filter(q =>
   q.国.includes('日本') &&
-  q.遺産区分 === '文化遺産' &&
+  q.遺産区分 === '自然遺産' &&
   q.難易度 === 2
 );
 ```
@@ -90,7 +105,6 @@ const isCorrect = selectedIndex + 1 === question.正解;
 
 例:
 
-- `data/sekaken_4_2024_07_rpg.json`
 - `data/sekaken_4_2024_12_rpg.json`
 - `data/sekaken_4_2025_03_rpg.json`
 
