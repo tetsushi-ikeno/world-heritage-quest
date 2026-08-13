@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>世界遺産クエスト α v9</title>
+<style>
+:root{--tile:34px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#171923;color:#fff;font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+#app{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px}
+h1{font-size:20px;margin:4px 0 10px}
+.panel{background:#262a38;border:2px solid #eee;border-radius:8px;padding:12px;max-width:860px;width:100%}
+.mapWrap{overflow:auto;max-width:100%;border:3px solid #eee;background:#5ba8d1;touch-action:none}
+.map{display:grid;width:max-content;image-rendering:pixelated}
+.tile{width:var(--tile);height:var(--tile);display:flex;align-items:center;justify-content:center;position:relative;font-size:18px}
+.sea{background:#355b9a}
+.sailable{background:#11aee3}
+.land{background:#78b957}
+.grass{background:#78b957}
+.path{background:#cfb979}
+.forest{background:#43855a}
+.house{background:#9c6544}
+.gate{background:#b89763}
+.site{background:#e3c75c}
+.site.undiscovered{background:#e3c75c}
+.site.discovered{background:#e3c75c}
+.site.cleared{background:#74b96c}
+.mountain{background:#87906a}
+.bridge{background:#b69762}
+
+.house::before{content:"⌂";font-size:22px;color:#f4dfb7;font-weight:bold}
+.forest::before{content:"♠";font-size:21px;color:#174e2b}
+.gate::before{content:"▥";font-size:23px;color:#493624;font-weight:bold}
+.site::before{font-weight:900;text-shadow:1px 1px #333}
+.site.undiscovered::before{content:"?";font-size:22px;color:#fff}
+.site.discovered::before{content:"!";font-size:22px;color:#ffe34d}
+.site.cleared::before{content:"✓";font-size:20px;color:#fff;text-shadow:1px 1px #24572b}
+.mountain::before{content:"▲";color:#4e5947;font-size:18px}
+
+.player::after{
+ content:"";position:absolute;width:14px;height:20px;background:#2d4c9b;
+ border:3px solid #f0d29a;box-shadow:0 -7px 0 -2px #8b3b36,0 7px 0 -3px #49382e;z-index:6
+}
+.npc::after,.guard::after{
+ content:"";position:absolute;width:14px;height:18px;background:#8d4c78;
+ border:3px solid #f0d29a;box-shadow:0 -7px 0 -2px #58402f,0 7px 0 -3px #49382e;z-index:4
+}
+.npc.researcher::after{background:#e5e5d7;box-shadow:0 -7px 0 -2px #ddd,0 7px 0 -3px #49382e}
+.npc.elder::after{background:#705b9a;box-shadow:0 -7px 0 -2px #ddd,0 7px 0 -3px #49382e}
+.guard::after{background:#586b86;box-shadow:0 -7px 0 -2px #6a4d32,0 7px 0 -3px #49382e}
+
+.need::before,.done::before{
+ position:absolute;top:-10px;right:1px;font-weight:900;z-index:8;
+ text-shadow:1px 1px #222
+}
+.need::before{content:"!";color:#ffe34d}
+.done::before{content:"✓";color:#8bf58f}
+
+#progressHud{display:none;justify-content:space-between;gap:12px;align-items:center;background:#111a31;border:2px solid #fff;padding:8px 10px;margin-bottom:8px;font-weight:700;font-size:14px}
+#progressHud.show{display:flex}
+#status{margin:10px 0 4px;font-size:15px;min-height:22px}
+.controls{display:grid;grid-template-columns:64px 64px 64px;grid-template-rows:54px 54px 54px;gap:5px;margin:12px auto;width:max-content}
+.controls button,.bigbtn,.answer{font-size:20px;border:0;border-radius:10px;background:#f1f1f1;color:#222;box-shadow:0 3px 0 #999}
+.controls button:active,.bigbtn:active,.answer:active{transform:translateY(2px);box-shadow:0 1px 0 #777}
+.up{grid-column:2}.left{grid-column:1;grid-row:2}.right{grid-column:3;grid-row:2}.down{grid-column:2;grid-row:3}
+.bigbtn{padding:12px 18px;font-size:17px}
+.hidden{display:none!important}
+#dialog,#quiz,#siteDialog{max-width:620px;width:100%;margin-top:12px}
+.dialogBox{background:#111a31;border:4px double #fff;padding:14px;min-height:130px}
+.speaker{color:#ffe68a;font-weight:700;margin-bottom:8px}
+.dialogText{font-size:17px;line-height:1.7;white-space:pre-line}
+.tapHint{text-align:right;color:#bbb;font-size:12px;margin-top:8px}
+.answers{display:grid;gap:8px;margin-top:12px}
+.answer{padding:12px;text-align:left;font-size:16px}
+#feedback{font-weight:700;margin:12px 0;min-height:24px}
+.small{font-size:13px;color:#ddd}
+.legend{font-size:13px;color:#ddd;margin-top:6px}
+.regionLabel{
+ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+ z-index:3;white-space:nowrap;font-size:10px;font-weight:800;color:#17351e;
+ background:rgba(255,255,255,.60);padding:1px 3px;border-radius:3px;
+ pointer-events:none
+}
+.sourceNote{font-size:12px;color:#cfd7ee;margin:6px 0 0}
+#encounterOverlay{
+ position:fixed;left:50%;top:50%;width:36px;height:36px;background:#000;
+ z-index:9999;pointer-events:none;opacity:0;
+ transform:translate(-50%,-50%) scale(.1) rotate(0deg);
+}
+#encounterOverlay.run{
+ opacity:1;
+ animation:encounterExpand .68s cubic-bezier(.2,.7,.2,1) forwards;
+}
+@keyframes encounterExpand{
+ 0%{transform:translate(-50%,-50%) scale(.1) rotate(0deg)}
+ 35%{transform:translate(-50%,-50%) scale(3) rotate(45deg)}
+ 70%{transform:translate(-50%,-50%) scale(12) rotate(105deg)}
+ 100%{transform:translate(-50%,-50%) scale(45) rotate(180deg)}
+}
+#discovery{
+ text-align:center;
+ background:#111a31;
+ border:4px double #fff;
+}
+.discoveryKicker{font-size:14px;color:#ffe68a;font-weight:800;letter-spacing:.08em}
+#discoveryName{font-size:27px;margin:12px 0}
+.discoveryMark{
+ width:68px;height:68px;margin:6px auto 12px;border:3px solid #fff;
+ display:flex;align-items:center;justify-content:center;font-size:40px;
+ background:#233052;color:#ffe34d;
+}
+
+@media (min-width:700px){:root{--tile:31px}}
+</style>
+</head>
+<body>
+<div id="encounterOverlay"></div>
+<div id="app">
+<h1>世界遺産クエスト α v9</h1>
+
+<section id="game" class="panel">
+  <div id="progressHud"><span id="totalPoints">総ポイント 0 pt</span><span id="clearCount">クリア 0 / 5</span></div>
+  <div id="mapWrap" class="mapWrap"><div id="map" class="map"></div></div>
+  <div id="status"></div>
+  <div class="controls">
+    <button class="up" onclick="move(0,-1)">▲</button>
+    <button class="left" onclick="move(-1,0)">◀</button>
+    <button class="right" onclick="move(1,0)">▶</button>
+    <button class="down" onclick="move(0,1)">▼</button>
+  </div>
+  <div id="legend" class="legend"></div>
+  <div class="small">α版：グラフィック・問題内容は仮です。</div>
+</section>
+
+<section id="dialog" class="panel hidden">
+  <div class="dialogBox" onclick="nextDialog()">
+    <div id="speaker" class="speaker"></div>
+    <div id="dialogText" class="dialogText"></div>
+    <div class="tapHint">タップしてつづく ▶</div>
+  </div>
+</section>
+
+<section id="discovery" class="panel hidden">
+  <div class="discoveryKicker">NEW WORLD HERITAGE</div>
+  <div class="discoveryMark">!</div>
+  <div>新しい世界遺産を発見！</div>
+  <h2 id="discoveryName"></h2>
+  <button class="bigbtn" onclick="continueFromDiscovery()">つぎへ</button>
+</section>
+
+<section id="siteDialog" class="panel hidden">
+  <h2 id="siteName"></h2>
+  <p>世界遺産ポイントに到着しました。</p>
+  <p id="siteStatus" style="font-weight:700"></p>
+  <p id="sitePoints" style="font-weight:700"></p>
+  <p>難易度を選んでください。</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="bigbtn" onclick="startQuiz(1)">難易度1<br><span class="small">正解 +1pt</span></button>
+    <button class="bigbtn" onclick="startQuiz(2)">難易度2<br><span class="small">正解 +2pt</span></button>
+    <button class="bigbtn" onclick="startQuiz(3)">難易度3<br><span class="small">正解 +3pt</span></button>
+  </div>
+  <br>
+  <button class="bigbtn" onclick="backToMap()">マップへ戻る</button>
+</section>
+
+<section id="quiz" class="panel hidden">
+  <h2 id="quizSite"></h2>
+  <p id="question">サンプル問題</p>
+  <div id="questionSource" class="sourceNote"></div>
+  <div class="answers" id="answers"></div>
+  <div id="feedback"></div>
+  <button id="quizBack" class="bigbtn hidden" onclick="backToMap()">マップへ戻る</button>
+</section>
+</div>
+
+<script>
+let mode="village";
+let px=7, py=7, currentSite=null;
+let talked={traveler:false,researcher:false,elder:false};
+let activeNpc=null, dialogIndex=0, afterDialog=null;
+
+// 左端に門と門番。門は x=0,y=5、門番は x=1,y=5。
+const villageRows=[
+"FFFFFFFFFFFFFF",
+"F....H....H..F",
+"F............F",
+"F...PPPPPP...F",
+"F...P....P...F",
+"GPPPPPPPPP...F",
+"F...P....P...F",
+"F...PPPPPP...F",
+"F............F",
+"F....H.......F",
+"FFFFFFFFFFFFFF"
+];
+
+const npcs={
+ "5,4":{id:"traveler",name:"旅人",cls:"",lines:[
+   "旅に出るなら、まず世界遺産のことを少し知っておくといいよ。",
+   "世界遺産には「文化遺産」「自然遺産」「複合遺産」の3つの種類があるんだ。"
+ ]},
+ "9,4":{id:"researcher",name:"森の研究者",cls:"researcher",lines:[
+   "自然遺産は、すばらしい自然や、生き物、地形などに大きな価値がある場所だよ。",
+   "これから日本の自然遺産をめぐるなら、どんな自然が守られているのか見てみると面白いよ。"
+ ]},
+ "7,6":{id:"elder",name:"村の長老",cls:"elder",lines:[
+   "世界遺産として認められるための「登録基準」は、全部で10個ある。",
+   "今は10個の中身まで覚えなくてよいぞ。旅をしながら少しずつ知っていけばよい。"
+ ]}
+};
+
+const guard={
+ id:"guard",name:"門番",cls:"guard",
+ before:[
+   "この先は日本の自然遺産へ続く道だ。",
+   "まだ準備が整っていないようだな。村の3人に話を聞いてくるといい。"
+ ],
+ after:[
+   "3人から話を聞いてきたようだな。",
+   "準備ができたようだ。門を開けよう。",
+   "日本の自然遺産をめぐる旅へ、いってらっしゃい！"
+ ]
+};
+
+// ドラクエ風にかなりデフォルメした日本列島。
+// 北海道・本州・九州・沖縄の位置関係を残し、各地域は陸路でつなぐ。
+const japanRows=[
+"~~~~~~~~~~~~~~~~~~~~~~~~~~",
+"~~~~~~~~~~~~~~~~~~~LLL~~~~",
+"~~~~~~~~~~~~~~~~~~LLLLL~~~",
+"~~~~~~~~~~~~~~~~~~LLLLSLL~",
+"~~~~~~~~~~~~~~~~~~~LLLL~~~",
+"~~~~~~~~~~~~~~~~~~~~LL~~~~",
+"~~~~~~~~~~~~~~~~~~~~w~~~~~",
+"~~~~~~~~~~~~~~~~~~~LLL~~~~",
+"~~~~~~~~~~~~~~~~~~LSLL~~~~",
+"~~~~~~~~~~~~~~~~~LLLL~~~~~",
+"~~~~~~~~~~~~L~~~LLLL~~~~~~",
+"~~~~~~~~~~~~L~LLLLL~~~~~~~",
+"~~~~~~~~~~~~LLLLLL~~~~~~~~",
+"~~~~~~~~~~LLLLLLLLwwwwwww~",
+"~~~~~~wwLLLLLL~~~~~~~~~w~~",
+"~~~~~LLwLLLw~~~~~~~~~~~w~~",
+"~~~~LLLL~~LLLL~~~~~~~~~w~~",
+"~~~~LLL~~~~LL~~~~~~~~~~w~~",
+"~~~~LL~~~~~~~~~~~~~~~~~L~~",
+"~~~~~S~~~~~~~~~~~~~~~~~S~~",
+"~~~www~~~~~~~~~~~~~~~~~~~~",
+"~~~wL~~~~~~~~~~~~~~~~~~~~~",
+"~wLL~~~~~~~~~~~~~~~~~~~~~~",
+"~S~~~~~~~~~~~~~~~~~~~~~~~~"
+];
+
+const sites={
+ "22,3":"知床",
+ "19,8":"白神山地",
+ "5,19":"屋久島",
+ "1,23":"奄美大島、徳之島、沖縄島北部及び西表島",
+ "23,19":"小笠原諸島"
+};
+
+const regionLabels={
+ "20,2":"北海道",
+ "16,12":"本州",
+ "12,10":"佐渡島",
+ "12,16":"四国",
+ "5,17":"九州",
+ "2,22":"沖縄諸島",
+ "24,19":"小笠原"
+};
+
+const quizData={
+ "知床":{
+   1:{q:"難易度1のサンプル問題",p:1},
+   2:{q:"難易度2のサンプル問題",p:2},
+   3:{q:"難易度3のサンプル問題",p:3}
+ },
+ "白神山地":{
+   1:{
+     q:"『白神山地』に生息する絶滅危惧種の生物は何でしょうか。",
+     p:1,
+     source:"世界遺産検定公式サイト 4級例題",
+     options:[
+       {label:"クマゲラ",ok:true},
+       {label:"ヤクザル",ok:false},
+       {label:"イグアナ",ok:false},
+       {label:"セーブル・アンテロープ",ok:false}
+     ]
+   },
+   2:{q:"難易度2のサンプル問題",p:2},
+   3:{q:"難易度3のサンプル問題",p:3}
+ },
+ "小笠原諸島":{
+   1:{q:"難易度1のサンプル問題",p:1},
+   2:{q:"難易度2のサンプル問題",p:2},
+   3:{q:"難易度3のサンプル問題",p:3}
+ },
+ "屋久島":{
+   1:{q:"難易度1のサンプル問題",p:1},
+   2:{q:"難易度2のサンプル問題",p:2},
+   3:{q:"難易度3のサンプル問題",p:3}
+ },
+ "奄美大島、徳之島、沖縄島北部及び西表島":{
+   1:{q:"難易度1のサンプル問題",p:1},
+   2:{q:"難易度2のサンプル問題",p:2},
+   3:{q:"難易度3のサンプル問題",p:3}
+ }
+};
+let points={
+ "知床":0,"白神山地":0,"小笠原諸島":0,"屋久島":0,"奄美大島、徳之島、沖縄島北部及び西表島":0
+};
+let discovered={
+ "知床":false,"白神山地":false,"小笠原諸島":false,"屋久島":false,"奄美大島、徳之島、沖縄島北部及び西表島":false
+};
+let currentLevel=1;
+let transitionLock=false;
+
+function allTalked(){return talked.traveler&&talked.researcher&&talked.elder}
+
+function rows(){return mode==="village"?villageRows:japanRows}
+
+function render(){
+ const r=rows(), W=r[0].length, H=r.length;
+ const map=document.getElementById("map"); map.innerHTML="";
+ map.style.gridTemplateColumns=`repeat(${W},var(--tile))`;
+ map.style.gridTemplateRows=`repeat(${H},var(--tile))`;
+
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+   const d=document.createElement("div"), c=r[y][x], key=x+","+y;
+   let cls="";
+   if(mode==="village"){
+     cls=c==="F"?"forest":c==="P"?"path":c==="H"?"house":c==="G"?"gate":"grass";
+     if(npcs[key]){
+       const n=npcs[key];
+       cls+=" npc "+n.cls+" "+(talked[n.id]?"done":"need");
+     }
+     if(key==="1,5") cls+=" guard"+(allTalked()?" need":"");
+   } else {
+     if(c==="~"){
+       cls="sea";
+     }else if(c==="w"){
+       cls="sailable";
+     }else if(c==="S"){
+       const siteName=sites[key];
+       if(siteName && points[siteName]>0){
+         cls="site cleared";
+       }else if(siteName && discovered[siteName]){
+         cls="site discovered";
+       }else{
+         cls="site undiscovered";
+       }
+     }else{
+       cls="land";
+     }
+   }
+   d.className="tile "+cls+(x===px&&y===py?" player":"");
+   if(mode==="japan" && regionLabels[key]){
+     const label=document.createElement("span");
+     label.className="regionLabel";
+     label.textContent=regionLabels[key];
+     d.appendChild(label);
+   }
+   map.appendChild(d);
+ }
+
+ const hud=document.getElementById("progressHud");
+ if(mode==="japan"){
+   hud.classList.add("show");
+   const total=Object.values(points).reduce((a,b)=>a+b,0);
+   const cleared=Object.values(points).filter(v=>v>0).length;
+   document.getElementById("totalPoints").textContent="総ポイント "+total+" pt";
+   document.getElementById("clearCount").textContent="クリア "+cleared+" / "+Object.keys(points).length;
+ }else{
+   hud.classList.remove("show");
+ }
+
+ document.getElementById("status").textContent=
+   mode==="village"
+   ? (allTalked()?"3人に話を聞いた。左の門番のところへ行こう。":"「！」のついた3人に話を聞いてみよう。")
+   : "「？」はまだ見つけていない世界遺産。近づいて確かめよう。";
+
+ document.getElementById("legend").textContent=
+   mode==="village"
+   ? "！＝まだ話していない　✓＝会話済み　左端に門と門番があります。"
+   : "？＝未発見　！＝発見済み・未クリア　✓＝クリア済み　水色＝渡れる海";
+}
+
+function isNpc(x,y){return npcs[x+","+y]}
+function isGuard(x,y){return x===1&&y===5}
+
+function passable(x,y){
+ const r=rows(), c=r[y][x];
+ if(mode==="village"){
+   if(c==="F"||c==="H"||c==="G") return false;
+   if(isNpc(x,y)||isGuard(x,y)) return false;
+   return true;
+ }
+ return c!=="~";
+}
+
+function move(dx,dy){
+ if(transitionLock)return;
+ const r=rows(), W=r[0].length, H=r.length;
+ const nx=px+dx, ny=py+dy;
+ if(nx<0||ny<0||nx>=W||ny>=H)return;
+
+ const npc=isNpc(nx,ny);
+ if(mode==="village" && npc){ startNpcDialog(npc); return; }
+ if(mode==="village" && isGuard(nx,ny)){ startGuardDialog(); return; }
+
+ if(!passable(nx,ny)){
+   document.getElementById("status").textContent=mode==="village"?"そこには進めません":"海には進めません";
+   return;
+ }
+
+ px=nx; py=ny; render();
+
+ if(mode==="japan" && sites[px+","+py]){
+   currentSite=sites[px+","+py];
+   if(!discovered[currentSite]){
+     discoverCurrentSite();
+   }else{
+     openSiteDialog();
+   }
+ }
+}
+
+function openSiteDialog(){
+ document.getElementById("siteName").textContent=currentSite;
+ document.getElementById("siteStatus").textContent=points[currentSite]>0 ? "✓ クリア済み" : "！ 発見済み・未クリア";
+ document.getElementById("sitePoints").textContent="この遺産のポイント： "+points[currentSite]+" pt";
+ document.getElementById("game").classList.add("hidden");
+ document.getElementById("siteDialog").classList.remove("hidden");
+}
+
+function discoverCurrentSite(){
+ transitionLock=true;
+ const overlay=document.getElementById("encounterOverlay");
+ overlay.classList.remove("run");
+ void overlay.offsetWidth;
+ overlay.classList.add("run");
+
+ setTimeout(()=>{
+   discovered[currentSite]=true;
+   document.getElementById("game").classList.add("hidden");
+   document.getElementById("discoveryName").textContent=currentSite;
+   document.getElementById("discovery").classList.remove("hidden");
+   overlay.style.opacity="1";
+ },650);
+
+ setTimeout(()=>{
+   overlay.classList.remove("run");
+   overlay.style.opacity="0";
+   transitionLock=false;
+ },830);
+}
+
+function continueFromDiscovery(){
+ document.getElementById("discovery").classList.add("hidden");
+ openSiteDialog();
+}
+
+function openDialog(npc, callback=null){
+ activeNpc=npc; dialogIndex=0; afterDialog=callback;
+ document.getElementById("game").classList.add("hidden");
+ document.getElementById("dialog").classList.remove("hidden");
+ showDialogLine();
+}
+
+function startNpcDialog(npc){
+ openDialog(npc,()=>{
+   talked[npc.id]=true;
+   render();
+ });
+}
+
+function startGuardDialog(){
+ if(!allTalked()){
+   openDialog({id:"guard",name:"門番",lines:guard.before});
+ }else{
+   openDialog({id:"guard",name:"門番",lines:guard.after},()=>{
+     enterJapanMap();
+   });
+ }
+}
+
+function showDialogLine(){
+ document.getElementById("speaker").textContent=activeNpc.name;
+ document.getElementById("dialogText").textContent=activeNpc.lines[dialogIndex];
+}
+
+function nextDialog(){
+ dialogIndex++;
+ if(dialogIndex<activeNpc.lines.length){showDialogLine();return;}
+ document.getElementById("dialog").classList.add("hidden");
+ document.getElementById("game").classList.remove("hidden");
+ const cb=afterDialog; afterDialog=null;
+ if(cb) cb(); else render();
+}
+
+function enterJapanMap(){
+ mode="japan";
+ px=14; py=12;
+ render();
+}
+
+function startQuiz(level){
+ currentLevel=level;
+ const qd=quizData[currentSite][level];
+ document.getElementById("siteDialog").classList.add("hidden");
+ document.getElementById("quiz").classList.remove("hidden");
+ document.getElementById("quizSite").textContent=currentSite+"：難易度"+level;
+ document.getElementById("question").textContent=qd.q;
+ document.getElementById("questionSource").textContent=qd.source ? "出典："+qd.source : "";
+ document.getElementById("feedback").textContent="";
+ document.getElementById("quizBack").classList.add("hidden");
+
+ const data=qd.options || [
+   {label:"選択肢（正解）",ok:true},
+   {label:"選択肢（間違い1）",ok:false},
+   {label:"選択肢（間違い2）",ok:false},
+   {label:"選択肢（間違い3）",ok:false}
+ ];
+ const a=document.getElementById("answers"); a.innerHTML="";
+ data.forEach(item=>{
+   const b=document.createElement("button");
+   b.className="answer";
+   b.textContent=item.label;
+   b.onclick=()=>answer(item.ok);
+   a.appendChild(b);
+ });
+}
+
+function answer(ok){
+ document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
+ if(ok){
+   const gain=quizData[currentSite][currentLevel].p;
+   const wasUncleared=points[currentSite]===0;
+   points[currentSite]+=gain;
+   document.getElementById("feedback").textContent=
+     "正解！ +"+gain+"pt　この遺産： "+points[currentSite]+"pt"+
+     (wasUncleared ? "　✓ クリア！" : "");
+ }else{
+   const qd=quizData[currentSite][currentLevel];
+   const correct=qd.options ? qd.options.find(o=>o.ok).label : "選択肢（正解）";
+   document.getElementById("feedback").textContent="残念！ 正解は「"+correct+"」です。";
+ }
+ document.getElementById("quizBack").classList.remove("hidden");
+}
+
+function backToMap(){
+ document.getElementById("discovery").classList.add("hidden");
+ document.getElementById("siteDialog").classList.add("hidden");
+ document.getElementById("quiz").classList.add("hidden");
+ document.getElementById("game").classList.remove("hidden");
+ render();
+}
+render();
+</script>
+</body>
+</html>
