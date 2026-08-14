@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>世界遺産クエスト α v15</title>
+<title>世界遺産クエスト α v16</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="encounterOverlay"></div>
 <div id="app">
-<h1>世界遺産クエスト α v15</h1>
+<h1>世界遺産クエスト α v16</h1>
 
 <section id="avatarScreen" class="panel">
   <div class="discoveryKicker">CHARACTER CREATE</div>
@@ -33,21 +33,32 @@
 <section id="game" class="panel hidden">
   <div class="gameLandscape">
     <aside class="gameSide">
-      <div class="sideTitle">ぼうけんガイド</div>
-      <div class="guideBox">
-        <div class="guidePortrait"><div class="pyramidBody"></div><div class="pyramidFace"></div><div class="pyramidMouth"></div><div class="pyramidHand left"></div><div class="pyramidHand right"></div></div>
-        <div class="guideText"><div class="guideName">ピラミトン</div><div id="guideMessage">まずは村のみんなに話を聞いてみよう！</div></div>
+      <div class="guideSection">
+        <div class="sideTitle">ぼうけんガイド</div>
+        <div class="guideBox">
+          <div class="guidePortrait"><div class="pyramidBody"></div><div class="pyramidFace"></div><div class="pyramidMouth"></div><div class="pyramidHand left"></div><div class="pyramidHand right"></div></div>
+          <div class="guideText"><div class="guideName">ピラミトン</div><div id="guideMessage">まずは村のみんなに話を聞いてみよう！</div></div>
+        </div>
       </div>
-      <div class="sideTitle">ぼうけんのきろく</div>
-      <div id="progressHud" class="sideProgress">
-        <div class="hudItem"><span class="hudLabel">POINT</span><span class="hudValue" id="totalPoints">0 pt</span></div>
-        <div class="hudItem"><span class="hudLabel">★</span><span class="hudValue" id="starCount">0</span></div>
-        <div class="hudItem"><span class="hudLabel">CLEAR</span><span class="hudValue" id="clearCount">0 / 5</span></div>
-        <div class="hudItem"><span class="hudLabel">MASTER</span><span class="hudValue" id="masterCount">0 / 5</span></div>
+      <div class="recordSection">
+        <div class="sideTitle">ぼうけんのきろく</div>
+        <div id="progressHud" class="sideProgress">
+          <div class="hudItem"><span class="hudLabel">POINT</span><span class="hudValue" id="totalPoints">0 pt</span></div>
+          <div class="hudItem"><span class="hudLabel">★</span><span class="hudValue" id="starCount">0</span></div>
+          <div class="hudItem"><span class="hudLabel">CLEAR</span><span class="hudValue" id="clearCount">0 / 5</span></div>
+          <div class="hudItem"><span class="hudLabel">MASTER</span><span class="hudValue" id="masterCount">0 / 5</span></div>
+        </div>
       </div>
       <div class="sideControls">
         <div class="sideTitle">いどう</div>
-        <div class="controls"><button class="up" onclick="move(0,-1)">▲</button><button class="left" onclick="move(-1,0)">◀</button><button class="right" onclick="move(1,0)">▶</button><button class="down" onclick="move(0,1)">▼</button></div>
+        <div class="controlHint">十字キー / キーボード / となりのマスをタップ</div>
+        <div class="controls" role="group" aria-label="移動操作">
+          <button class="up" aria-label="上へ移動" onclick="move(0,-1)">▲</button>
+          <button class="left" aria-label="左へ移動" onclick="move(-1,0)">◀</button>
+          <div class="dpadCenter" aria-hidden="true"></div>
+          <button class="right" aria-label="右へ移動" onclick="move(1,0)">▶</button>
+          <button class="down" aria-label="下へ移動" onclick="move(0,1)">▼</button>
+        </div>
       </div>
       <div id="status" class="sideLegend"></div>
       <div id="legend" class="sideLegend"></div>
