@@ -1,0 +1,28 @@
+/* v17 Phase 7: reusable cultural/natural heritage presentation */
+
+.heritageCulture{
+  background:#b58b55;
+  border:1px solid rgba(82,57,32,.45);
+  box-shadow:inset 0 0 0 2px rgba(243,217,164,.18);
+}
+.heritageCulture::before{
+  content:"▥";
+  color:#f1d49a;
+  font-size:25px;
+  font-weight:900;
+  text-shadow:7px 5px 0 #78552f;
+}
+
+.map[data-mode="hokkaidoGridD"] .phase57Site{
+  z-index:6;
+}
+.map[data-mode="hokkaidoGridD"] .areaSiteLabel{
+  max-width:88px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.map[data-mode="site"] .heritageCulture{
+  outline:1px solid rgba(86,61,32,.35);
+}
