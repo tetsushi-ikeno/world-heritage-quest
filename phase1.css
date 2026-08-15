@@ -1,0 +1,53 @@
+/* v17 Phase 1 additions */
+
+.heritageNature{
+  background:#4f8b58;
+  border:1px solid rgba(31,78,43,.45);
+}
+.heritageNature::before{
+  content:"♠";
+  color:#163f24;
+  font-size:24px;
+  text-shadow:8px 6px 0 #2f6d40;
+}
+
+.siteBook{
+  background:#cfb979;
+}
+.siteBook::before{
+  content:"📖";
+  font-size:22px;
+  filter:saturate(.85);
+}
+
+.siteGateLocked{
+  background:#9c8663;
+}
+.siteGateLocked::before{
+  content:"🔒";
+  font-size:20px;
+  filter:grayscale(.25);
+}
+
+.siteExit{
+  background:#cfb979;
+}
+.siteExit::before{
+  content:"↓";
+  color:#fff;
+  font-size:23px;
+  font-weight:900;
+  text-shadow:1px 1px #574628;
+}
+
+.siteNpc::before{
+  display:none;
+}
+
+.map[data-mode="site"] .tile{
+  outline:1px solid rgba(255,255,255,.035);
+}
+
+.map[data-mode="site"] .heritageNature{
+  box-shadow:inset 0 0 0 1px rgba(20,60,29,.25);
+}
