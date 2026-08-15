@@ -1,4 +1,4 @@
-/* v17 Phase 1 additions */
+/* v17 Phases 1-4 additions */
 
 .heritageNature{
   background:#4f8b58;
@@ -11,43 +11,56 @@
   text-shadow:8px 6px 0 #2f6d40;
 }
 
-.siteBook{
-  background:#cfb979;
+.siteBook{background:#cfb979}
+.siteBook::before{content:"📖";font-size:22px;filter:saturate(.85)}
+.siteGateLocked{background:#9c8663}
+.siteGateLocked::before{content:"🔒";font-size:20px;filter:grayscale(.25)}
+.siteExit{background:#cfb979}
+.siteExit::before{content:"↓";color:#fff;font-size:23px;font-weight:900;text-shadow:1px 1px #574628}
+.siteNpc::before{display:none}
+
+.map[data-mode="site"] .tile{outline:1px solid rgba(255,255,255,.035)}
+.map[data-mode="site"] .heritageNature{box-shadow:inset 0 0 0 1px rgba(20,60,29,.25)}
+
+.phaseHidden{display:none!important}
+
+.phaseCodexButton{
+  width:100%;margin-top:7px;padding:9px 10px;border:2px solid #d9dfec;border-radius:8px;
+  background:#243554;color:#fff;font:inherit;font-weight:800;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 0 #101727;cursor:pointer
 }
-.siteBook::before{
-  content:"📖";
-  font-size:22px;
-  filter:saturate(.85);
+.phaseCodexButton:active{transform:translateY(1px);box-shadow:0 1px 0 #101727}
+.phaseNewBadge,.phaseCardNew{
+  display:inline-flex;align-items:center;justify-content:center;background:#d94a4a;color:#fff;border-radius:999px;
+  font-size:10px;font-weight:900;line-height:1;padding:4px 6px;box-shadow:0 1px 0 rgba(0,0,0,.3)
 }
 
-.siteGateLocked{
-  background:#9c8663;
-}
-.siteGateLocked::before{
-  content:"🔒";
-  font-size:20px;
-  filter:grayscale(.25);
-}
+.phaseActionPanel,.phaseCodexPanel{max-width:720px;margin-top:12px;background:#f3ead2;color:#312d29;border:4px solid #745a3a;box-shadow:inset 0 0 0 3px #d8c49b}
+.phaseActionKicker{font-size:12px;letter-spacing:.12em;font-weight:900;color:#876a43;margin-bottom:5px}
+.phaseActionPanel h2,.phaseCodexPanel h2{margin:3px 0 10px;color:#3f382f}
+.phaseActionText{white-space:pre-line;font-size:18px;line-height:1.75;min-height:90px;background:rgba(255,255,255,.38);border-radius:8px;padding:12px}
+.phaseActionButtons{display:grid;gap:9px;margin-top:12px}
+.phaseActionButtons .bigbtn{width:100%;text-align:left;background:#fffdf7;color:#332d26;box-shadow:0 3px 0 #a38f70}
+.phaseActionButtons .phasePrimary{font-weight:900}
 
-.siteExit{
-  background:#cfb979;
+.phaseCodexHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.phaseSmallButton{padding:8px 12px;font-size:14px;white-space:nowrap}
+.phaseCodexCount{font-weight:900;color:#745a3a;margin:4px 0 10px}
+.phaseCardGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.phaseCardSlot{
+  position:relative;min-height:86px;border:2px solid #ac9879;border-radius:9px;padding:10px;text-align:left;
+  background:#e8dcc3;color:#3c352d;font:inherit
 }
-.siteExit::before{
-  content:"↓";
-  color:#fff;
-  font-size:23px;
-  font-weight:900;
-  text-shadow:1px 1px #574628;
-}
+.phaseCardSlot.acquired{background:#fffaf0;cursor:pointer}
+.phaseCardSlot.missing{opacity:.7;cursor:default}
+.phaseCardSlot.selected{outline:3px solid rgba(116,90,58,.3)}
+.phaseCardProperty{display:block;font-size:12px;font-weight:900;color:#79664d;margin-bottom:9px}
+.phaseCardIcon{display:inline-block;width:25px;text-align:center;margin-right:3px}
+.phaseCardValue{display:block;font-size:17px;font-weight:900;line-height:1.3}
+.phaseCardNew{position:absolute;right:7px;top:7px}
+.phaseCodexDetail{margin-top:11px;background:#fffaf0;border:2px solid #c9b797;border-radius:8px;padding:11px;min-height:70px;line-height:1.6}
 
-.siteNpc::before{
-  display:none;
-}
-
-.map[data-mode="site"] .tile{
-  outline:1px solid rgba(255,255,255,.035);
-}
-
-.map[data-mode="site"] .heritageNature{
-  box-shadow:inset 0 0 0 1px rgba(20,60,29,.25);
+@media (max-width:620px){
+  .phaseCardGrid{grid-template-columns:1fr}
+  .phaseActionText{font-size:16px}
 }
