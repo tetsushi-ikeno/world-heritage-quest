@@ -1,0 +1,65 @@
+/* v17 Phase 6.2 virtual joystick */
+.sideControls{display:flex;flex-direction:column;align-items:center}
+.sideControls .sideTitle{align-self:stretch}
+.sideControls .controlHint{text-align:center;font-size:12px;line-height:1.4;color:#d4dbea;margin:5px 0 7px}
+.phase62Joystick{
+  position:relative;
+  width:136px;
+  height:136px;
+  flex:0 0 auto;
+  border-radius:50%;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+  cursor:grab;
+  background:radial-gradient(circle at 50% 45%,rgba(100,123,158,.56) 0 42%,rgba(29,43,69,.88) 43% 68%,rgba(11,18,31,.95) 69% 100%);
+  border:2px solid rgba(218,227,242,.72);
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.05),0 3px 9px rgba(0,0,0,.28);
+}
+.phase62Joystick:active{cursor:grabbing}
+.phase62JoyRing{
+  position:absolute;
+  left:50%;top:50%;
+  width:92px;height:92px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(220,230,245,.2);
+  pointer-events:none;
+}
+.phase62JoyKnob{
+  position:absolute;
+  left:50%;top:50%;
+  width:56px;height:56px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  pointer-events:none;
+  background:linear-gradient(145deg,#e9eef5,#9daec4);
+  border:3px solid #f9fbff;
+  box-shadow:0 4px 8px rgba(0,0,0,.35),inset 0 -5px 8px rgba(57,75,101,.24);
+  transition:transform 45ms linear;
+  z-index:4;
+}
+.phase62JoyMark{
+  position:absolute;
+  color:rgba(235,242,252,.58);
+  font-size:12px;
+  font-weight:900;
+  line-height:1;
+  pointer-events:none;
+  z-index:2;
+}
+.phase62JoyMark.up{left:50%;top:9px;transform:translateX(-50%)}
+.phase62JoyMark.down{left:50%;bottom:9px;transform:translateX(-50%)}
+.phase62JoyMark.left{left:9px;top:50%;transform:translateY(-50%)}
+.phase62JoyMark.right{right:9px;top:50%;transform:translateY(-50%)}
+.phase62Joystick[data-direction="up"] .phase62JoyMark.up,
+.phase62Joystick[data-direction="down"] .phase62JoyMark.down,
+.phase62Joystick[data-direction="left"] .phase62JoyMark.left,
+.phase62Joystick[data-direction="right"] .phase62JoyMark.right{color:#ffe68a;text-shadow:0 0 6px rgba(255,230,138,.65)}
+.phase62KeyboardHint{font-size:10px;color:#94a1ba;text-align:center;margin-top:5px}
+
+@media (max-height:720px){
+  .phase62Joystick{width:118px;height:118px}
+  .phase62JoyRing{width:78px;height:78px}
+  .phase62JoyKnob{width:50px;height:50px}
+}
