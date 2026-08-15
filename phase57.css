@@ -1,0 +1,115 @@
+/* v17 Phase 6.1: grid-only Hokkaido map and Japan -> Hokkaido zoom */
+
+/* No freeform Hokkaido silhouette: every visible cell is the movement truth. */
+.map[data-mode="hokkaidoGridD"]{
+  position:relative;
+  background:#4e91b8;
+}
+.map[data-mode="hokkaidoGridD"] .tile{
+  outline:1px solid rgba(25,52,68,.38);
+  box-shadow:none;
+  border-radius:0;
+}
+.phase57Sea{background:#65a9cf!important}
+.phase57Land{background:#72aa55!important}
+.phase57Site{
+  position:relative;
+  background:#d8bd55!important;
+  z-index:4;
+}
+.phase57Gate{
+  position:relative;
+  background:#788271!important;
+  z-index:4;
+}
+.phase57Gate::before{
+  content:"🔒";
+  font-size:18px;
+  filter:grayscale(.35);
+}
+.map[data-mode="hokkaidoGridD"] .areaUndiscovered::before{
+  content:"?";
+  color:#fff;
+  font-size:24px;
+  font-weight:900;
+  text-shadow:1px 1px #555;
+}
+.map[data-mode="hokkaidoGridD"] .areaDiscovered::before{
+  content:"!";
+  color:#ffe34d;
+  font-size:23px;
+  font-weight:900;
+  text-shadow:1px 1px #555;
+}
+.map[data-mode="hokkaidoGridD"] .areaCleared::before{
+  content:"✓"!important;
+  color:#fff!important;
+  font-size:22px!important;
+  font-weight:900;
+  text-shadow:1px 1px #24572b!important;
+}
+
+/* National overview shown briefly before entering the area. */
+.map[data-mode="japanOverview"]{
+  position:relative;
+  transition:transform .9s cubic-bezier(.2,.72,.25,1),opacity .9s ease;
+  transform-origin:82% 15%;
+  will-change:transform,opacity;
+}
+.map[data-mode="japanOverview"].phase57Zooming{
+  transform:scale(2.9);
+  opacity:.42;
+}
+.map[data-mode="japanOverview"] .tile{
+  outline:1px solid rgba(25,52,68,.22);
+}
+.phase57OverviewSea{background:#65a9cf!important}
+.phase57OverviewLand{background:#72aa55!important}
+.phase57OverviewHokkaido{
+  background:#d8bd55!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
+}
+.phase57OverviewMarker{
+  position:absolute;
+  z-index:10;
+  left:80%;
+  top:12%;
+  width:84px;
+  height:58px;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.phase57OverviewMarker>span{
+  position:absolute;
+  left:50%;
+  top:-16px;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  padding:3px 7px;
+  border-radius:6px;
+  background:rgba(17,26,49,.94);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  box-shadow:0 2px 5px rgba(0,0,0,.28);
+}
+.phase57OverviewMarker .mapAvatar{
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(.9);
+}
+
+/* During the national-map transition, crop overflow so the zoom reads as a camera move. */
+.gameMapSide:has(.map[data-mode="japanOverview"]) .mapWrap{
+  overflow:hidden;
+}
+
+/* Retain the fixed, calm interaction-window sizing from the previous pass. */
+#phaseAction.phaseMapWindow{
+  width:min(620px,86%)!important;
+  min-width:min(620px,86%)!important;
+}
+#dialog.phaseMapWindow{
+  width:min(600px,84%)!important;
+  min-width:min(600px,84%)!important;
+}
