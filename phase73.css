@@ -1,0 +1,73 @@
+/* World Heritage Quest α v17 Phase 7.3 */
+
+/* Piramiton: the character/expression itself is an image. CSS only sizes/moves it. */
+.piramitonImage{
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  background-color:transparent!important;
+  image-rendering:pixelated;
+}
+.piramitonImage>.pyramidBody,
+.piramitonImage>.pyramidFace,
+.piramitonImage>.pyramidMouth,
+.piramitonImage>.pyramidHand{display:none!important}
+
+.phase71BigPiramiton.piramitonImage{
+  width:150px!important;
+  height:170px!important;
+  transform:none!important;
+}
+.phase71MiniPiramiton.piramitonImage{
+  width:70px!important;
+  height:68px!important;
+  transform:none!important;
+  flex:0 0 70px;
+}
+.guidePortrait.piramitonImage{
+  width:72px!important;
+  min-width:72px!important;
+  height:66px!important;
+  min-height:66px!important;
+  border:0!important;
+}
+.phaseMapGuide .guideBox{grid-template-columns:78px 1fr!important}
+
+@keyframes piramitonBob73{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+}
+@keyframes piramitonPop73{
+  0%{transform:scale(.9)}
+  55%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+@keyframes piramitonJump73{
+  0%,100%{transform:translateY(0)}
+  45%{transform:translateY(-9px)}
+}
+.piramitonBob{animation:piramitonBob73 1.8s ease-in-out infinite}
+.piramitonPop{animation:piramitonPop73 .32s ease-out 1}
+.piramitonJumpMotion{animation:piramitonJump73 .55s ease-out 2}
+
+/* Make the registration-criteria branch unmistakable at the north Hokkaido start. */
+.phase72BranchTile{
+  box-shadow:inset 0 0 0 2px #ffe68a,0 0 0 2px rgba(17,26,49,.65)!important;
+  z-index:8!important;
+}
+.phase72BranchTile::before{content:'🏛'!important;font-size:21px!important;filter:none!important}
+.phase72BranchLabel{
+  font-size:11px!important;
+  padding:3px 6px!important;
+  background:#111a31!important;
+  color:#ffe68a!important;
+  border:2px solid #fff!important;
+  z-index:20!important;
+}
+
+@media(max-width:760px){
+  .phase71BigPiramiton.piramitonImage{width:120px!important;height:125px!important}
+  .phase71MiniPiramiton.piramitonImage{width:58px!important;height:56px!important;flex-basis:58px}
+  .guidePortrait.piramitonImage{width:58px!important;min-width:58px!important;height:54px!important;min-height:54px!important}
+  .phaseMapGuide .guideBox{grid-template-columns:62px 1fr!important}
+}
