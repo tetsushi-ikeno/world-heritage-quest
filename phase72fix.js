@@ -1,13 +1,12 @@
-// v17 Phase 7.2 stabilization hotfix
-// - remove the forced registration-criteria branch from the Hokkaido loop
-// - restore direct entry into heritage sites
-// - standardize the 10 criterion names used by the app
-// - make Piramiton reliably visible with the original expression sheet
-// - keep the direct Hokkaido transition stable
+// v17 Phase 7.2 corrective hotfix
+// - restore the registration-criteria branch on the Hokkaido map
+// - guarantee entry when stepping onto a heritage marker
+// - replace the fragile sprite-sheet Piramiton with stable CSS expressions/actions
+// - keep child-friendly criterion wording consistent
 
 (function(){
   // ---------------------------------------------------------------------------
-  // 1. Standard app names for the ten World Heritage criteria
+  // 1. Consistent, child-friendly names for the ten World Heritage criteria
   // ---------------------------------------------------------------------------
   const appCriteria=[
     {title:"人類の創造力",note:"人が生み出した、特にすぐれた傑作"},
@@ -38,8 +37,6 @@
       });
     }
 
-    // Keep the branch quiz internally coherent even though the branch is no
-    // longer part of the mandatory game loop.
     if(typeof phase72BranchQuiz!=="undefined" && phase72BranchQuiz[2]){
       phase72BranchQuiz[2]={
         q:"基準9「生態系のしくみ」が見ているのは、どんなこと？",
@@ -84,104 +81,206 @@
         const card=jomon.cards?.find(c=>c.id==="criteria");
         if(card){
           card.value="3 文化・文明の証言 / 5 伝統的な暮らし・土地利用";
-          card.description="縄文遺跡群は、基準3『文化・文明の証言』と基準5『伝統的な暮らし・土地利用』で評価されている。正式表記では (iii)・(v)。";
+          card.description="縄文遺跡群は、基準3『文化・文明の証言』と基準5『伝統的な暮らし・土地利用』で評価されている。正式表記は (iii)・(v)。";
         }
       }
     }
   }catch(e){
-    console.warn("Phase 7.2 criterion naming patch skipped",e);
+    console.warn("Phase 7.2 criterion copy patch skipped",e);
   }
 
   // ---------------------------------------------------------------------------
-  // 2. Remove the forced registration-criteria branch from the core loop
+  // 2. Restore and harden the registration-criteria branch
   // ---------------------------------------------------------------------------
-  // Phase 7.2 had inserted invisible/special C tiles and blocked S/J until the
-  // branch quiz was cleared. That made the map feel arbitrary and prevented
-  // players from entering a heritage site. For the game-loop prototype,
-  // criteria are learned inside each heritage site instead.
   try{
-    if(typeof phase72BranchCleared!=="undefined") phase72BranchCleared=true;
+    if(typeof phase72BranchCleared!=="undefined") phase72BranchCleared=false;
     if(typeof phase72BranchTiles!=="undefined" && typeof phase7PlaceMarker==="function" && typeof phase7AreaRows!=="undefined"){
-      phase72BranchTiles.forEach(({x,y})=>phase7PlaceMarker(phase7AreaRows,x,y,"L"));
+      phase72BranchTiles.forEach(({x,y})=>phase7PlaceMarker(phase7AreaRows,x,y,"C"));
     }
-    if(typeof phase72DecorateBranch==="function") phase72DecorateBranch=function(){};
-    if(typeof phase72BaseUpdateProgress==="function") phase71UpdateProgress=phase72BaseUpdateProgress;
-    if(typeof phase72BaseMove==="function") move=phase72BaseMove;
-    if(typeof phase72BaseRender==="function") render=phase72BaseRender;
-    document.getElementById("phase72Branch")?.classList.add("hidden");
   }catch(e){
-    console.warn("Phase 7.2 branch bypass skipped",e);
+    console.warn("Phase 7.2 branch restore skipped",e);
   }
 
-  // ---------------------------------------------------------------------------
-  // 3. Piramiton: reliably use the original expression sheet
-  // ---------------------------------------------------------------------------
-  const moodPosition={
-    normal:"0% 0%",
-    happy:"50% 0%",
-    surprised:"100% 0%",
-    sad:"25% 100%",
-    sparkle:"75% 100%"
+  // The final movement wrapper handles special tiles itself. This avoids the
+  // previous state in which the player could visually stand on a ? tile without
+  // the discovery/entry event firing.
+  move=function(dx,dy){
+    if(mode==="japanOverview" || transitionLock) return;
+    if(typeof phase41WindowOpen!=="undefined" && phase41WindowOpen) return;
+
+    if(mode==="japan"){
+      const nx=px+dx, ny=py+dy;
+      if(ny<0 || ny>=phase7AreaRows.length || nx<0 || nx>=phase7AreaRows[0].length) return;
+      const c=phase7AreaRows[ny][nx];
+
+      if(c==="~" || c==="G") return;
+
+      if(c==="C"){
+        px=nx; py=ny;
+        render();
+        if(!phase72BranchCleared){
+          phase62StopJoystick?.();
+          phase72OpenBranch();
+        }
+        return;
+      }
+
+      if(c==="S" || c==="J"){
+        if(!phase72BranchCleared){
+          phase62StopJoystick?.();
+          showAction(
+            "先に登録基準支部へ行ってみよう",
+            "世界遺産を調べる前に、すぐ近くの『登録基準支部』で、世界遺産を見るためのヒントを教えてもらおう。",
+            [{label:"わかった",action:closeAction}],
+            "GUIDE"
+          );
+          return;
+        }
+
+        px=nx; py=ny;
+        render();
+        phase62StopJoystick?.();
+        currentSite=c==="S"?"知床":"北海道・北東北の縄文遺跡群";
+        if(!discovered[currentSite]) discoverCurrentSite();
+        else phase7EnterSite(currentSite);
+        return;
+      }
+    }
+
+    return phase72BaseMove(dx,dy);
   };
 
+  // ---------------------------------------------------------------------------
+  // 3. Stable Piramiton expressions/actions using the existing CSS character
+  // ---------------------------------------------------------------------------
   function installPiramitonStyle(){
-    let style=document.getElementById("phase72PiramitonStyle");
+    let style=document.getElementById("phase72PiramitonMoodStyle");
     if(!style){
       style=document.createElement("style");
-      style.id="phase72PiramitonStyle";
+      style.id="phase72PiramitonMoodStyle";
       document.head.appendChild(style);
     }
     style.textContent=`
-      .piramitonOriginal{
-        background-repeat:no-repeat!important;
+      .piramitonMood{
+        background-image:none!important;
         background-color:transparent!important;
-        background-size:300% auto!important;
-        overflow:hidden!important;
+        background-position:initial!important;
+        background-size:auto!important;
+        background-repeat:no-repeat!important;
+        overflow:visible!important;
         image-rendering:pixelated;
       }
-      .piramitonOriginal>.pyramidBody,
-      .piramitonOriginal>.pyramidFace,
-      .piramitonOriginal>.pyramidMouth,
-      .piramitonOriginal>.pyramidHand{display:none!important}
-      .phaseMapGuide .guideBox{grid-template-columns:70px 1fr!important}
-      .guidePortrait.piramitonOriginal{
-        width:66px!important;
-        min-width:66px!important;
-        height:60px!important;
-        min-height:60px!important;
-        border:0!important;
-      }
-      .phase71MiniPiramiton.piramitonOriginal{
-        width:64px!important;
-        height:60px!important;
-        transform:none!important;
-      }
-      .phase71BigPiramiton.piramitonOriginal{
-        width:140px!important;
-        height:130px!important;
-        transform:none!important;
-      }
+      .piramitonMood>.pyramidBody,
+      .piramitonMood>.pyramidFace,
+      .piramitonMood>.pyramidMouth,
+      .piramitonMood>.pyramidHand{display:block!important}
+      .piramitonMood>.pyramidBody,
+      .piramitonMood>.pyramidFace,
+      .piramitonMood>.pyramidMouth,
+      .piramitonMood>.pyramidHand{transition:transform .18s ease,top .18s ease,left .18s ease,right .18s ease,width .18s ease,height .18s ease,border .18s ease}
+      .piramitonMood::after{position:absolute;z-index:10;right:-2px;top:-8px;font-size:18px;font-weight:1000;line-height:1;text-shadow:1px 1px #111;pointer-events:none}
+
+      .piramitonMood.mood-normal .pyramidMouth{width:10px;height:3px;background:#6c3229;border:0;border-radius:0}
+
+      .piramitonMood.mood-happy .pyramidFace::before,
+      .piramitonMood.mood-happy .pyramidFace::after{height:2px;top:2px;border-radius:50%}
+      .piramitonMood.mood-happy .pyramidMouth{width:12px;height:7px;background:transparent;border:0;border-bottom:3px solid #6c3229;border-radius:0 0 12px 12px;transform:translate(-1px,-2px)}
+      .piramitonMood.mood-happy .pyramidHand.left{transform:rotate(-35deg) translateY(-2px)}
+      .piramitonMood.mood-happy .pyramidHand.right{transform:rotate(35deg) translateY(-2px)}
+
+      .piramitonMood.mood-surprised::after{content:"!";color:#ffe68a}
+      .piramitonMood.mood-surprised .pyramidFace::before,
+      .piramitonMood.mood-surprised .pyramidFace::after{width:5px;height:6px;top:-1px;border-radius:50%}
+      .piramitonMood.mood-surprised .pyramidMouth{width:8px;height:8px;background:transparent;border:2px solid #6c3229;border-radius:50%;transform:translate(1px,-2px)}
+      .piramitonMood.mood-surprised .pyramidBody{animation:piramitonPop .38s ease}
+
+      .piramitonMood.mood-thinking::after{content:"?";color:#9fe8ff}
+      .piramitonMood.mood-thinking .pyramidBody{transform:rotate(-3deg)}
+      .piramitonMood.mood-thinking .pyramidMouth{width:8px;height:2px;background:#6c3229;transform:rotate(-8deg)}
+      .piramitonMood.mood-thinking .pyramidHand.right{top:42px!important;right:4px!important;transform:rotate(-58deg)}
+
+      .piramitonMood.mood-point .pyramidHand.right{width:18px!important;right:-7px!important;top:47px!important;transform:rotate(-8deg)}
+      .piramitonMood.mood-point .pyramidHand.left{transform:rotate(-8deg)}
+      .piramitonMood.mood-point .pyramidMouth{width:11px;height:6px;background:transparent;border:0;border-bottom:3px solid #6c3229;border-radius:0 0 10px 10px;transform:translate(0,-2px)}
+
+      .piramitonMood.mood-sad::after{content:"…";color:#cbd3e6}
+      .piramitonMood.mood-sad .pyramidBody{transform:translateY(2px)}
+      .piramitonMood.mood-sad .pyramidMouth{width:11px;height:6px;background:transparent;border:0;border-top:3px solid #6c3229;border-radius:10px 10px 0 0;transform:translate(0,2px)}
+      .piramitonMood.mood-sad .pyramidHand.left{transform:rotate(26deg) translateY(3px)}
+      .piramitonMood.mood-sad .pyramidHand.right{transform:rotate(-26deg) translateY(3px)}
+
+      .piramitonMood.mood-celebrate::after{content:"✦";color:#ffe68a;animation:piramitonSparkle .7s ease-in-out infinite alternate}
+      .piramitonMood.mood-celebrate .pyramidBody{animation:piramitonBounce .55s ease-in-out infinite alternate}
+      .piramitonMood.mood-celebrate .pyramidMouth{width:13px;height:8px;background:transparent;border:0;border-bottom:3px solid #6c3229;border-radius:0 0 12px 12px;transform:translate(-1px,-3px)}
+      .piramitonMood.mood-celebrate .pyramidHand.left{top:42px!important;left:-1px!important;transform:rotate(-58deg)}
+      .piramitonMood.mood-celebrate .pyramidHand.right{top:42px!important;right:-1px!important;transform:rotate(58deg)}
+
+      .piramitonMood.mood-wave .pyramidHand.right{top:41px!important;right:0!important;transform-origin:left center;animation:piramitonWave .48s ease-in-out infinite alternate}
+      .piramitonMood.mood-wave .pyramidMouth{width:12px;height:7px;background:transparent;border:0;border-bottom:3px solid #6c3229;border-radius:0 0 12px 12px;transform:translate(-1px,-2px)}
+
+      .phase71BigPiramiton.piramitonMood::after{right:12px;top:28px;font-size:22px}
+      .phase71BigPiramiton.piramitonMood.mood-thinking .pyramidHand.right{top:72px!important;right:30px!important}
+      .phase71BigPiramiton.piramitonMood.mood-point .pyramidHand.right{top:78px!important;right:20px!important;width:23px!important}
+      .phase71BigPiramiton.piramitonMood.mood-celebrate .pyramidHand.left{top:70px!important;left:30px!important}
+      .phase71BigPiramiton.piramitonMood.mood-celebrate .pyramidHand.right{top:70px!important;right:30px!important}
+      .phase71BigPiramiton.piramitonMood.mood-wave .pyramidHand.right{top:70px!important;right:30px!important}
+
+      .phase71MiniPiramiton.piramitonMood::after{right:-6px;top:-5px;font-size:15px}
+      .phase71MiniPiramiton.piramitonMood.mood-thinking .pyramidHand.right{top:28px!important;right:-5px!important}
+      .phase71MiniPiramiton.piramitonMood.mood-point .pyramidHand.right{top:31px!important;right:-10px!important;width:16px!important}
+      .phase71MiniPiramiton.piramitonMood.mood-celebrate .pyramidHand.left{top:25px!important;left:-5px!important}
+      .phase71MiniPiramiton.piramitonMood.mood-celebrate .pyramidHand.right{top:25px!important;right:-5px!important}
+      .phase71MiniPiramiton.piramitonMood.mood-wave .pyramidHand.right{top:24px!important;right:-4px!important}
+
+      @keyframes piramitonPop{0%{transform:scale(.85)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+      @keyframes piramitonBounce{from{transform:translateY(2px)}to{transform:translateY(-3px)}}
+      @keyframes piramitonWave{from{transform:rotate(42deg)}to{transform:rotate(78deg)}}
+      @keyframes piramitonSparkle{from{transform:scale(.8);opacity:.65}to{transform:scale(1.25);opacity:1}}
     `;
   }
 
+  function ensurePiramitonParts(el){
+    if(!el) return;
+    el.classList.remove("piramitonOriginal");
+    el.style.removeProperty("background-image");
+    el.style.removeProperty("background-position");
+    el.style.removeProperty("background-size");
+    el.style.removeProperty("background-repeat");
+    if(!el.querySelector(".pyramidBody")){
+      const body=document.createElement("div"); body.className="pyramidBody"; el.appendChild(body);
+    }
+    if(!el.querySelector(".pyramidFace")){
+      const face=document.createElement("div"); face.className="pyramidFace"; el.appendChild(face);
+    }
+    if(!el.querySelector(".pyramidMouth")){
+      const mouth=document.createElement("div"); mouth.className="pyramidMouth"; el.appendChild(mouth);
+    }
+    if(!el.querySelector(".pyramidHand.left")){
+      const hand=document.createElement("div"); hand.className="pyramidHand left"; el.appendChild(hand);
+    }
+    if(!el.querySelector(".pyramidHand.right")){
+      const hand=document.createElement("div"); hand.className="pyramidHand right"; el.appendChild(hand);
+    }
+  }
+
   function setPiramitonMood(el,mood="normal"){
-    if(!el || !window.PIRAMITON_EXPR_SHEET) return false;
+    if(!el) return false;
     installPiramitonStyle();
-    el.classList.add("piramitonOriginal");
+    ensurePiramitonParts(el);
+    el.classList.add("piramitonMood");
+    ["normal","happy","surprised","thinking","point","sad","celebrate","wave"].forEach(m=>el.classList.remove(`mood-${m}`));
+    el.classList.add(`mood-${mood}`);
     el.dataset.piramitonMood=mood;
-    el.style.setProperty("background-image",`url("${window.PIRAMITON_EXPR_SHEET}")`,"important");
-    el.style.setProperty("background-position",moodPosition[mood]||moodPosition.normal,"important");
-    el.style.setProperty("background-repeat","no-repeat","important");
     return true;
   }
   window.setPiramitonMood=setPiramitonMood;
 
   function guideMoodFromText(text){
     const t=text||"";
-    if(/CLEAR|正解|できた|カード|発見|到着|記録/.test(t)) return "sparkle";
-    if(/おしい|あと少し|まだ|できない|入れない/.test(t)) return "sad";
-    if(/\?|？|なに|何/.test(t)) return "surprised";
-    if(/行って|歩いて|話して|調べ|めぐって/.test(t)) return "happy";
+    if(/CLEAR|正解|できた|カード|発見|到着|記録|すべて/.test(t)) return "celebrate";
+    if(/おしい|あと少し|まだ|できない|入れない|海だよ|進めない/.test(t)) return "sad";
+    if(/先に|行って|向か|支部|歩いて|話して/.test(t)) return "point";
+    if(/なぜ|どうして|考え|調べ|気になる|\?|？/.test(t)) return "thinking";
     return "normal";
   }
 
@@ -191,23 +290,52 @@
     if(portrait) setPiramitonMood(portrait,guideMoodFromText(msg?.textContent));
   }
 
-  function introMood(){
-    if(typeof phase71IntroIndex==="undefined") return "normal";
-    if(phase71IntroIndex===1) return "surprised";
-    if(phase71IntroIndex>=2) return "happy";
-    return "normal";
-  }
-
   if(typeof phase71RenderIntro==="function"){
     const baseIntro=phase71RenderIntro;
     phase71RenderIntro=function(){
       baseIntro();
-      requestAnimationFrame(()=>setPiramitonMood(document.querySelector(".phase71BigPiramiton"),introMood()));
+      requestAnimationFrame(()=>{
+        const moods=["thinking","surprised","wave"];
+        setPiramitonMood(document.querySelector(".phase71BigPiramiton"),moods[phase71IntroIndex]||"normal");
+      });
     };
   }
 
-  // Re-apply after every map render/mount so later phase code cannot bring back
-  // the old CSS-only face.
+  if(typeof phase71RenderOrientationLesson==="function"){
+    const baseOrientation=phase71RenderOrientationLesson;
+    phase71RenderOrientationLesson=function(){
+      baseOrientation();
+      requestAnimationFrame(()=>setPiramitonMood(document.querySelector("#phase71Orientation .phase71MiniPiramiton"),"point"));
+    };
+  }
+
+  if(typeof phase72OpenBranch==="function"){
+    const baseOpenBranch=phase72OpenBranch;
+    phase72OpenBranch=function(){
+      baseOpenBranch();
+      requestAnimationFrame(()=>setPiramitonMood(document.querySelector("#phase72Branch .phase71MiniPiramiton"),"wave"));
+    };
+  }
+
+  if(typeof phase72RenderBranchStep==="function"){
+    const baseRenderBranchStep=phase72RenderBranchStep;
+    phase72RenderBranchStep=function(){
+      baseRenderBranchStep();
+      requestAnimationFrame(()=>{
+        const mood=phase72BranchStep===0?"thinking":phase72BranchStep===1?"point":"happy";
+        setPiramitonMood(document.querySelector("#phase72Branch .phase71MiniPiramiton"),mood);
+      });
+    };
+  }
+
+  if(typeof phase72CompleteBranch==="function"){
+    const baseCompleteBranch=phase72CompleteBranch;
+    phase72CompleteBranch=function(){
+      baseCompleteBranch();
+      requestAnimationFrame(refreshGuidePiramiton);
+    };
+  }
+
   if(typeof phase56MountPiramiton==="function"){
     const baseMount=phase56MountPiramiton;
     phase56MountPiramiton=function(){
@@ -221,59 +349,11 @@
     new MutationObserver(refreshGuidePiramiton).observe(guideMessage,{childList:true,subtree:true,characterData:true});
   }
 
-  // ---------------------------------------------------------------------------
-  // 4. Simple HQ orientation; no detailed criterion lesson before the map
-  // ---------------------------------------------------------------------------
-  phase71RenderOrientationLesson=function(){
-    const head=document.querySelector("#phase71Orientation .phase71OrientationHead h2");
-    if(head) head.textContent="本部オリエンテーション";
-    const main=document.getElementById("phase71OrientationMain");
-    if(!main) return;
-    main.innerHTML=`
-      <div class="phase71Speech">
-        <strong>ピラミトン：</strong> 世界遺産には、「なぜ世界的に大切なのか」を判断するための<strong>登録基準が10個</strong>あるよ。<br><br>
-        今は覚えなくて大丈夫。旅をしながら、世界遺産ごとに少しずつ知っていこう！
-      </div>
-      <div class="phase71StoryActions"><button id="phase72LeaveHQ" class="bigbtn">北海道へ行ってみよう</button></div>
-    `;
-    setPiramitonMood(document.querySelector("#phase71Orientation .phase71MiniPiramiton"),"happy");
-    document.getElementById("phase72LeaveHQ").onclick=phase71BeginJourney;
-  };
-
-  // ---------------------------------------------------------------------------
-  // 5. Stable direct transition to Hokkaido
-  // ---------------------------------------------------------------------------
-  function arriveHokkaido(){
-    clearTimeout(typeof phase57ZoomTimer1!=="undefined"?phase57ZoomTimer1:null);
-    clearTimeout(typeof phase57ZoomTimer2!=="undefined"?phase57ZoomTimer2:null);
-    if(typeof phase62StopJoystick==="function") phase62StopJoystick();
-    if(typeof phase41SetWindowOpen==="function") phase41SetWindowOpen(false);
-    if(typeof phase57OverviewActive!=="undefined") phase57OverviewActive=false;
-    transitionLock=false;
-    mode="japan";
-    // Keep the existing north-Hokkaido start point, but without a mandatory branch.
-    if(typeof phase72NorthStart!=="undefined"){
-      px=phase72NorthStart.x;
-      py=phase72NorthStart.y;
-    }
-    document.getElementById("game")?.classList.remove("hidden");
-    document.getElementById("map")?.classList.remove("phase57Zooming");
-    render();
-    requestAnimationFrame(()=>{
-      transitionLock=false;
-      if(typeof phase41SetWindowOpen==="function") phase41SetWindowOpen(false);
-      setGuideMessage("北海道に到着！ 気になる世界遺産を探してみよう！");
-      refreshGuidePiramiton();
-    });
-  }
-
-  phase57StartZoomToHokkaido=function(){ arriveHokkaido(); };
-
-  // Apply immediately to already-created UI.
   installPiramitonStyle();
   requestAnimationFrame(()=>{
-    setPiramitonMood(document.querySelector(".phase71BigPiramiton"),introMood());
-    setPiramitonMood(document.querySelector("#phase71Orientation .phase71MiniPiramiton"),"happy");
+    const moods=["thinking","surprised","wave"];
+    setPiramitonMood(document.querySelector(".phase71BigPiramiton"),moods[phase71IntroIndex]||"normal");
+    setPiramitonMood(document.querySelector("#phase71Orientation .phase71MiniPiramiton"),"point");
     refreshGuidePiramiton();
   });
 })();
