@@ -1,0 +1,55 @@
+/* v17 Phase 7.2 */
+
+.phase72TenCriteriaHint{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:520px;margin:18px auto}
+.phase72TenCriteriaHint span{display:flex;align-items:center;justify-content:center;min-height:54px;border-radius:9px;background:#30394e;border:1px solid #7887a8;color:#ffe68a;font-size:22px;font-weight:1000}
+
+/* Two-tile research branch placed across the only path out of northern Hokkaido. */
+.phase72BranchTile{background:#c9ad6a!important;border-top:2px solid #f2dea0;border-bottom:2px solid #84672e;z-index:4}
+.phase72BranchTile::before{content:"🏛";font-size:19px;filter:saturate(.55)}
+.phase72BranchTile.branchLeft{border-left:2px solid #f2dea0;border-radius:6px 0 0 6px}
+.phase72BranchTile.branchRight{border-right:2px solid #84672e;border-radius:0 6px 6px 0}
+.phase72BranchTile.cleared{background:#80b977!important}
+.phase72BranchTile.cleared::after{content:"✓";position:absolute;right:1px;top:-5px;color:#fff;font-size:16px;font-weight:1000;text-shadow:1px 1px #28552d}
+.phase72BranchLabel{position:absolute;left:0;bottom:calc(100% + 4px);z-index:9;white-space:nowrap;background:#111a31;color:#ffe68a;border:1px solid #fff;border-radius:4px;padding:2px 5px;font-size:10px;font-weight:900;pointer-events:none}
+.phase72BranchProgress b{color:#ffe68a!important}
+
+.phase72Branch{max-width:920px;background:#202738;border-color:#d9c38d;color:#fff}
+.phase72BranchHead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.phase72BranchHead h2{margin:2px 0;font-size:24px}
+.phase72Branch h3{margin:8px 0 14px;font-size:23px}
+.phase72Step{font-size:12px;letter-spacing:.06em;color:#ffe68a;font-weight:900}
+.phase72RomanKeys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:620px;margin:14px auto}
+.phase72RomanKeys>div{display:flex;align-items:center;justify-content:center;gap:12px;background:#111a31;border:2px solid #6e7d9e;border-radius:10px;padding:14px}
+.phase72RomanKeys b{font-family:Georgia,serif;font-size:34px;color:#ffe68a}.phase72RomanKeys span{font-size:18px;font-weight:900}
+.phase72RuleGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.phase72RuleGrid>div{display:flex;flex-direction:column;gap:7px;background:#30394e;border:1px solid #6f7d9d;border-radius:8px;padding:13px;font-size:15px}
+.phase72RuleGrid strong{color:#ffe68a;font-size:16px}.phase72RuleGrid b{font-size:20px}
+.phase72Tip{background:#253649;border:1px solid #52718d;border-radius:7px;padding:10px 12px;line-height:1.6;font-size:13px;color:#dcecff;margin-top:12px}
+.phase72Actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:16px}
+
+.phase72IconNote{font-size:11px;color:#bec9df;margin:-8px 0 10px}
+.phase72CriteriaGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.phase72Criterion{display:grid;grid-template-columns:30px 34px 1fr 48px;gap:6px;align-items:center;background:#30394e;border:1px solid #657492;border-radius:7px;padding:7px}
+.phase72CriterionIcon{display:flex;align-items:center;justify-content:center;font-size:21px}
+.phase72CriterionNum{display:flex;align-items:center;justify-content:center;width:31px;height:31px;background:#ffe68a;color:#272217;border-radius:50%;font-weight:1000}
+.phase72CriterionText b{display:block;font-size:14px}.phase72CriterionText small{display:block;color:#c6d0e3;font-size:10px;line-height:1.35;margin-top:2px}
+.phase72CriterionRoman{font-family:Georgia,serif;text-align:center;color:#ffe68a;font-weight:900;font-size:14px}
+
+.phase72StatsLead{font-size:12px;color:#cbd3e6;margin:-7px 0 10px}
+.phase72Bars{display:grid;grid-template-columns:1fr 1fr;gap:5px 14px}
+.phase72BarRow{display:grid;grid-template-columns:42px 1fr 36px;column-gap:6px;align-items:center;background:#171f31;border-radius:5px;padding:5px 7px}
+.phase72BarRow>span{font-size:12px;font-weight:900}.phase72BarRow>div{height:9px;background:#3c465c;border-radius:5px;overflow:hidden}.phase72BarRow i{display:block;height:100%;background:#d9bd54;border-radius:5px}.phase72BarRow>b{text-align:right;font-size:11px}.phase72BarRow>small{grid-column:2/4;font-size:9px;color:#bfc8da;margin-top:2px}
+
+.phase72Question{line-height:1.5}
+.phase72Choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.phase72Choice{font-size:16px!important;text-align:left;min-height:52px}
+.phase72Choice.correct{background:#dff0d8!important}.phase72Choice.wrong{background:#f2d6d4!important}
+.phase72QuizFeedback{font-size:15px;line-height:1.7;margin-top:12px;min-height:76px}.phase72QuizFeedback .bigbtn{margin-top:9px}
+.phase72BranchClear{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:6px auto;background:#5f9b5b;border:3px solid #dff0d8;color:#fff;font-size:36px;font-weight:1000}
+
+@media(max-width:760px){
+  .phase72TenCriteriaHint{grid-template-columns:repeat(5,1fr);gap:5px}.phase72TenCriteriaHint span{min-height:43px;font-size:18px}
+  .phase72RomanKeys{gap:6px}.phase72RomanKeys>div{padding:9px}.phase72RomanKeys b{font-size:26px}.phase72RomanKeys span{font-size:15px}
+  .phase72RuleGrid,.phase72CriteriaGrid,.phase72Bars,.phase72Choices{grid-template-columns:1fr}
+  .phase72Criterion{grid-template-columns:28px 32px 1fr 42px}.phase72CriterionText small{font-size:9px}
+}
