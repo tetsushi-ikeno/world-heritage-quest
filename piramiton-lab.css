@@ -78,12 +78,25 @@ button{touch-action:manipulation}
 
 /* SVG motion */
 .piramitonSvg.animated.pose-idle{animation:labBob 1.8s ease-in-out infinite;transform-origin:50% 78%}
-.piramitonSvg.animated.pose-wave .arm-right{animation:labWave .72s ease-in-out infinite;transform-origin:84px 53px;transform-box:view-box}
-.piramitonSvg.animated.pose-celebrate{animation:labJump .72s ease-out infinite;transform-origin:50% 78%}
-.piramitonSvg.animated.pose-point .arm-right{animation:labPoint 1.1s ease-in-out infinite;transform-origin:84px 54px;transform-box:view-box}
+.piramitonSvg.animated.pose-wave .arm-right{animation:labWave .72s ease-in-out infinite;transform-origin:70px 50px;transform-box:view-box}
+.piramitonSvg.animated.pose-celebrate{animation:labCelebrateBob .7s ease-in-out infinite;transform-origin:50% 78%}
+.piramitonSvg .piramiton-turn{transform-origin:50px 45px;transform-box:view-box}
+.piramitonSvg.animated.pose-celebrate .piramiton-turn{animation:labPyramidSpin 1.4s ease-in-out infinite}
+.piramitonSvg.animated.pose-point .arm-right{animation:labPoint 1.1s ease-in-out infinite;transform-origin:70px 59px;transform-box:view-box}
 @keyframes labBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-@keyframes labWave{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(12deg)}}
-@keyframes labJump{0%,100%{transform:translateY(0)}42%{transform:translateY(-6px)}}
+@keyframes labWave{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
+@keyframes labCelebrateBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes labPyramidSpin{
+  0%{transform:scaleX(1)}
+  24%{transform:scaleX(.18)}
+  25%{transform:scaleX(0)}
+  26%{transform:scaleX(-.18)}
+  50%{transform:scaleX(-1)}
+  74%{transform:scaleX(-.18)}
+  75%{transform:scaleX(0)}
+  76%{transform:scaleX(.18)}
+  100%{transform:scaleX(1)}
+}
 @keyframes labPoint{0%,100%{transform:translateX(0)}50%{transform:translateX(2px)}}
 
 @media(max-width:900px){
