@@ -15,7 +15,7 @@ function createInitialState(){
   siteId:null,
   position:{x:C.hokkaido.start.x,y:C.hokkaido.start.y},
   introIndex:0,
-  progress:{criteriaBranchCleared:false,discovered:{shiretoko:false,jomon:false},siteCards:initialCards(),siteCleared:{shiretoko:false,jomon:false}},
+  progress:{criteriaBranchCleared:false,discovered:{shiretoko:false,jomon:false},siteCards:initialCards(),siteCleared:{shiretoko:false,jomon:false},searchCounters:{shiretoko:{},jomon:{}}},
   branch:{step:0,quizIndex:0,correct:0,answered:false,feedback:''},
   quiz:{questions:[],index:0,correct:0,answered:false,feedback:''},
   ui:{overlay:null,action:null,guide:'',status:'',legend:''}
@@ -81,8 +81,8 @@ function siteMove(dx,dy){
  if(cell===s.centralCode){
   openAction(s.field.title,s.field.text,[...s.field.actions.map((a,i)=>({label:a.label,event:{type:'SITE_FIELD_ACTION',index:i}})),{label:'またあとで',event:{type:'CLOSE_OVERLAY'}}],s.shortName.toUpperCase());return;
  }
- if(cell==='R'){openAction('ちょうさいんがいる！','この世界遺産のことを調べているみたいだ。',[{label:'はなしてみる',event:{type:'SITE_NPC'}},{label:'またあとで',event:{type:'CLOSE_OVERLAY'}}],s.shortName.toUpperCase());return;}
- if(cell==='B'){openAction('本をみつけた！','世界遺産登録について書かれているみたいだ。',[{label:'読んでみる',event:{type:'SITE_BOOK'}},{label:'またあとで',event:{type:'CLOSE_OVERLAY'}}],s.shortName.toUpperCase());return;}
+ if(cell==='R'){openAction(s.npc.promptTitle,s.npc.promptText,[{label:s.npc.label,event:{type:'SITE_NPC'}},{label:'またあとで',event:{type:'CLOSE_OVERLAY'}}],s.shortName.toUpperCase());return;}
+ if(cell==='B'){openAction(s.book.promptTitle,s.book.promptText,[{label:s.book.label,event:{type:'SITE_BOOK'}},{label:'またあとで',event:{type:'CLOSE_OVERLAY'}}],s.shortName.toUpperCase());return;}
  if(cell==='K'){
   const remaining=Math.max(0,s.gateCards-acquiredCount(s.id));
   if(remaining>0)openAction('鍵のかかった門がある！',`門を開けるには、${s.shortName}のカードがあと${remaining}枚必要みたいだ。`,[{label:'またあとで',event:{type:'CLOSE_OVERLAY'}}],'LOCKED');
@@ -116,9 +116,28 @@ function dispatch(event){
   case 'BRANCH_QUIZ_NEXT':if(!state.branch.answered)break;if(state.branch.quizIndex<C.branchQuiz.length-1){state.branch.quizIndex++;state.branch.answered=false;state.branch.feedback='';}else{state.progress.criteriaBranchCleared=true;state.ui.overlay=null;state.branch.step=0;setAreaGuide();}break;
   case 'DISCOVERY_CONTINUE':if(state.siteId)enterSite(state.siteId);break;
   case 'CLOSE_OVERLAY':state.ui.overlay=null;state.ui.action=null;if(state.screen==='area')setAreaGuide();if(state.screen==='site')setSiteGuide();break;
-  case 'SITE_FIELD_ACTION':{const s=site(),a=s?.field.actions[event.index];if(a){acquire(s.id,a.cards);openAction(a.title,a.text,[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'FOUND');setSiteGuide();}}break;
-  case 'SITE_NPC':{const s=site();if(s){acquire(s.id,s.npc.cards);openAction(s.npc.title,s.npc.text,[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'FOUND');setSiteGuide();}}break;
-  case 'SITE_BOOK':{const s=site();if(s){acquire(s.id,s.book.cards);openAction(s.book.title,s.book.text,[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'FOUND');setSiteGuide();}}break;
+  case 'SITE_FIELD_ACTION':{
+   const s=site(),a=s?.field.actions[event.index];
+   if(!s||!a)break;
+   if(a.kind==='search'){
+    const remaining=a.cards.filter(id=>!state.progress.siteCards[s.id][id]);
+    if(!remaining.length){openAction('生き物をさがした！','ほかにもたくさんの生き物がくらしているようだ。\n\nこの場所で図鑑に記録できる生き物は、全部見つけた！',[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'COMPLETE');break;}
+    const counters=state.progress.searchCounters[s.id];
+    const count=(counters[a.id]||0)+1;counters[a.id]=count;
+    const first=remaining.length===a.cards.length;
+    let found=false;
+    if(first){if(count>=3)found=true;else if(count===2)found=Math.random()<0.45;}
+    else{if(count>=2)found=true;else found=Math.random()<0.45;}
+    if(!found){openAction('生き物をさがした！','…………。\n\nなにも見つからなかった。\nまたさがしてみよう。',[{label:'もう一度さがす',event:{type:'SITE_FIELD_ACTION',index:event.index}},{label:'いったんもどる',event:{type:'CLOSE_OVERLAY'}}],'SEARCH');break;}
+    const id=remaining[Math.floor(Math.random()*remaining.length)],card=s.cards.find(c=>c.id===id);counters[a.id]=0;acquire(s.id,[id]);
+    const more=a.cards.some(cardId=>!state.progress.siteCards[s.id][cardId]);
+    const text=more?`${card.value}をみつけた！\n\n図鑑に記録した！\nまだ何かいそうだ。`:`${card.value}をみつけた！\n\n図鑑に記録した！\nこの場所で記録できる生き物を全部見つけた！`;
+    openAction('生き物をみつけた！',text,[{label:more?'もう少しさがす':'もどる',event:more?{type:'SITE_FIELD_ACTION',index:event.index}:{type:'CLOSE_OVERLAY'}}],'FOUND');setSiteGuide();break;
+   }
+   const wasNew=a.cards.some(id=>!state.progress.siteCards[s.id][id]);acquire(s.id,a.cards);openAction(a.title,wasNew?a.newText:a.knownText,[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'FOUND');setSiteGuide();
+  }break;
+  case 'SITE_NPC':{const s=site();if(s){const wasNew=s.npc.cards.some(id=>!state.progress.siteCards[s.id][id]);acquire(s.id,s.npc.cards);openAction(s.npc.title,wasNew?s.npc.newText:s.npc.knownText,[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'LEARNED');setSiteGuide();}}break;
+  case 'SITE_BOOK':{const s=site();if(s){const wasNew=s.book.cards.some(id=>!state.progress.siteCards[s.id][id]);acquire(s.id,s.book.cards);openAction(s.book.title,wasNew?s.book.newText:s.book.knownText,[{label:'もどる',event:{type:'CLOSE_OVERLAY'}}],'LEARNED');setSiteGuide();}}break;
   case 'OPEN_CODEX':if(state.screen==='site')state.ui.overlay='codex';break;
   case 'START_SITE_QUIZ':startSiteQuiz();break;
   case 'QUIZ_ANSWER':if(state.ui.overlay!=='quiz'||state.quiz.answered)break;{const q=state.quiz.questions[state.quiz.index];state.quiz.answered=true;if(event.index===q.answer)state.quiz.correct++;state.quiz.feedback=event.index===q.answer?'正解！':`おしい！ 正解は「${q.choices[q.answer]}」`;}break;
