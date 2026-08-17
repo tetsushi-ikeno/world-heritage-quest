@@ -14,6 +14,16 @@ const spriteDefs={
   welcome:{sheet:'action',x:55,y:44,w:53,h:38}
 };
 
+const tuningDefaults={
+  armThickness:6.4,
+  armLength:6,
+  armY:64,
+  armSpread:2,
+  mouthY:-1,
+  faceX:-5,
+  sideRatio:.18
+};
+
 const state={
   mode:'side',
   expression:'normal',
@@ -23,7 +33,8 @@ const state={
   outlineWidth:2.4,
   referenceOpacity:.5,
   animated:true,
-  grid:false
+  grid:false,
+  ...tuningDefaults
 };
 
 const spriteCache={};
@@ -99,14 +110,25 @@ function setReferenceImage(img){
   img.style.height=`${Math.round(state.size*.9)}px`;
 }
 
-function mountSvg(target,size=state.size){
-  target.replaceChildren(createPiramitonSVG({
+function svgOptions(size){
+  return {
     expression:state.expression,
     pose:state.pose,
     size,
     outlineWidth:state.outlineWidth,
-    animated:state.animated
-  }));
+    animated:state.animated,
+    armThickness:state.armThickness,
+    armLength:state.armLength,
+    armY:state.armY,
+    armSpread:state.armSpread,
+    mouthY:state.mouthY,
+    faceX:state.faceX,
+    sideRatio:state.sideRatio
+  };
+}
+
+function mountSvg(target,size=state.size){
+  target.replaceChildren(createPiramitonSVG(svgOptions(size)));
 }
 
 function applyBackground(stage){
@@ -147,16 +169,28 @@ function renderUsage(){
   mountSvg($('eventSvg96'),96);
 }
 
+function setRange(id,valueId,value,formatter=v=>String(v)){
+  $(id).value=value;
+  $(valueId).textContent=formatter(value);
+}
+
 function renderControls(){
   syncActiveButtons('modeControls','mode',state.mode);
   syncActiveButtons('expressionControls','expression',state.expression);
   syncActiveButtons('poseControls','pose',state.pose);
   syncActiveButtons('sizeControls','size',state.size);
   syncActiveButtons('backgroundControls','background',state.background);
-  $('outlineRange').value=state.outlineWidth;
-  $('outlineValue').textContent=state.outlineWidth.toFixed(1);
-  $('opacityRange').value=Math.round(state.referenceOpacity*100);
-  $('opacityValue').textContent=String(Math.round(state.referenceOpacity*100));
+
+  setRange('outlineRange','outlineValue',state.outlineWidth,v=>Number(v).toFixed(1));
+  setRange('opacityRange','opacityValue',Math.round(state.referenceOpacity*100),v=>String(Math.round(v)));
+  setRange('armThicknessRange','armThicknessValue',state.armThickness,v=>Number(v).toFixed(1));
+  setRange('armLengthRange','armLengthValue',state.armLength,v=>Number(v).toFixed(1));
+  setRange('armYRange','armYValue',state.armY,v=>Number(v).toFixed(1));
+  setRange('armSpreadRange','armSpreadValue',state.armSpread,v=>Number(v).toFixed(1));
+  setRange('mouthYRange','mouthYValue',state.mouthY,v=>Number(v).toFixed(1));
+  setRange('faceXRange','faceXValue',state.faceX,v=>Number(v).toFixed(1));
+  setRange('sideRatioRange','sideRatioValue',Math.round(state.sideRatio*100),v=>`${Math.round(v)}%`);
+
   $('animationToggle').checked=state.animated;
   $('gridToggle').checked=state.grid;
 }
@@ -178,6 +212,55 @@ function bindButtonGroup(containerId,key,parser=value=>value){
   });
 }
 
+function bindRange(id,key,parser=Number){
+  $(id).addEventListener('input',event=>{
+    state[key]=parser(event.target.value);
+    render();
+  });
+}
+
+function ensureTuningControls(){
+  if(!$('piramitonTuningStyle')){
+    const style=document.createElement('style');
+    style.id='piramitonTuningStyle';
+    style.textContent=`
+      .tuningSliders{display:grid;gap:12px}
+      .tuningHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+      .tuningHead .controlLabel{margin:0 0 3px}
+      .tuningHead small{display:block;color:#667085;font-size:11px;line-height:1.45}
+      .tuningHead button{border:1px solid #cfd6e4;background:#fff;color:#30394b;border-radius:10px;min-height:38px;padding:7px 11px;font-weight:700;white-space:nowrap}
+      .tuningGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px}
+      .tuningGrid label{display:grid;gap:6px;font-size:12px;color:#4b5568}
+      .tuningGrid input[type="range"]{width:100%}
+      @media(max-width:700px){.tuningGrid{grid-template-columns:1fr}.tuningHead{align-items:flex-start;flex-direction:column}}
+    `;
+    document.head.appendChild(style);
+  }
+  if($('armThicknessRange'))return;
+  const panel=document.querySelector('.controlPanel');
+  const anchor=panel.querySelector('.controlGroup.sliders');
+  const group=document.createElement('div');
+  group.className='controlGroup wide tuningSliders';
+  group.innerHTML=`
+    <div class="tuningHead">
+      <div>
+        <span class="controlLabel">形状チューニング</span>
+        <small>原画寄りの初期値。動かすとすべてのSVGプレビューへ即時反映されます。</small>
+      </div>
+      <button type="button" id="resetTuning">原画基準に戻す</button>
+    </div>
+    <div class="tuningGrid">
+      <label><span>腕の太さ <b id="armThicknessValue">6.4</b></span><input id="armThicknessRange" type="range" min="3" max="10" value="6.4" step="0.2"></label>
+      <label><span>腕の長さ <b id="armLengthValue">6.0</b></span><input id="armLengthRange" type="range" min="3" max="12" value="6" step="0.5"></label>
+      <label><span>腕の高さ <b id="armYValue">64.0</b></span><input id="armYRange" type="range" min="58" max="72" value="64" step="0.5"></label>
+      <label><span>腕の開き <b id="armSpreadValue">2.0</b></span><input id="armSpreadRange" type="range" min="0" max="8" value="2" step="0.5"></label>
+      <label><span>口の高さ <b id="mouthYValue">-1.0</b></span><input id="mouthYRange" type="range" min="-6" max="6" value="-1" step="0.5"></label>
+      <label><span>顔の左右位置 <b id="faceXValue">-5.0</b></span><input id="faceXRange" type="range" min="-10" max="4" value="-5" step="0.5"></label>
+      <label><span>奥行き面 <b id="sideRatioValue">18%</b></span><input id="sideRatioRange" type="range" min="8" max="28" value="18" step="1"></label>
+    </div>`;
+  anchor.insertAdjacentElement('afterend',group);
+}
+
 function bindControls(){
   bindButtonGroup('modeControls','mode');
   bindButtonGroup('expressionControls','expression');
@@ -185,14 +268,25 @@ function bindControls(){
   bindButtonGroup('sizeControls','size',Number);
   bindButtonGroup('backgroundControls','background');
 
-  $('outlineRange').addEventListener('input',event=>{
-    state.outlineWidth=Number(event.target.value);
-    render();
-  });
+  bindRange('outlineRange','outlineWidth');
   $('opacityRange').addEventListener('input',event=>{
     state.referenceOpacity=Number(event.target.value)/100;
     render();
   });
+
+  bindRange('armThicknessRange','armThickness');
+  bindRange('armLengthRange','armLength');
+  bindRange('armYRange','armY');
+  bindRange('armSpreadRange','armSpread');
+  bindRange('mouthYRange','mouthY');
+  bindRange('faceXRange','faceX');
+  bindRange('sideRatioRange','sideRatio',value=>Number(value)/100);
+
+  $('resetTuning').addEventListener('click',()=>{
+    Object.assign(state,tuningDefaults);
+    render();
+  });
+
   $('animationToggle').addEventListener('change',event=>{
     state.animated=event.target.checked;
     render();
@@ -204,6 +298,7 @@ function bindControls(){
 }
 
 async function start(){
+  ensureTuningControls();
   bindControls();
   render();
   await prepareSprites();
