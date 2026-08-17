@@ -23,4 +23,14 @@ legacyControllers.forEach(file=>assert(!html.includes(`<script src="${file}`),`P
 assert(!html.includes('<script src="piramiton-expr.js'),'Phase 8 should no longer load Piramiton expression sprite sheet');
 assert(!html.includes('<script src="piramiton-action.js'),'Phase 8 should no longer load Piramiton action sprite sheet');
 
+const input=fs.readFileSync(path.join(__dirname,'..','phase8-input.js'),'utf8');
+assert(input.includes('if(dx===0&&dy===0)'), 'Map tap must support interacting with the tile the player already occupies');
+assert(input.includes("E.dispatch({type:'MOVE',dx:0,dy:0})"), 'Current-tile tap must re-run the centralized MOVE interaction');
+
+const piramiton=fs.readFileSync(path.join(__dirname,'..','piramiton-svg.js'),'utf8');
+assert(piramiton.includes('options.armThickness??10'),'Phase 8 must use the tuned Piramiton arm thickness');
+assert(piramiton.includes('options.armLength??3'),'Phase 8 must use the tuned Piramiton arm length');
+assert(piramiton.includes('options.armY??66'),'Phase 8 must use the tuned Piramiton arm height');
+assert(piramiton.includes('options.sideRatio??.20'),'Phase 8 must use the tuned Piramiton depth ratio');
+
 console.log('PASS Phase 8 runtime contract');
