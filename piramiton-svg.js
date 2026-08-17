@@ -21,8 +21,9 @@ function add(parent,name,attrs={}){
 
 function drawEyePair(group,expression,ink){
   if(expression==='happy'||expression==='excited'){
-    add(group,'path',{d:'M34 46 Q39 41 44 46',fill:'none',stroke:ink,'stroke-width':3,'stroke-linecap':'round'});
-    add(group,'path',{d:'M56 46 Q61 41 66 46',fill:'none',stroke:ink,'stroke-width':3,'stroke-linecap':'round'});
+    const peak=expression==='excited'?43.2:43.7;
+    add(group,'path',{d:`M34 46 Q39 ${peak} 44 46`,fill:'none',stroke:ink,'stroke-width':2.8,'stroke-linecap':'round'});
+    add(group,'path',{d:`M56 46 Q61 ${peak} 66 46`,fill:'none',stroke:ink,'stroke-width':2.8,'stroke-linecap':'round'});
     return;
   }
   if(expression==='sad'){
@@ -51,18 +52,14 @@ function drawMouth(group,expression,ink){
     add(group,'path',{d:'M44 61 Q50 56 56 61',fill:'none',stroke:ink,'stroke-width':2.8,'stroke-linecap':'round'});
     return;
   }
-  if(expression==='happy'||expression==='excited'){
-    add(group,'path',{d:'M42 56 Q50 65 58 56 Q57 66 50 67 Q43 66 42 56 Z',fill:ink});
-    add(group,'path',{d:'M46 63 Q50 66 54 63',fill:'none',stroke:'#e58b7a','stroke-width':2,'stroke-linecap':'round'});
-    return;
-  }
+  // Happy/excited intentionally keep the same minimal mouth as normal.
+  // The emotion difference is carried mainly by the slightly arched eyes.
   add(group,'path',{d:'M44 57 Q50 62 56 57',fill:'none',stroke:ink,'stroke-width':2.7,'stroke-linecap':'round'});
 }
 
 function drawCheeks(group,expression){
-  if(!['happy','excited'].includes(expression))return;
-  add(group,'ellipse',{cx:31.5,cy:55,rx:4.2,ry:2.2,fill:'#ef9c83',opacity:.55});
-  add(group,'ellipse',{cx:68.5,cy:55,rx:4.2,ry:2.2,fill:'#ef9c83',opacity:.55});
+  // Keep happy/excited close to the original minimal expression: eyes do the work.
+  return;
 }
 
 function arm(group,side,pose,ink,bodyFill,tuning){
@@ -121,13 +118,13 @@ function createPiramitonSVG(options={}){
   const sideFill=options.sideFill||'#c98f36';
 
   const tuning={
-    armThickness:Math.max(3,Math.min(10,Number(options.armThickness??6.4))),
-    armLength:Math.max(3,Math.min(12,Number(options.armLength??6))),
-    armY:Math.max(58,Math.min(72,Number(options.armY??64))),
-    armSpread:Math.max(0,Math.min(8,Number(options.armSpread??2))),
-    mouthY:Math.max(-6,Math.min(6,Number(options.mouthY??-1))),
-    faceX:Math.max(-10,Math.min(4,Number(options.faceX??-5))),
-    sideRatio:Math.max(.08,Math.min(.28,Number(options.sideRatio??.18)))
+    armThickness:Math.max(3,Math.min(10,Number(options.armThickness??10))),
+    armLength:Math.max(3,Math.min(12,Number(options.armLength??3))),
+    armY:Math.max(58,Math.min(72,Number(options.armY??66))),
+    armSpread:Math.max(0,Math.min(8,Number(options.armSpread??4.5))),
+    mouthY:Math.max(-6,Math.min(6,Number(options.mouthY??-4))),
+    faceX:Math.max(-10,Math.min(4,Number(options.faceX??-3))),
+    sideRatio:Math.max(.08,Math.min(.28,Number(options.sideRatio??.20)))
   };
 
   const svg=node('svg',{
