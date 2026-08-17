@@ -67,7 +67,11 @@ function clearCriteriaBranch(){
     E.dispatch({type:'BRANCH_ANSWER',index:question.answer});
     E.dispatch({type:'BRANCH_QUIZ_NEXT'});
   });
-  assert(E.getState().progress.criteriaBranchCleared,'Criteria branch should clear');
+  assert(E.getState().branch.step===4,'Branch result should be shown before clear');
+  assert(!E.getState().progress.criteriaBranchCleared,'Branch must not clear before result confirmation');
+  E.dispatch({type:'BRANCH_COMPLETE'});
+  assert(E.getState().progress.criteriaBranchCleared,'Criteria branch should clear after result confirmation');
+  assert(E.getState().ui.overlay===null,'Branch should close after clear');
 }
 
 // Before branch clear, arriving at Shiretoko must be blocked by guidance.
