@@ -1,6 +1,5 @@
 // Reusable SVG prototype for Piramiton.
-// Goal: preserve the current character proportions while replacing pixel stair-steps
-// with straight edges and keeping face/arms as independent SVG parts.
+// The Lab exposes geometry options so the character can be tuned against the original art.
 (function(global){
 'use strict';
 
@@ -66,32 +65,45 @@ function drawCheeks(group,expression){
   add(group,'ellipse',{cx:68.5,cy:55,rx:4.2,ry:2.2,fill:'#ef9c83',opacity:.55});
 }
 
-// Arms are short, thick, filled shapes drawn on the very front layer.
-// Idle keeps both hands inside the front face as a compact Japanese "ハ" shape.
-function arm(group,side,pose,ink,bodyFill,outline){
+function arm(group,side,pose,ink,bodyFill,tuning){
   const isLeft=side==='left';
   const g=add(group,'g',{class:`arm-${side}`});
+  const thickness=tuning.armThickness;
+  const inner=Math.max(1.5,thickness*.5);
+  const y=tuning.armY;
+  const length=tuning.armLength;
+  const spread=tuning.armSpread;
   let path;
 
   if(pose==='celebrate'){
+    const startY=y-3;
     path=isLeft
-      ? 'M39 57 C36 54 33 50 31 46 C30 43 31 41 33 42 C36 44 38 48 41 52 C43 54 43 56 42 58 Z'
-      : 'M57 57 C60 54 63 50 65 46 C66 43 65 41 63 42 C60 44 58 48 55 52 C53 54 53 56 54 58 Z';
+      ? `M${39-spread*.15} ${startY} Q${35-spread*.55} ${startY-length*.55} ${33-spread} ${startY-length}`
+      : `M${53+spread*.15} ${startY} Q${57+spread*.55} ${startY-length*.55} ${59+spread} ${startY-length}`;
   }else if(pose==='wave'&&!isLeft){
-    path='M57 58 C61 55 64 51 65 47 C66 44 66 42 64 41 C62 41 61 44 60 47 C59 50 56 53 54 55 Z';
+    const startY=y-2;
+    path=`M${53+spread*.15} ${startY} Q${59+spread*.45} ${startY-length*.55} ${58+spread} ${startY-length}`;
   }else if(pose==='point'&&!isLeft){
-    path='M57 58 C62 58 68 58 73 59 C76 59 77 61 75 63 C72 64 66 63 61 63 C59 63 58 61 57 58 Z';
+    path=`M${53+spread*.1} ${y} Q${59+spread*.65} ${y-1} ${63+spread+length*.55} ${y+1}`;
   }else{
     path=isLeft
-      ? 'M40 57 C38 59 37 62 36 65 C35 67 37 69 39 67 C41 65 42 62 43 60 C44 58 42 57 40 57 Z'
-      : 'M56 57 C58 59 59 62 60 65 C61 67 59 69 57 67 C55 65 54 62 53 60 C52 58 54 57 56 57 Z';
+      ? `M${39-spread*.15} ${y} Q${36-spread*.55} ${y+length*.45} ${35-spread} ${y+length}`
+      : `M${53+spread*.15} ${y} Q${56+spread*.55} ${y+length*.45} ${57+spread} ${y+length}`;
   }
 
   add(g,'path',{
     d:path,
-    fill:bodyFill,
+    fill:'none',
     stroke:ink,
-    'stroke-width':Math.max(2.2,outline),
+    'stroke-width':thickness,
+    'stroke-linecap':'round',
+    'stroke-linejoin':'round'
+  });
+  add(g,'path',{
+    d:path,
+    fill:'none',
+    stroke:bodyFill,
+    'stroke-width':inner,
     'stroke-linecap':'round',
     'stroke-linejoin':'round'
   });
@@ -108,6 +120,16 @@ function createPiramitonSVG(options={}){
   const shade=options.shade||'#d39a39';
   const sideFill=options.sideFill||'#c98f36';
 
+  const tuning={
+    armThickness:Math.max(3,Math.min(10,Number(options.armThickness??6.4))),
+    armLength:Math.max(3,Math.min(12,Number(options.armLength??6))),
+    armY:Math.max(58,Math.min(72,Number(options.armY??64))),
+    armSpread:Math.max(0,Math.min(8,Number(options.armSpread??2))),
+    mouthY:Math.max(-6,Math.min(6,Number(options.mouthY??-1))),
+    faceX:Math.max(-10,Math.min(4,Number(options.faceX??-5))),
+    sideRatio:Math.max(.08,Math.min(.28,Number(options.sideRatio??.18)))
+  };
+
   const svg=node('svg',{
     viewBox:'0 0 100 90',
     width:size,
@@ -122,11 +144,9 @@ function createPiramitonSVG(options={}){
   const clipId=clip.getAttribute('id');
   add(clip,'path',{d:'M50 8 L91 76 L9 76 Z'});
 
-  const turn=add(svg,'g',{class:'piramiton-turn'});
-  const body=add(turn,'g',{class:'piramiton-body'});
+  const character=add(svg,'g',{class:'piramiton-character'});
+  const body=add(character,'g',{class:'piramiton-body'});
 
-  // Main front plane. The original character shows a broad front face,
-  // with only a narrow slice of the depth face visible at the right edge.
   add(body,'path',{
     d:'M50 8 L91 76 L9 76 Z',
     fill,
@@ -135,16 +155,19 @@ function createPiramitonSVG(options={}){
     'stroke-linejoin':'round'
   });
 
-  // Narrow right depth plane: about 18% of the visible base width.
+  const baseWidth=82;
+  const sideWidth=baseWidth*tuning.sideRatio;
+  const ridgeX=91-sideWidth;
+
   add(body,'path',{
-    class:'pyramid-side side-right',
-    d:'M50 8 L91 76 L76 76 Z',
+    class:'pyramid-depth-plane',
+    d:`M50 8 L91 76 L${ridgeX.toFixed(2)} 76 Z`,
     fill:sideFill,
     stroke:'none'
   });
   add(body,'path',{
-    class:'pyramid-ridge ridge-right',
-    d:'M50 8 L76 76',
+    class:'pyramid-depth-ridge',
+    d:`M50 8 L${ridgeX.toFixed(2)} 76`,
     fill:'none',
     stroke:ink,
     'stroke-width':Math.max(1,outline*.62),
@@ -152,42 +175,20 @@ function createPiramitonSVG(options={}){
     opacity:.72
   });
 
-  // Mirror plane used only during celebrate to suggest the pyramid turning
-  // without flattening or changing its overall width.
-  add(body,'path',{
-    class:'pyramid-side side-left',
-    d:'M50 8 L24 76 L9 76 Z',
-    fill:sideFill,
-    stroke:'none',
-    opacity:0
-  });
-  add(body,'path',{
-    class:'pyramid-ridge ridge-left',
-    d:'M50 8 L24 76',
-    fill:'none',
-    stroke:ink,
-    'stroke-width':Math.max(1,outline*.62),
-    'stroke-linecap':'round',
-    opacity:0
-  });
-
   const texture=add(body,'g',{'clip-path':`url(#${clipId})`,opacity:.5});
   add(texture,'path',{d:'M21 60 H79 M28 48 H72 M35 36 H65',stroke:shade,'stroke-width':2.2,'stroke-linecap':'square'});
   add(texture,'path',{d:'M32 60 V76 M50 60 V76 M68 60 V76 M41 48 V60 M59 48 V60 M50 36 V48',stroke:shade,'stroke-width':1.7,'stroke-linecap':'square',opacity:.65});
 
-  // Face sits fully on the broad front plane. Shift slightly left to match
-  // the original three-quarter-view character rather than the depth plane.
-  const face=add(turn,'g',{class:'piramiton-face',transform:'translate(-4 0)'});
+  const face=add(character,'g',{class:'piramiton-face',transform:`translate(${tuning.faceX} 0)`});
   drawCheeks(face,expression);
   const eyes=add(face,'g',{class:'piramiton-eyes'});
   drawEyePair(eyes,expression,ink);
-  const mouth=add(face,'g',{class:'piramiton-mouth'});
+  const mouth=add(face,'g',{class:'piramiton-mouth',transform:`translate(0 ${tuning.mouthY})`});
   drawMouth(mouth,expression,ink);
 
-  // Arms stay on the frontmost layer.
-  const arms=add(turn,'g',{class:'piramiton-arms'});
-  arm(arms,'left',pose,ink,fill,outline);
-  arm(arms,'right',pose,ink,fill,outline);
+  const arms=add(character,'g',{class:'piramiton-arms'});
+  arm(arms,'left',pose,ink,fill,tuning);
+  arm(arms,'right',pose,ink,fill,tuning);
 
   return svg;
 }
