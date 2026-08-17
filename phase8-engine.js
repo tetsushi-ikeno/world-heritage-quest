@@ -113,7 +113,10 @@ function dispatch(event){
   case 'BRANCH_NEXT':if(state.branch.step<2)state.branch.step++;else{state.branch.step=3;state.branch.quizIndex=0;state.branch.correct=0;state.branch.answered=false;state.branch.feedback='';}break;
   case 'BRANCH_PREV':if(state.branch.step>0&&state.branch.step<3)state.branch.step--;break;
   case 'BRANCH_ANSWER':if(state.branch.step!==3||state.branch.answered)break;{const q=C.branchQuiz[state.branch.quizIndex];state.branch.answered=true;if(event.index===q.answer)state.branch.correct++;state.branch.feedback=(event.index===q.answer?'正解！ ':'おしい！ ')+q.explain;}break;
-  case 'BRANCH_QUIZ_NEXT':if(!state.branch.answered)break;if(state.branch.quizIndex<C.branchQuiz.length-1){state.branch.quizIndex++;state.branch.answered=false;state.branch.feedback='';}else{state.progress.criteriaBranchCleared=true;state.ui.overlay=null;state.branch.step=0;setAreaGuide();}break;
+  case 'BRANCH_QUIZ_NEXT':if(!state.branch.answered)break;if(state.branch.quizIndex<C.branchQuiz.length-1){state.branch.quizIndex++;state.branch.answered=false;state.branch.feedback='';}else{state.branch.step=4;state.branch.answered=false;state.branch.feedback='';}break;
+  case 'BRANCH_COMPLETE':if(state.branch.step===4&&state.branch.correct>=2){state.progress.criteriaBranchCleared=true;state.ui.overlay=null;state.position={...C.hokkaido.branch};state.branch.step=0;setAreaGuide();}break;
+  case 'BRANCH_REVIEW':state.branch={step:0,quizIndex:0,correct:0,answered:false,feedback:''};break;
+  case 'BRANCH_RETRY':state.branch={step:3,quizIndex:0,correct:0,answered:false,feedback:''};break;
   case 'DISCOVERY_CONTINUE':if(state.siteId)enterSite(state.siteId);break;
   case 'CLOSE_OVERLAY':state.ui.overlay=null;state.ui.action=null;if(state.screen==='area')setAreaGuide();if(state.screen==='site')setSiteGuide();break;
   case 'SITE_FIELD_ACTION':{
