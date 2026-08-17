@@ -6,6 +6,10 @@ Phase 7.5で採用している画像版ピラミトンと、直線輪郭＋SVG�
 
 ゲーム本体の `index.html` や既存Phaseコントローラは変更しません。
 
+## 公開状態
+
+Lab v0.1。GitHub Pages の `/piramiton-lab.html` から確認します。
+
 ## 確認ページ
 
 `/piramiton-lab.html`
