@@ -1,0 +1,10 @@
+/* Phase 8 structural additions only. Existing visual assets/classes are reused. */
+.phase8BranchTile{position:relative;box-shadow:inset 0 0 0 2px rgba(122,89,37,.55)}
+.phase8TileLabel,.phase8Object{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--tile)*.55);pointer-events:none;z-index:3}
+.phase8Book,.phase8Gate,.phase8Exit{position:relative}
+.phase8Overlay,.phase8Story,.phase8Branch,.phase8Codex,.phase8Quiz{z-index:20}
+.phase8Overlay{display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:center}
+.phase8Overlay .discoveryMark{font-size:52px;text-align:center}
+.phase8Overlay .discoveryKicker,.phase8Overlay h2{text-align:center}
+.phase8Codex .phaseCardSlot small{display:block;margin-top:6px;font-size:12px;line-height:1.4}
+#phase8Joystick{touch-action:none;user-select:none;-webkit-user-select:none}
