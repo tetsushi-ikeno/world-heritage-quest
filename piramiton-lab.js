@@ -15,13 +15,13 @@ const spriteDefs={
 };
 
 const tuningDefaults={
-  armThickness:6.4,
-  armLength:6,
-  armY:64,
-  armSpread:2,
-  mouthY:-1,
-  faceX:-5,
-  sideRatio:.18
+  armThickness:10,
+  armLength:3,
+  armY:66,
+  armSpread:4.5,
+  mouthY:-4,
+  faceX:-3,
+  sideRatio:.20
 };
 
 const state={
@@ -245,18 +245,18 @@ function ensureTuningControls(){
     <div class="tuningHead">
       <div>
         <span class="controlLabel">形状チューニング</span>
-        <small>原画寄りの初期値。動かすとすべてのSVGプレビューへ即時反映されます。</small>
+        <small>採用値を初期値に設定。動かすとすべてのSVGプレビューへ即時反映されます。</small>
       </div>
-      <button type="button" id="resetTuning">原画基準に戻す</button>
+      <button type="button" id="resetTuning">採用値に戻す</button>
     </div>
     <div class="tuningGrid">
-      <label><span>腕の太さ <b id="armThicknessValue">6.4</b></span><input id="armThicknessRange" type="range" min="3" max="10" value="6.4" step="0.2"></label>
-      <label><span>腕の長さ <b id="armLengthValue">6.0</b></span><input id="armLengthRange" type="range" min="3" max="12" value="6" step="0.5"></label>
-      <label><span>腕の高さ <b id="armYValue">64.0</b></span><input id="armYRange" type="range" min="58" max="72" value="64" step="0.5"></label>
-      <label><span>腕の開き <b id="armSpreadValue">2.0</b></span><input id="armSpreadRange" type="range" min="0" max="8" value="2" step="0.5"></label>
-      <label><span>口の高さ <b id="mouthYValue">-1.0</b></span><input id="mouthYRange" type="range" min="-6" max="6" value="-1" step="0.5"></label>
-      <label><span>顔の左右位置 <b id="faceXValue">-5.0</b></span><input id="faceXRange" type="range" min="-10" max="4" value="-5" step="0.5"></label>
-      <label><span>奥行き面 <b id="sideRatioValue">18%</b></span><input id="sideRatioRange" type="range" min="8" max="28" value="18" step="1"></label>
+      <label><span>腕の太さ <b id="armThicknessValue">10.0</b></span><input id="armThicknessRange" type="range" min="3" max="10" value="10" step="0.2"></label>
+      <label><span>腕の長さ <b id="armLengthValue">3.0</b></span><input id="armLengthRange" type="range" min="3" max="12" value="3" step="0.5"></label>
+      <label><span>腕の高さ <b id="armYValue">66.0</b></span><input id="armYRange" type="range" min="58" max="72" value="66" step="0.5"></label>
+      <label><span>腕の開き <b id="armSpreadValue">4.5</b></span><input id="armSpreadRange" type="range" min="0" max="8" value="4.5" step="0.5"></label>
+      <label><span>口の高さ <b id="mouthYValue">-4.0</b></span><input id="mouthYRange" type="range" min="-6" max="6" value="-4" step="0.5"></label>
+      <label><span>顔の左右位置 <b id="faceXValue">-3.0</b></span><input id="faceXRange" type="range" min="-10" max="4" value="-3" step="0.5"></label>
+      <label><span>奥行き面 <b id="sideRatioValue">20%</b></span><input id="sideRatioRange" type="range" min="8" max="28" value="20" step="1"></label>
     </div>`;
   anchor.insertAdjacentElement('afterend',group);
 }
