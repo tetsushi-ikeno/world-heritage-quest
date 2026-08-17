@@ -20,7 +20,7 @@ function ensureUi(){
  return {story,branch,overlay,codex,quiz};
 }
 function allPanelsHidden(){['phase8Story','phase8Branch','phase8Overlay','phase8Codex','phase8Quiz','discovery','siteDialog','quiz','dialog'].forEach(hide);}
-function playerHtml(){return '<div class="mapAvatar"><div class="mapHair"></div><div class="mapFace"></div><div class="mapBody"></div><div class="mapItem">✦</div></div>';}
+function playerHtml(){const item=global.Phase8AvatarItem||'✦';return `<div class="mapAvatar"><div class="mapHair"></div><div class="mapFace"></div><div class="mapBody"></div><div class="mapItem">${item}</div></div>`;}
 function updateText(state){
  if($('guideMessage'))$('guideMessage').textContent=state.ui.guide||'';
  if($('status'))$('status').textContent=state.ui.status||'';
@@ -48,7 +48,7 @@ function renderArea(state){
 function renderSite(state){
  const s=C.sites[state.siteId],rows=s.rows,map=$('map');if(!map)return;map.innerHTML='';map.dataset.mode='phase8Site';map.style.gridTemplateColumns=`repeat(${rows[0].length},var(--tile))`;map.style.gridTemplateRows=`repeat(${rows.length},var(--tile))`;
  rows.forEach((row,y)=>[...row].forEach((cell,x)=>{
-  const d=document.createElement('div');let cls=cell==='F'?'forest':'grass';if(cell===s.centralCode)cls=s.centralClass;if(cell==='R')cls='grass npc researcher';if(cell==='B')cls='grass phase8Book';if(cell==='K')cls='grass phase8Gate';if(cell==='E')cls='grass phase8Exit';
+  const d=document.createElement('div');let cls='grass';if(cell==='F')cls='forest';if(cell===s.centralCode)cls=s.centralClass;if(cell==='R')cls='npc researcher siteNpc';if(cell==='B')cls='siteBook';if(cell==='K')cls=E.acquiredCount(s.id)>=s.gateCards?'siteGateOpen':'siteGateLocked';if(cell==='E')cls='siteExit';
   d.className=`tile ${cls}${x===state.position.x&&y===state.position.y?' player':''}`;d.dataset.x=x;d.dataset.y=y;
   if(x===state.position.x&&y===state.position.y)d.insertAdjacentHTML('beforeend',playerHtml());
   if(cell==='R')d.insertAdjacentHTML('beforeend','<span class="phase8Object">人</span>');
