@@ -8,3 +8,16 @@
 .phase8Overlay .discoveryKicker,.phase8Overlay h2{text-align:center}
 .phase8Codex .phaseCardSlot small{display:block;margin-top:6px;font-size:12px;line-height:1.4}
 #phase8Joystick{touch-action:none;user-select:none;-webkit-user-select:none}
+
+/* Tuned SVG Piramiton */
+.phase8SvgPiramiton{display:flex!important;align-items:center;justify-content:center;background:none!important;background-image:none!important;overflow:visible!important}
+.phase8SvgPiramiton::before,.phase8SvgPiramiton::after{content:none!important;display:none!important}
+.phase8SvgPiramiton svg{display:block;max-width:100%;height:auto;overflow:visible}
+.piramitonSvg.animated.pose-idle{animation:phase8PiramitonBob 1.8s ease-in-out infinite;transform-origin:50% 78%}
+.piramitonSvg.animated.pose-wave .arm-right{animation:phase8PiramitonWave .72s ease-in-out infinite;transform-origin:63px 62px;transform-box:view-box}
+.piramitonSvg.animated.pose-point .arm-right{animation:phase8PiramitonPoint 1.1s ease-in-out infinite;transform-origin:64px 66px;transform-box:view-box}
+.piramitonSvg.animated.pose-celebrate{animation:phase8PiramitonCelebrate .72s ease-in-out infinite;transform-origin:50% 78%}
+@keyframes phase8PiramitonBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes phase8PiramitonWave{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(9deg)}}
+@keyframes phase8PiramitonPoint{0%,100%{transform:translateX(0)}50%{transform:translateX(1.5px)}}
+@keyframes phase8PiramitonCelebrate{0%,100%{transform:translateY(0)}45%{transform:translateY(-5px)}}
