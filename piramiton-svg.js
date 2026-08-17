@@ -66,33 +66,36 @@ function drawCheeks(group,expression){
   add(group,'ellipse',{cx:68.5,cy:55,rx:4.2,ry:2.2,fill:'#ef9c83',opacity:.55});
 }
 
+// Arms are intentionally one minimal rounded curve each.
+// There is no separate hand circle or finger: the curve itself reads as both arm and hand.
 function arm(group,side,pose,ink,bodyFill,outline){
   const isLeft=side==='left';
   const cls=`arm-${side}`;
   const g=add(group,'g',{class:cls});
-  const startX=isLeft?12:88;
-  const startY=55;
-  let path,handX,handY;
+  let path;
 
   if(pose==='celebrate'){
-    if(isLeft){path='M12 55 Q5 48 7 37';handX=7;handY=33;}
-    else{path='M88 55 Q95 48 93 37';handX=93;handY=33;}
+    path=isLeft
+      ? 'M13 57 Q4 49 6 40 Q7 34 12 39'
+      : 'M87 57 Q96 49 94 40 Q93 34 88 39';
   }else if(pose==='wave'&&!isLeft){
-    path='M88 55 Q96 50 95 38';handX=95;handY=33;
+    path='M87 57 Q97 51 96 42 Q95 35 90 39';
   }else if(pose==='point'&&!isLeft){
-    path='M88 55 Q94 54 99 51';handX=99;handY=51;
+    path='M87 57 Q96 51 102 54 Q107 57 101 61';
   }else{
-    if(isLeft){path='M12 55 Q5 59 6 68';handX=6;handY=71;}
-    else{path='M88 55 Q95 59 94 68';handX=94;handY=71;}
+    path=isLeft
+      ? 'M13 57 Q4 59 6 67 Q8 73 13 67'
+      : 'M87 57 Q96 59 94 67 Q92 73 87 67';
   }
 
-  add(g,'path',{d:path,fill:'none',stroke:ink,'stroke-width':outline+2.4,'stroke-linecap':'round','stroke-linejoin':'round'});
-  add(g,'path',{d:path,fill:'none',stroke:bodyFill,'stroke-width':Math.max(2.2,outline),'stroke-linecap':'round','stroke-linejoin':'round'});
-  add(g,'circle',{cx:handX,cy:handY,r:4.1,fill:bodyFill,stroke:ink,'stroke-width':outline});
-
-  if(pose==='point'&&!isLeft){
-    add(g,'path',{d:'M99 51 L103 49',fill:'none',stroke:ink,'stroke-width':outline+1.2,'stroke-linecap':'round'});
-  }
+  add(g,'path',{
+    d:path,
+    fill:'none',
+    stroke:ink,
+    'stroke-width':Math.max(2.8,outline+1),
+    'stroke-linecap':'round',
+    'stroke-linejoin':'round'
+  });
 }
 
 function createPiramitonSVG(options={}){
