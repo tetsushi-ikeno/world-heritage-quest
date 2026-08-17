@@ -17,7 +17,12 @@ function installJoystick(){const host=document.querySelector('.sideControls');if
  const finish=event=>{if(pointerId!==null&&event?.pointerId!==undefined&&event.pointerId!==pointerId)return;stop();};stick.addEventListener('pointerup',finish);stick.addEventListener('pointercancel',finish);stick.addEventListener('lostpointercapture',finish);
 }
 function installKeyboard(){window.addEventListener('keydown',event=>{const key=event.key.toLowerCase(),dirs={arrowup:[0,-1],w:[0,-1],arrowdown:[0,1],s:[0,1],arrowleft:[-1,0],a:[-1,0],arrowright:[1,0],d:[1,0]},d=dirs[key];if(!d)return;const s=E.getState();if(s.screen!=='area'&&s.screen!=='site')return;event.preventDefault();E.dispatch({type:'MOVE',dx:d[0],dy:d[1]});});}
-function installMapTap(){document.getElementById('map')?.addEventListener('click',event=>{const tile=event.target.closest('.tile');if(!tile)return;const s=E.getState(),tx=Number(tile.dataset.x),ty=Number(tile.dataset.y),dx=tx-s.position.x,dy=ty-s.position.y;if(Math.abs(dx)+Math.abs(dy)!==1)return;E.dispatch({type:'MOVE',dx,dy});});}
+function installMapTap(){document.getElementById('map')?.addEventListener('click',event=>{const tile=event.target.closest('.tile');if(!tile)return;const s=E.getState(),tx=Number(tile.dataset.x),ty=Number(tile.dataset.y),dx=tx-s.position.x,dy=ty-s.position.y;
+  // Tapping the tile the player already stands on re-runs that tile's interaction.
+  // This is a recovery path for site markers: if the player has reached a "?",
+  // tapping it again must open discovery / enter the site instead of doing nothing.
+  if(dx===0&&dy===0){E.dispatch({type:'MOVE',dx:0,dy:0});return;}
+  if(Math.abs(dx)+Math.abs(dy)!==1)return;E.dispatch({type:'MOVE',dx,dy});});}
 function install(){installJoystick();installKeyboard();installMapTap();}
 global.Phase8Input={install,stop};
 })(window);
