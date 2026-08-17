@@ -19,8 +19,8 @@ assert(state.ui && Object.prototype.hasOwnProperty.call(state.ui,'overlay'),'ove
 const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 const legacyControllers=['app.js','phase1.js','phase41.js','phase56.js','phase57.js','phase62.js','phase7.js','phase71.js','phase72.js','phase73.js','phase75.js'];
 legacyControllers.forEach(file=>assert(!html.includes(`<script src="${file}`),`Phase 8 runtime must not load legacy controller ${file}`));
-['phase8-content.js','phase8-engine.js','phase8-piramiton.js','phase8-render.js','phase8-input.js','phase8-main.js'].forEach(file=>assert(html.includes(`<script src="${file}`),`Phase 8 runtime must load ${file}`));
-assert(html.includes('<script src="piramiton-expr.js'), 'Phase 8 must preserve Piramiton expression assets');
-assert(html.includes('<script src="piramiton-action.js'), 'Phase 8 must preserve Piramiton action assets');
+['piramiton-svg.js','phase8-content.js','phase8-engine.js','phase8-piramiton.js','phase8-render.js','phase8-input.js','phase8-main.js'].forEach(file=>assert(html.includes(`<script src="${file}`),`Phase 8 runtime must load ${file}`));
+assert(!html.includes('<script src="piramiton-expr.js'),'Phase 8 should no longer load Piramiton expression sprite sheet');
+assert(!html.includes('<script src="piramiton-action.js'),'Phase 8 should no longer load Piramiton action sprite sheet');
 
 console.log('PASS Phase 8 runtime contract');
