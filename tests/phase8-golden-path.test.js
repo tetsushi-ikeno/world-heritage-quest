@@ -86,20 +86,21 @@ clearCriteriaBranch();
 movePath(areaPath(E.getState().position,C.sites.shiretoko.map));
 assert(E.getState().ui.overlay==='discovery','Shiretoko discovery should open');
 assert(E.getState().progress.discovered.shiretoko,'Shiretoko should be marked discovered');
+assert(E.getState().position.x===C.sites.shiretoko.map.x&&E.getState().position.y===C.sites.shiretoko.map.y,'Player must actually arrive on the Shiretoko marker');
 E.dispatch({type:'DISCOVERY_CONTINUE'});
 assert(E.getState().screen==='site'&&E.getState().siteId==='shiretoko','Discovery should enter Shiretoko village');
 assert(E.acquiredCount('shiretoko')===2,'Entering the village should grant type/place cards');
 
-// Exit -> Hokkaido.
+// Exit -> Hokkaido. The player returns to the Shiretoko marker.
 const shiretoko=C.sites.shiretoko;
 const exitPath=bfs(shiretoko.rows,E.getState().position,{x:6,y:9},cell=>cell==='.'||cell==='E');
 movePath(exitPath);
 assert(E.getState().screen==='area','Village exit should return to Hokkaido');
+assert(E.getState().position.x===shiretoko.map.x&&E.getState().position.y===shiretoko.map.y,'Exit should return to the site marker');
 
-// Re-entry does not replay discovery.
-E.dispatch({type:'MOVE',dx:0,dy:1});
-E.dispatch({type:'MOVE',dx:0,dy:-1});
-assert(E.getState().screen==='site'&&E.getState().siteId==='shiretoko','Discovered Shiretoko should re-enter directly');
-assert(E.getState().ui.overlay===null,'Discovery must not replay on re-entry');
+// Recovery/re-entry: tapping the current marker dispatches MOVE 0,0 and must enter.
+E.dispatch({type:'MOVE',dx:0,dy:0});
+assert(E.getState().screen==='site'&&E.getState().siteId==='shiretoko','Current-site interaction should re-enter discovered Shiretoko');
+assert(E.getState().ui.overlay===null,'Discovery must not replay on current-site re-entry');
 
 console.log('PASS Phase 8 Golden Path');
