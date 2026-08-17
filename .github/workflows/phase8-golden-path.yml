@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'phase8-*.js'
-      - 'tests/phase8-golden-path.test.js'
+      - 'tests/phase8-*.test.js'
       - 'index.html'
       - '.github/workflows/phase8-golden-path.yml'
   push:
@@ -12,7 +12,7 @@ on:
       - 'agent/phase8-game-loop'
     paths:
       - 'phase8-*.js'
-      - 'tests/phase8-golden-path.test.js'
+      - 'tests/phase8-*.test.js'
       - 'index.html'
       - '.github/workflows/phase8-golden-path.yml'
 
@@ -24,5 +24,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Run Phase 8 runtime contract test
+        run: node tests/phase8-runtime-contract.test.js
       - name: Run Phase 8 Golden Path test
         run: node tests/phase8-golden-path.test.js
