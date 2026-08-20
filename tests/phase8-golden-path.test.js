@@ -1,8 +1,10 @@
 global.window=global;
 require('../phase8-content.js');
+require('../phase8-coast.js');
 require('../phase8-engine.js');
 
 const C=global.Phase8Content;
+const Coast=global.Phase8Coast;
 const E=global.Phase8Engine;
 
 function assert(condition,message){
@@ -73,6 +75,10 @@ function clearCriteriaBranch(){
   assert(E.getState().progress.criteriaBranchCleared,'Criteria branch should clear after result confirmation');
   assert(E.getState().ui.overlay===null,'Branch should close after clear');
 }
+
+assert(Coast.isShallow(26,4),'Shiretoko approach should include a shallow coastal shoulder');
+assert(Coast.isShallow(23,7),'The narrow north-east route should be widened with shallow water');
+assert(C.hokkaido.rows[4][26]==='L'&&C.hokkaido.rows[7][23]==='L','Shallow coastal cells must be walkable');
 
 // Before branch clear, arriving at Shiretoko must be blocked by guidance.
 bootToHokkaido();
