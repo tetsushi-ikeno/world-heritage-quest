@@ -2,16 +2,26 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>世界遺産クエスト COAST LAB 1</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>世界遺産クエスト COAST LAB 2</title>
 <style>
 :root{--sea:#63a7cd;--land:#74ad57;--site:#d8bd55;--gate:#87917d;--shallow:hsl(197 58% 79%);--tile:30px}
-*{box-sizing:border-box}body{margin:0;background:#eef3f8;color:#1a2740;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}.wrap{max-width:1500px;margin:0 auto;padding:18px}.head{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:14px}.head h1{font-size:22px;margin:0}.badge{background:#172238;color:#fff;border:2px solid #e9b84c;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;white-space:nowrap}.layout{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);gap:14px}.panel{background:#fff;border:1px solid #cad5e4;border-radius:14px;padding:14px;box-shadow:0 5px 15px rgba(24,43,72,.08)}.controls{display:grid;gap:15px}.control label{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:6px}.control input[type=range]{width:100%}.switches{display:grid;gap:9px;font-size:14px}.note{font-size:12px;line-height:1.6;color:#59677c;background:#f4f7fb;border-radius:9px;padding:9px}.legend{display:flex;gap:13px;flex-wrap:wrap;font-size:12px;margin-top:12px}.key{display:flex;gap:5px;align-items:center}.swatch{width:17px;height:17px;border-radius:3px}.mapPanel{overflow:auto}.mapFrame{min-width:max-content;background:var(--sea);padding:14px;border-radius:10px}.map{display:grid;grid-template-columns:repeat(32,var(--tile));grid-template-rows:repeat(20,var(--tile));background:var(--sea);width:max-content}.tile{width:var(--tile);height:var(--tile);display:flex;align-items:center;justify-content:center;font-size:calc(var(--tile)*.55);font-weight:900;position:relative;border:1px solid var(--cell-color,transparent)}.land{--cell-color:var(--land);background:var(--land)}.sea{--cell-color:var(--sea);background:var(--sea)}.shallow{--cell-color:var(--shallow);background:var(--shallow)}.site{--cell-color:var(--site);background:var(--site);color:#fff}.gate{--cell-color:var(--gate);background:var(--gate)}.grid .tile{border-color:rgba(255,255,255,.28)}.summary{margin-top:10px;font-size:13px;font-weight:800}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{border:1px solid #b9c7d9;background:#fff;border-radius:9px;padding:8px 11px;font-weight:800;color:#243650}.actions button:hover{background:#f3f7fb}@media(max-width:850px){.layout{grid-template-columns:1fr}.mapPanel{order:-1}.wrap{padding:10px}:root{--tile:24px}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overscroll-behavior:none}
+body{margin:0;background:#eef3f8;color:#1a2740;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;-webkit-user-select:none;user-select:none}
+button,input,label{font:inherit}
+.wrap{max-width:1500px;margin:0 auto;padding:14px}.head{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:10px}.head h1{font-size:21px;margin:0}.badge{background:#172238;color:#fff;border:2px solid #e9b84c;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;white-space:nowrap}
+.layout{display:grid;grid-template-columns:minmax(250px,330px) minmax(0,1fr);gap:12px}.panel{background:#fff;border:1px solid #cad5e4;border-radius:14px;padding:12px;box-shadow:0 5px 15px rgba(24,43,72,.08)}.controls{display:grid;gap:11px;align-content:start}.control label{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:5px}.control input[type=range]{width:100%;height:30px;accent-color:#1976d2}.switches{display:grid;gap:8px;font-size:14px}.switches label{min-height:30px;display:flex;align-items:center;gap:7px}.switches input{width:20px;height:20px;accent-color:#1976d2}.note{font-size:12px;line-height:1.55;color:#59677c;background:#f4f7fb;border-radius:9px;padding:8px}.legend{display:flex;gap:11px;flex-wrap:wrap;font-size:12px}.key{display:flex;gap:5px;align-items:center}.swatch{width:17px;height:17px;border-radius:3px}.summary{font-size:13px;font-weight:800}.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button,.jumpButtons button{border:1px solid #b9c7d9;background:#fff;border-radius:9px;padding:9px 11px;font-weight:800;color:#243650;min-height:42px}.actions button:active,.jumpButtons button:active{transform:translateY(1px);background:#edf4fb}
+.mapPanel{overflow:hidden;display:flex;flex-direction:column;min-width:0}.mapStage{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:10px;min-height:0}.mapScroll{overflow:auto;min-width:0;-webkit-overflow-scrolling:touch}.mapFrame{min-width:max-content;background:var(--sea);padding:10px;border-radius:10px}.map{display:grid;grid-template-columns:repeat(32,var(--tile));grid-template-rows:repeat(20,var(--tile));background:var(--sea);width:max-content;touch-action:manipulation}.tile{width:var(--tile);height:var(--tile);display:flex;align-items:center;justify-content:center;font-size:calc(var(--tile)*.55);font-weight:900;position:relative;border:1px solid var(--cell-color,transparent)}.land{--cell-color:var(--land);background:var(--land)}.sea{--cell-color:var(--sea);background:var(--sea)}.shallow{--cell-color:var(--shallow);background:var(--shallow)}.site{--cell-color:var(--site);background:var(--site);color:#fff}.gate{--cell-color:var(--gate);background:var(--gate)}.grid .tile{border-color:rgba(255,255,255,.28)}
+.playerMark{position:absolute;left:50%;top:50%;width:calc(var(--tile)*.54);height:calc(var(--tile)*.72);transform:translate(-50%,-56%);z-index:5;pointer-events:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}.playerHead{position:absolute;width:52%;aspect-ratio:1;left:24%;top:0;background:#f1c391;border:1.5px solid #3b2f2a}.playerHair{position:absolute;width:60%;height:22%;left:20%;top:-2%;background:#6a3d29;border-radius:2px}.playerBody{position:absolute;width:70%;height:48%;left:15%;bottom:0;background:#2d4c9b;border:1.5px solid #27354d;border-radius:2px}.playerFace{position:absolute;left:35%;top:25%;width:7%;height:7%;background:#30251f;box-shadow:calc(var(--tile)*.12) 0 #30251f}
+.touchPanel{background:#f4f7fb;border:1px solid #d7e0ec;border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:9px}.touchTitle{font-weight:900;font-size:13px}.touchHint{font-size:11px;line-height:1.35;text-align:center;color:#65758b}.joystick{position:relative;width:142px;height:142px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#e4ebf4 0 30%,#263a59 31% 34%,#18263e 35% 100%);border:2px solid #879bb8;touch-action:none;box-shadow:inset 0 0 0 5px rgba(255,255,255,.08),0 3px 8px rgba(30,48,73,.18)}.joyRing{position:absolute;inset:16px;border:1px solid rgba(255,255,255,.18);border-radius:50%}.joyKnob{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(#edf3fa,#bac9dc);border:2px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.32);pointer-events:none}.joyMark{position:absolute;color:#dce6f4;font-size:17px;font-weight:900;pointer-events:none}.joyMark.up{top:7px;left:50%;transform:translateX(-50%)}.joyMark.right{right:8px;top:50%;transform:translateY(-50%)}.joyMark.down{bottom:7px;left:50%;transform:translateX(-50%)}.joyMark.left{left:8px;top:50%;transform:translateY(-50%)}.jumpButtons{display:grid;gap:7px;width:100%}.moveStatus{font-size:12px;font-weight:800;min-height:34px;text-align:center;color:#334b6b}.blocked{color:#a1473d}
+@media(max-width:1180px) and (orientation:landscape){:root{--tile:22px}.wrap{padding:8px}.head{margin-bottom:7px}.head h1{font-size:18px}.layout{grid-template-columns:255px minmax(0,1fr);gap:8px}.panel{padding:9px;border-radius:10px}.controls{gap:7px}.control input[type=range]{height:24px}.note{display:none}.mapStage{grid-template-columns:minmax(0,1fr) 154px;gap:7px}.mapFrame{padding:6px}.joystick{width:126px;height:126px}.joyKnob{width:52px;height:52px}.touchPanel{padding:7px;gap:6px}.actions button,.jumpButtons button{padding:7px 8px;min-height:38px;font-size:12px}.legend{gap:7px}.summary{font-size:11px}}
+@media(max-width:850px) and (orientation:portrait){.layout{grid-template-columns:1fr}.mapPanel{order:-1}.mapStage{grid-template-columns:1fr}.touchPanel{display:grid;grid-template-columns:150px 1fr;align-items:center}.joystick{grid-row:1/5}.wrap{padding:8px}:root{--tile:22px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="head"><h1>北海道 海岸線チューニング</h1><div class="badge">COAST LAB 1</div></div>
+  <div class="head"><h1>北海道 海岸線チューニング</h1><div class="badge">COAST LAB 2</div></div>
   <div class="layout">
     <section class="panel controls">
       <div class="control"><label><span>浅瀬の幅</span><b id="widthValue">1マス</b></label><input id="width" type="range" min="0" max="2" step="1" value="1"></div>
@@ -22,11 +32,25 @@
         <label><input id="grid" type="checkbox"> 確認用のタイル境界線を表示する</label>
       </div>
       <div class="actions"><button id="soft">やわらかい水色</button><button id="subtle">海に近い水色</button><button id="reset">初期値に戻す</button></div>
-      <div class="note">通常表示では各マスの枠も中身と同じ色で塗り、背景の海色がすき間から見えないようにしています。浅瀬はすべて「歩ける」想定です。門・イベント・移動経路との干渉は、このLabで確定後にPREVIEW版へ入れて確認します。</div>
+      <div class="note">通常表示では各マスの枠も中身と同じ色で塗っています。COAST LAB 2では、陸と浅瀬を実際にタッチ操作で歩いて確認できます。濃い海には入れません。</div>
       <div class="legend"><span class="key"><i class="swatch" style="background:var(--land)"></i>陸</span><span class="key"><i class="swatch" style="background:var(--shallow)"></i>浅瀬（歩ける）</span><span class="key"><i class="swatch" style="background:var(--sea)"></i>海</span></div>
       <div id="summary" class="summary"></div>
     </section>
-    <section class="panel mapPanel"><div class="mapFrame"><div id="map" class="map"></div></div></section>
+    <section class="panel mapPanel">
+      <div class="mapStage">
+        <div class="mapScroll"><div class="mapFrame"><div id="map" class="map"></div></div></div>
+        <aside class="touchPanel">
+          <div class="touchTitle">iPad 操作テスト</div>
+          <div class="touchHint">スティックを倒したままで連続移動できます</div>
+          <div id="joystick" class="joystick" role="application" aria-label="移動スティック">
+            <div class="joyRing"></div><div id="joyKnob" class="joyKnob"></div>
+            <span class="joyMark up">▲</span><span class="joyMark right">▶</span><span class="joyMark down">▼</span><span class="joyMark left">◀</span>
+          </div>
+          <div id="moveStatus" class="moveStatus">陸・浅瀬を歩いて確認できます</div>
+          <div class="jumpButtons"><button id="jumpShiretoko">知床付近へ</button><button id="jumpStart">初期位置へ</button></div>
+        </aside>
+      </div>
+    </section>
   </div>
 </div>
 <script>
@@ -59,45 +83,98 @@ function put(y,x,c){rows[y]=rows[y].slice(0,x)+c+rows[y].slice(x+1)}
 put(2,11,'C');put(4,27,'S');put(15,5,'J');put(19,5,'G');
 const W=32,H=20;
 const map=document.getElementById('map'),width=document.getElementById('width'),light=document.getElementById('light'),sat=document.getElementById('sat'),diagonal=document.getElementById('diagonal'),grid=document.getElementById('grid');
+const joystick=document.getElementById('joystick'),joyKnob=document.getElementById('joyKnob'),moveStatus=document.getElementById('moveStatus');
 const isBaseLand=(x,y)=>rows[y]&&rows[y][x]&&rows[y][x]!=='~';
+let shallow=new Set();
+let player={x:11,y:1};
+let active=false,pointerId=null,dir=null,timer=null,lastStep=0;
+const INTERVAL=135;
 function neighbors(diag){return diag?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]]}
 function buildShallows(){
  const layers=Number(width.value),dirs=neighbors(diagonal.checked),walkable=new Set();
  for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(isBaseLand(x,y))walkable.add(`${x},${y}`);
- const shallow=new Set();
+ const result=new Set();
  for(let layer=0;layer<layers;layer++){
   const next=[];
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){
    const key=`${x},${y}`;if(walkable.has(key)||rows[y][x]!=='~')continue;
    if(dirs.some(([dx,dy])=>walkable.has(`${x+dx},${y+dy}`)))next.push(key);
   }
-  next.forEach(k=>{walkable.add(k);shallow.add(k)});
+  next.forEach(k=>{walkable.add(k);result.add(k)});
  }
- return shallow;
+ return result;
 }
+function isWalkable(x,y){
+ if(x<0||x>=W||y<0||y>=H)return false;
+ const c=rows[y][x];
+ if(c==='G')return false;
+ return c!=='~'||shallow.has(`${x},${y}`);
+}
+function nearestWalkable(tx,ty){
+ if(isWalkable(tx,ty))return{x:tx,y:ty};
+ for(let r=1;r<8;r++)for(let y=Math.max(0,ty-r);y<=Math.min(H-1,ty+r);y++)for(let x=Math.max(0,tx-r);x<=Math.min(W-1,tx+r);x++)if(isWalkable(x,y))return{x,y};
+ return{x:11,y:1};
+}
+function playerHtml(){return '<div class="playerMark"><div class="playerHead"></div><div class="playerHair"></div><div class="playerFace"></div><div class="playerBody"></div></div>'}
 function render(){
  document.documentElement.style.setProperty('--shallow',`hsl(197 ${sat.value}% ${light.value}%)`);
  document.getElementById('widthValue').textContent=`${width.value}マス`;
  document.getElementById('lightValue').textContent=`${light.value}%`;
  document.getElementById('satValue').textContent=`${sat.value}%`;
  map.classList.toggle('grid',grid.checked);map.innerHTML='';
- const shallow=buildShallows();
+ shallow=buildShallows();
+ if(!isWalkable(player.x,player.y))player=nearestWalkable(player.x,player.y);
  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
   const c=rows[y][x],d=document.createElement('div'),key=`${x},${y}`;
+  d.dataset.x=x;d.dataset.y=y;
   if(shallow.has(key)){d.className='tile shallow';}
   else if(c==='~')d.className='tile sea';
   else if(c==='S'||c==='J'){d.className='tile site';d.textContent='?';}
   else if(c==='C'){d.className='tile land';d.textContent='🏛';}
   else if(c==='G'){d.className='tile gate';d.textContent='🔒';}
   else d.className='tile land';
+  if(x===player.x&&y===player.y)d.insertAdjacentHTML('beforeend',playerHtml());
   map.appendChild(d);
  }
  document.getElementById('summary').textContent=`浅瀬 ${shallow.size}マス ／ 海岸判定：${diagonal.checked?'8方向':'上下左右4方向'}`;
 }
+function move(dx,dy){
+ const nx=player.x+dx,ny=player.y+dy;
+ if(!isWalkable(nx,ny)){
+  moveStatus.textContent='ここから先は深い海です';moveStatus.classList.add('blocked');return false;
+ }
+ player={x:nx,y:ny};
+ moveStatus.textContent=shallow.has(`${nx},${ny}`)?'浅瀬を歩いています':'陸を歩いています';moveStatus.classList.remove('blocked');
+ render();return true;
+}
+function step(force=false){
+ if(!active||!dir)return;const now=performance.now();if(!force&&now-lastStep<INTERVAL-8)return;lastStep=now;move(dir[0],dir[1]);
+}
+function stop(){active=false;pointerId=null;dir=null;lastStep=0;clearInterval(timer);timer=null;joyKnob.style.transform='translate(-50%,-50%)'}
+function getDirection(event){
+ const r=joystick.getBoundingClientRect(),dx=event.clientX-(r.left+r.width/2),dy=event.clientY-(r.top+r.height/2),distance=Math.hypot(dx,dy),dead=Math.min(r.width,r.height)*.10;
+ if(distance<dead)return null;if(Math.abs(dx)>=Math.abs(dy))return dx<0?[-1,0]:[1,0];return dy<0?[0,-1]:[0,1];
+}
+function placeKnob(event){
+ const r=joystick.getBoundingClientRect(),dx=event.clientX-(r.left+r.width/2),dy=event.clientY-(r.top+r.height/2),distance=Math.hypot(dx,dy),max=Math.min(r.width,r.height)*.27,ratio=distance>max&&distance>0?max/distance:1;
+ joyKnob.style.transform=`translate(calc(-50% + ${dx*ratio}px),calc(-50% + ${dy*ratio}px))`;
+}
+function setDir(event,moveOnChange){
+ placeKnob(event);const next=getDirection(event),old=dir?dir.join(','):'';dir=next;if(moveOnChange&&next&&next.join(',')!==old)step(true);
+}
+joystick.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'&&event.button!==0)return;event.preventDefault();active=true;pointerId=event.pointerId;try{joystick.setPointerCapture(event.pointerId)}catch(_e){}setDir(event,false);if(dir)step(true);clearInterval(timer);timer=setInterval(()=>step(true),INTERVAL)});
+joystick.addEventListener('pointermove',event=>{if(!active||event.pointerId!==pointerId)return;event.preventDefault();setDir(event,true)});
+['pointerup','pointercancel','lostpointercapture'].forEach(name=>joystick.addEventListener(name,event=>{if(pointerId!==null&&event.pointerId!==undefined&&event.pointerId!==pointerId)return;stop()}));
+map.addEventListener('click',event=>{
+ const tile=event.target.closest('.tile');if(!tile)return;const tx=Number(tile.dataset.x),ty=Number(tile.dataset.y),dx=tx-player.x,dy=ty-player.y;if(Math.abs(dx)+Math.abs(dy)===1)move(dx,dy);
+});
+window.addEventListener('keydown',event=>{const dirs={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]},d=dirs[event.key]||dirs[event.key.toLowerCase?.()];if(!d)return;event.preventDefault();move(d[0],d[1])});
 [width,light,sat,diagonal,grid].forEach(el=>el.addEventListener('input',render));
 document.getElementById('soft').onclick=()=>{width.value=1;light.value=82;sat.value=52;diagonal.checked=true;grid.checked=false;render()};
 document.getElementById('subtle').onclick=()=>{width.value=1;light.value=73;sat.value=48;diagonal.checked=true;grid.checked=false;render()};
 document.getElementById('reset').onclick=()=>{width.value=1;light.value=79;sat.value=58;diagonal.checked=true;grid.checked=false;render()};
+document.getElementById('jumpShiretoko').onclick=()=>{player=nearestWalkable(26,4);moveStatus.textContent='知床付近から操作テストできます';moveStatus.classList.remove('blocked');render()};
+document.getElementById('jumpStart').onclick=()=>{player=nearestWalkable(11,1);moveStatus.textContent='初期位置に戻りました';moveStatus.classList.remove('blocked');render()};
 render();
 })();
 </script>
