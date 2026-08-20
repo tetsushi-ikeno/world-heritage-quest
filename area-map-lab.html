@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>世界遺産クエスト AREA MAP LAB</title>
+<style>
+:root{--sea:#63a7cd;--land:#74ad57;--site:#d8bd55;--gate:#87917d;--shallow:hsl(197 58% 79%);--tile:30px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overscroll-behavior:none}
+body{margin:0;background:#eef3f8;color:#1a2740;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;-webkit-user-select:none;user-select:none}
+button,input,label{font:inherit}
+.wrap{max-width:1500px;margin:0 auto;padding:14px}
+.head{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:9px}
+.head h1{font-size:21px;margin:0}
+.badge{background:#172238;color:#fff;border:2px solid #e9b84c;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;white-space:nowrap}
+.areaTabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
+.areaTabs button{min-height:44px;border:1px solid #b9c7d9;background:#fff;border-radius:10px;color:#31445f;font-weight:900;padding:7px 8px;line-height:1.2}
+.areaTabs button.active{background:#203b65;color:#fff;border-color:#203b65;box-shadow:0 3px 9px rgba(32,59,101,.2)}
+.layout{display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:12px}
+.panel{background:#fff;border:1px solid #cad5e4;border-radius:14px;padding:12px;box-shadow:0 5px 15px rgba(24,43,72,.08)}
+.controls{display:grid;gap:10px;align-content:start}
+.areaInfo{background:#edf4fb;border:1px solid #d6e2ef;border-radius:10px;padding:9px}
+.areaName{font-size:16px;font-weight:950;margin-bottom:4px}
+.areaDesc{font-size:12px;line-height:1.5;color:#53647a}
+.grain{display:inline-flex;align-items:center;gap:5px;margin-top:6px;background:#fff;border:1px solid #cfdbe8;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:900;color:#405671}
+.control label{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:5px}
+.control input[type=range]{width:100%;height:30px;accent-color:#1976d2}
+.switches{display:grid;gap:7px;font-size:13px}
+.switches label{min-height:29px;display:flex;align-items:center;gap:7px}
+.switches input{width:20px;height:20px;accent-color:#1976d2}
+.note{font-size:12px;line-height:1.5;color:#59677c;background:#f4f7fb;border-radius:9px;padding:8px}
+.routeNote{font-size:12px;line-height:1.5;color:#365673;background:#e9f6fb;border-left:4px solid #5aa7ca;border-radius:8px;padding:8px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px}
+.key{display:flex;gap:5px;align-items:center}
+.swatch{width:17px;height:17px;border-radius:3px}
+.routeSwatch{box-shadow:inset 0 0 0 2px rgba(255,255,255,.55)}
+.summary{font-size:12px;font-weight:900;color:#3e536d}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button,.jumpButtons button{border:1px solid #b9c7d9;background:#fff;border-radius:9px;padding:9px 11px;font-weight:800;color:#243650;min-height:42px}
+.actions button:active,.jumpButtons button:active{transform:translateY(1px);background:#edf4fb}
+.mapPanel{overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.mapStage{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:10px;min-height:0}
+.mapScroll{overflow:auto;min-width:0;-webkit-overflow-scrolling:touch;border-radius:10px}
+.mapFrame{min-width:max-content;background:var(--sea);padding:10px;border-radius:10px}
+.map{display:grid;grid-template-columns:repeat(32,var(--tile));grid-template-rows:repeat(20,var(--tile));background:var(--sea);width:max-content;touch-action:manipulation}
+.tile{width:var(--tile);height:var(--tile);display:flex;align-items:center;justify-content:center;font-size:calc(var(--tile)*.55);font-weight:900;position:relative;border:1px solid var(--cell-color,transparent)}
+.land{--cell-color:var(--land);background:var(--land)}
+.sea{--cell-color:var(--sea);background:var(--sea)}
+.shallow{--cell-color:var(--shallow);background:var(--shallow)}
+.fixedRoute{box-shadow:inset 0 0 0 2px rgba(255,255,255,.38)}
+.fixedRoute::after{content:"";width:20%;height:20%;border-radius:50%;background:rgba(255,255,255,.65)}
+.site{--cell-color:var(--site);background:var(--site);color:#fff}
+.gate{--cell-color:var(--gate);background:var(--gate)}
+.grid .tile{border-color:rgba(255,255,255,.28)}
+.playerMark{position:absolute;left:50%;top:50%;width:calc(var(--tile)*.54);height:calc(var(--tile)*.72);transform:translate(-50%,-56%);z-index:5;pointer-events:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.playerHead{position:absolute;width:52%;aspect-ratio:1;left:24%;top:0;background:#f1c391;border:1.5px solid #3b2f2a}
+.playerHair{position:absolute;width:60%;height:22%;left:20%;top:-2%;background:#6a3d29;border-radius:2px}
+.playerBody{position:absolute;width:70%;height:48%;left:15%;bottom:0;background:#2d4c9b;border:1.5px solid #27354d;border-radius:2px}
+.playerFace{position:absolute;left:35%;top:25%;width:7%;height:7%;background:#30251f;box-shadow:calc(var(--tile)*.12) 0 #30251f}
+.touchPanel{background:#f4f7fb;border:1px solid #d7e0ec;border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:9px}
+.touchTitle{font-weight:900;font-size:13px}
+.touchHint{font-size:11px;line-height:1.35;text-align:center;color:#65758b}
+.joystick{position:relative;width:142px;height:142px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#e4ebf4 0 30%,#263a59 31% 34%,#18263e 35% 100%);border:2px solid #879bb8;touch-action:none;box-shadow:inset 0 0 0 5px rgba(255,255,255,.08),0 3px 8px rgba(30,48,73,.18)}
+.joyRing{position:absolute;inset:16px;border:1px solid rgba(255,255,255,.18);border-radius:50%}
+.joyKnob{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(#edf3fa,#bac9dc);border:2px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.32);pointer-events:none}
+.joyMark{position:absolute;color:#dce6f4;font-size:17px;font-weight:900;pointer-events:none}
+.joyMark.up{top:7px;left:50%;transform:translateX(-50%)}
+.joyMark.right{right:8px;top:50%;transform:translateY(-50%)}
+.joyMark.down{bottom:7px;left:50%;transform:translateX(-50%)}
+.joyMark.left{left:8px;top:50%;transform:translateY(-50%)}
+.jumpButtons{display:grid;gap:7px;width:100%}
+.moveStatus{font-size:12px;font-weight:800;min-height:42px;text-align:center;color:#334b6b;line-height:1.4}
+.blocked{color:#a1473d}
+@media(max-width:1180px) and (orientation:landscape){:root{--tile:22px}.wrap{padding:8px}.head{margin-bottom:6px}.head h1{font-size:18px}.areaTabs{gap:5px;margin-bottom:7px}.areaTabs button{min-height:38px;font-size:12px;padding:5px}.layout{grid-template-columns:265px minmax(0,1fr);gap:8px}.panel{padding:9px;border-radius:10px}.controls{gap:7px}.areaInfo{padding:7px}.areaDesc{font-size:11px}.control input[type=range]{height:24px}.note{display:none}.mapStage{grid-template-columns:minmax(0,1fr) 154px;gap:7px}.mapFrame{padding:6px}.joystick{width:126px;height:126px}.joyKnob{width:52px;height:52px}.touchPanel{padding:7px;gap:6px}.actions button,.jumpButtons button{padding:7px 8px;min-height:38px;font-size:12px}.legend{gap:7px}.summary{font-size:11px}}
+@media(max-width:850px) and (orientation:portrait){.areaTabs{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.mapPanel{order:-1}.mapStage{grid-template-columns:1fr}.touchPanel{display:grid;grid-template-columns:150px 1fr;align-items:center}.joystick{grid-row:1/5}.wrap{padding:8px}:root{--tile:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head"><h1>日本エリア MAP LAB</h1><div class="badge">AREA MAP LAB 3</div></div>
+  <nav id="areaTabs" class="areaTabs" aria-label="エリア切り替え"></nav>
+  <div class="layout">
+    <section class="panel controls">
+      <div class="areaInfo"><div id="areaName" class="areaName"></div><div id="areaDesc" class="areaDesc"></div><span class="grain">全エリア 32×20マス・北海道と同粒度</span></div>
+      <div class="control"><label><span>自動浅瀬の幅</span><b id="widthValue">1マス</b></label><input id="width" type="range" min="0" max="2" step="1" value="1"></div>
+      <div class="control"><label><span>浅瀬の明るさ</span><b id="lightValue">79%</b></label><input id="light" type="range" min="66" max="88" step="1" value="79"></div>
+      <div class="control"><label><span>浅瀬の鮮やかさ</span><b id="satValue">58%</b></label><input id="sat" type="range" min="30" max="75" step="1" value="58"></div>
+      <div class="switches"><label><input id="diagonal" type="checkbox" checked> ななめに接する海も浅瀬に含める</label><label><input id="grid" type="checkbox"> 確認用のタイル境界線を表示する</label></div>
+      <div class="actions"><button id="soft">やわらかい水色</button><button id="subtle">海に近い水色</button><button id="reset">初期値に戻す</button></div>
+      <div id="routeNote" class="routeNote"></div>
+      <div class="note">陸と浅瀬は歩行可能、濃い海には入れません。自動浅瀬を0マスにしても、小笠原・沖縄へ続くゲーム用の固定浅瀬ルートは残ります。</div>
+      <div class="legend"><span class="key"><i class="swatch" style="background:var(--land)"></i>陸</span><span class="key"><i class="swatch" style="background:var(--shallow)"></i>自動浅瀬</span><span class="key"><i class="swatch routeSwatch" style="background:var(--shallow)"></i>固定浅瀬ルート</span><span class="key"><i class="swatch" style="background:var(--sea)"></i>深い海</span></div>
+      <div id="summary" class="summary"></div>
+    </section>
+    <section class="panel mapPanel">
+      <div class="mapStage">
+        <div id="mapScroll" class="mapScroll"><div class="mapFrame"><div id="map" class="map"></div></div></div>
+        <aside class="touchPanel"><div class="touchTitle">iPad 移動テスト</div><div class="touchHint">スティックを倒したままで連続移動できます</div><div id="joystick" class="joystick" role="application" aria-label="移動スティック"><div class="joyRing"></div><div id="joyKnob" class="joyKnob"></div><span class="joyMark up">▲</span><span class="joyMark right">▶</span><span class="joyMark down">▼</span><span class="joyMark left">◀</span></div><div id="moveStatus" class="moveStatus">陸・浅瀬を歩いて確認できます</div><div class="jumpButtons"><button id="jumpFocus"></button><button id="jumpStart">初期位置へ</button></div></aside>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+(function(){
+'use strict';
+const W=32,H=20;
+const AREAS={
+ hokkaido:{order:'①',tab:'北海道',name:'① 北海道エリア',desc:'現在の北海道Labの地形を基準データとしてそのまま残しています。',route:'北海道は海岸沿いの自動浅瀬で歩行感を確認します。',start:[11,1],focus:[27,4],focusLabel:'知床付近へ',rows:[
+'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LL~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~LCLL~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LLLL~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LLLLL~~~~~~~~~~~S~~~~','~~~~~~~~~~~LLLLLL~~~~~~~~~LL~~~~','~~~~~~~~~~LLLLLLLL~~~~~~~LL~~~~~','~~~~~~~~~~LLLLLLLLLL~LL~LL~~~~~~','~~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~~','~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~~~','~~~~~~~~~LLLLLLLLLLLLLLLLL~~~~~~','~~~~~~L~~LLLLLLLLLLLLLLL~~~~~~~~','~~~~~~LLLLLLLLLLLLLLLLL~~~~~~~~~','~~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~','~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~~','~~~~LJLLLL~LLLLLLL~~~~~~~~~~~~~~','~~~~LL~L~~~~~LLLLL~~~~~~~~~~~~~~','~~~~LLL~~~~~~~~LL~~~~~~~~~~~~~~~','~~~~~LLL~~~~~~~~L~~~~~~~~~~~~~~~','~~~~~GLLL~~~~~~~~~~~~~~~~~~~~~~~']},
+ east:{order:'②',tab:'本州（東）',name:'② 本州（東）エリア',desc:'東北から関東・東側の中部を、北海道と同じ32×20マスの粗さで表現。佐渡と小笠原諸島も含めています。',route:'東京側の太平洋岸から小笠原諸島までは、ゲーム上の固定浅瀬ルートでつないでいます。',start:[22,1],focus:[27,18],focusLabel:'小笠原諸島へ',rows:[
+'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~L~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~~','~~~~~~~~~~~~~~~~~~~~LLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~LLLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~LLLLLLLL~~~~~~~','~~~~~~~~~~~~~~~~LLLLLLLL~~~~~~~~','~~~~~~~~~~~~L~~LLLLLLLLL~~~~~~~~','~~~~~~~~~~~~L~LLLLLLLLL~~~~~~~~~','~~~~~~~~~~~~~LLLLLLLLLLLL~~~~~~~','~~~~~~~~~~~~LLLLLLLLLLLLLL~~~~~~','~~~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~','~~~~~~~~~~LLLLLLLLLLLLLL=~~~~~~~','~~~~~~~~LLLLLLLLLLLLLL~~==~~~~~~','~~~~~~~LLLLLLLLLLLLL~~~~~==~~~~~','~~~~~~LLLLLLLLLLLL~~~~~~~~==~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~L~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~LL~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~L~~~~']},
+ west:{order:'③',tab:'本州（西）・四国',name:'③ 本州（西）・四国エリア',desc:'西側の中部から近畿・中国地方・四国までをひとつの移動エリアとして表現しています。',route:'本州と四国の間は、デフォルト1マスの海岸浅瀬で行き来できる距離感にしています。',start:[26,3],focus:[11,14],focusLabel:'四国へ',rows:[
+'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~LLL~~~~','~~~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~','~~~~~~~LL~~~~~~~~~~LLLLLLLL~~~~~','~~~~~~~~~~~~~~~~LLLLLLLLL~~~~~~~','~~~~~~~~~~~~~LLLLLLLLLL~~~~~~~~~','~~~~~~~~~LLLLLLLLLLLL~~~~~~~~~~~','~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~~','~~~LLLLLLLLLLLLLLLLLL~~~~~~~~~~~','~~~~LLLLLLLLLLLL~LLLL~~~~~~~~~~~','~~~~~~LLLLLLLL~LLLLL~~~~~~~~~~~~','~~~~~~~~LLLLLLLL~LL~~~~~~~~~~~~~','~~~~~~LLLLLLLLLLL~~~~~~~~~~~~~~~','~~~~~~~LLLLLLLLLL~~~~~~~~~~~~~~~','~~~~~~~~~LLLLLL~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~']},
+ kyushu:{order:'④',tab:'九州・沖縄',name:'④ 九州・沖縄エリア',desc:'九州本島から屋久島・奄美・沖縄本島・先島方面までを同じ32×20マス内に収めています。',route:'九州南部から沖縄諸島・先島方面までは、島伝いのゲーム用固定浅瀬ルートで最後まで歩けます。',start:[10,3],focus:[19,18],focusLabel:'沖縄本島へ',rows:[
+'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~LLL~~~~~~~~~~~~~~~~~~~~','~~~~~~~LLLLLLL~~~~~~~~~~~~~~~~~~','~~LL~~LLLLLLLLL~~~~~~~~~~~~~~~~~','~~~~~LLLLLLLLLL~~~~~~~~~~~~~~~~~','~~~~~LLLLLLLLL~~~~~~~~~~~~~~~~~~','~~L~LLLLLLLLLL~~~~~~~~~~~~~~~~~~','~~~L~LLLLLLLL~~~~~~~~~~~~~~~~~~~','~~~~~~LLLLLL~~~~~~~~~~~~~~~~~~~~','~~~~~~~LLLL~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~LL~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~==~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~L~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~====~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~L==~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~L===~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~LL~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~LLL===L=~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~==LL~~~']}
+};
+const areaKeys=Object.keys(AREAS);let areaKey='hokkaido';let player={x:AREAS[areaKey].start[0],y:AREAS[areaKey].start[1]};let shallow=new Set(),active=false,pointerId=null,dir=null,timer=null,lastStep=0;const INTERVAL=135;
+const map=document.getElementById('map'),mapScroll=document.getElementById('mapScroll'),width=document.getElementById('width'),light=document.getElementById('light'),sat=document.getElementById('sat'),diagonal=document.getElementById('diagonal'),grid=document.getElementById('grid'),joystick=document.getElementById('joystick'),joyKnob=document.getElementById('joyKnob'),moveStatus=document.getElementById('moveStatus'),areaTabs=document.getElementById('areaTabs'),jumpFocus=document.getElementById('jumpFocus');
+function area(){return AREAS[areaKey]}function rows(){return area().rows}function isLandChar(c){return c&&c!=='~'&&c!=='='}function isBaseLand(x,y){return rows()[y]&&isLandChar(rows()[y][x])}
+function neighbors(diag){return diag?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]]}
+function buildShallows(){const layers=Number(width.value),dirs=neighbors(diagonal.checked),seed=new Set(),result=new Set();for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(isBaseLand(x,y))seed.add(`${x},${y}`);for(let layer=0;layer<layers;layer++){const next=[];for(let y=0;y<H;y++)for(let x=0;x<W;x++){const key=`${x},${y}`;if(seed.has(key)||rows()[y][x]!=='~')continue;if(dirs.some(([dx,dy])=>seed.has(`${x+dx},${y+dy}`)))next.push(key)}next.forEach(k=>{seed.add(k);result.add(k)})}return result}
+function isWalkable(x,y){if(x<0||x>=W||y<0||y>=H)return false;const c=rows()[y][x];if(c==='G')return false;return isLandChar(c)||c==='='||shallow.has(`${x},${y}`)}
+function nearestWalkable(tx,ty){if(isWalkable(tx,ty))return{x:tx,y:ty};for(let r=1;r<10;r++)for(let y=Math.max(0,ty-r);y<=Math.min(H-1,ty+r);y++)for(let x=Math.max(0,tx-r);x<=Math.min(W-1,tx+r);x++)if(isWalkable(x,y))return{x,y};return{x:area().start[0],y:area().start[1]}}
+function playerHtml(){return '<div class="playerMark"><div class="playerHead"></div><div class="playerHair"></div><div class="playerFace"></div><div class="playerBody"></div></div>'}
+function ensurePlayerVisible(){const tile=map.querySelector('[data-player="true"]');if(!tile)return;const left=tile.offsetLeft,top=tile.offsetTop,right=left+tile.offsetWidth,bottom=top+tile.offsetHeight,pad=36;if(left<mapScroll.scrollLeft+pad)mapScroll.scrollLeft=Math.max(0,left-pad);else if(right>mapScroll.scrollLeft+mapScroll.clientWidth-pad)mapScroll.scrollLeft=right-mapScroll.clientWidth+pad;if(top<mapScroll.scrollTop+pad)mapScroll.scrollTop=Math.max(0,top-pad);else if(bottom>mapScroll.scrollTop+mapScroll.clientHeight-pad)mapScroll.scrollTop=bottom-mapScroll.clientHeight+pad}
+function render(){document.documentElement.style.setProperty('--shallow',`hsl(197 ${sat.value}% ${light.value}%)`);document.getElementById('widthValue').textContent=`${width.value}マス`;document.getElementById('lightValue').textContent=`${light.value}%`;document.getElementById('satValue').textContent=`${sat.value}%`;map.classList.toggle('grid',grid.checked);map.innerHTML='';shallow=buildShallows();if(!isWalkable(player.x,player.y))player=nearestWalkable(player.x,player.y);let fixedCount=0;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const c=rows()[y][x],d=document.createElement('div'),key=`${x},${y}`;d.dataset.x=x;d.dataset.y=y;if(c==='='){d.className='tile shallow fixedRoute';fixedCount++}else if(shallow.has(key))d.className='tile shallow';else if(c==='~')d.className='tile sea';else if(c==='S'||c==='J'){d.className='tile site';d.textContent='?'}else if(c==='C'){d.className='tile land';d.textContent='🏛'}else if(c==='G'){d.className='tile gate';d.textContent='🔒'}else d.className='tile land';if(x===player.x&&y===player.y){d.dataset.player='true';d.insertAdjacentHTML('beforeend',playerHtml())}map.appendChild(d)}document.getElementById('summary').textContent=`自動浅瀬 ${shallow.size}マス ／ 固定浅瀬 ${fixedCount}マス ／ 海岸判定：${diagonal.checked?'8方向':'上下左右4方向'}`;requestAnimationFrame(ensurePlayerVisible)}
+function updateAreaUI(){areaKeys.forEach(key=>{const b=areaTabs.querySelector(`[data-area="${key}"]`);if(b){b.classList.toggle('active',key===areaKey);b.setAttribute('aria-current',key===areaKey?'page':'false')}});document.getElementById('areaName').textContent=area().name;document.getElementById('areaDesc').textContent=area().desc;document.getElementById('routeNote').textContent=area().route;jumpFocus.textContent=area().focusLabel}
+function stop(){active=false;pointerId=null;dir=null;lastStep=0;clearInterval(timer);timer=null;joyKnob.style.transform='translate(-50%,-50%)'}
+function setArea(key){if(!AREAS[key]||key===areaKey)return;stop();areaKey=key;player={x:area().start[0],y:area().start[1]};moveStatus.textContent=`${area().name}の初期位置です`;moveStatus.classList.remove('blocked');mapScroll.scrollLeft=0;mapScroll.scrollTop=0;updateAreaUI();render()}
+function buildTabs(){areaKeys.forEach(key=>{const a=AREAS[key],b=document.createElement('button');b.type='button';b.dataset.area=key;b.textContent=`${a.order} ${a.tab}`;b.addEventListener('click',()=>setArea(key));areaTabs.appendChild(b)})}
+function move(dx,dy){const nx=player.x+dx,ny=player.y+dy;if(!isWalkable(nx,ny)){moveStatus.textContent='ここから先は深い海です';moveStatus.classList.add('blocked');return false}player={x:nx,y:ny};const c=rows()[ny][nx];if(c==='=')moveStatus.textContent='島へ続く固定浅瀬ルートを歩いています';else if(shallow.has(`${nx},${ny}`))moveStatus.textContent='海岸沿いの浅瀬を歩いています';else moveStatus.textContent='陸を歩いています';moveStatus.classList.remove('blocked');render();return true}
+function step(force=false){if(!active||!dir)return;const now=performance.now();if(!force&&now-lastStep<INTERVAL-8)return;lastStep=now;move(dir[0],dir[1])}
+function getDirection(event){const r=joystick.getBoundingClientRect(),dx=event.clientX-(r.left+r.width/2),dy=event.clientY-(r.top+r.height/2),distance=Math.hypot(dx,dy),dead=Math.min(r.width,r.height)*.10;if(distance<dead)return null;if(Math.abs(dx)>=Math.abs(dy))return dx<0?[-1,0]:[1,0];return dy<0?[0,-1]:[0,1]}
+function placeKnob(event){const r=joystick.getBoundingClientRect(),dx=event.clientX-(r.left+r.width/2),dy=event.clientY-(r.top+r.height/2),distance=Math.hypot(dx,dy),max=Math.min(r.width,r.height)*.27,ratio=distance>max&&distance>0?max/distance:1;joyKnob.style.transform=`translate(calc(-50% + ${dx*ratio}px),calc(-50% + ${dy*ratio}px))`}
+function setDir(event,moveOnChange){placeKnob(event);const next=getDirection(event),old=dir?dir.join(','):'';dir=next;if(moveOnChange&&next&&next.join(',')!==old)step(true)}
+joystick.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'&&event.button!==0)return;event.preventDefault();active=true;pointerId=event.pointerId;try{joystick.setPointerCapture(event.pointerId)}catch(_e){}setDir(event,false);if(dir)step(true);clearInterval(timer);timer=setInterval(()=>step(true),INTERVAL)});joystick.addEventListener('pointermove',event=>{if(!active||event.pointerId!==pointerId)return;event.preventDefault();setDir(event,true)});['pointerup','pointercancel','lostpointercapture'].forEach(name=>joystick.addEventListener(name,event=>{if(pointerId!==null&&event.pointerId!==undefined&&event.pointerId!==pointerId)return;stop()}));
+map.addEventListener('click',event=>{const tile=event.target.closest('.tile');if(!tile)return;const tx=Number(tile.dataset.x),ty=Number(tile.dataset.y),dx=tx-player.x,dy=ty-player.y;if(Math.abs(dx)+Math.abs(dy)===1)move(dx,dy)});window.addEventListener('keydown',event=>{const dirs={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]},d=dirs[event.key]||dirs[event.key.toLowerCase?.()];if(!d)return;event.preventDefault();move(d[0],d[1])});
+[width,light,sat,diagonal,grid].forEach(el=>el.addEventListener('input',render));document.getElementById('soft').onclick=()=>{width.value=1;light.value=82;sat.value=52;diagonal.checked=true;grid.checked=false;render()};document.getElementById('subtle').onclick=()=>{width.value=1;light.value=73;sat.value=48;diagonal.checked=true;grid.checked=false;render()};document.getElementById('reset').onclick=()=>{width.value=1;light.value=79;sat.value=58;diagonal.checked=true;grid.checked=false;render()};jumpFocus.onclick=()=>{player=nearestWalkable(area().focus[0],area().focus[1]);moveStatus.textContent=`${area().focusLabel.replace('へ','')}付近から移動テストできます`;moveStatus.classList.remove('blocked');render()};document.getElementById('jumpStart').onclick=()=>{player=nearestWalkable(area().start[0],area().start[1]);moveStatus.textContent='初期位置に戻りました';moveStatus.classList.remove('blocked');render()};
+buildTabs();updateAreaUI();render();
+})();
+</script>
+</body>
+</html>
