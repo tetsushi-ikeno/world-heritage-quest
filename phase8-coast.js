@@ -5,23 +5,33 @@
 const C=global.Phase8Content;
 if(!C?.hokkaido?.rows)return;
 
-// One-cell coastal shoulder around the narrow route toward Shiretoko.
-// These cells remain visually water, but behave as normal walkable area cells.
-const cells=[
- [27,3],
- [26,4],[28,4],
- [25,5],[28,5],
- [21,6],[22,6],[24,6],[27,6],
- [20,7],[23,7],[26,7],
- [25,8],
- [24,9],[25,9],
- [26,10]
-];
+// Create a one-cell-wide walkable shallow-water shoulder along the north-east coast.
+// We derive it from the current coastline instead of hard-coding isolated cells,
+// so the route toward Shiretoko remains forgiving even if the land shape changes slightly.
+const source=[...C.hokkaido.rows];
+const cells=[];
+const keys=new Set();
+const coastRegion={minX:18,maxX:30,minY:2,maxY:11};
+const landCodes=new Set(['L','S']);
+const directions=[[1,0],[-1,0],[0,1],[0,-1]];
 
-const keys=new Set(cells.map(([x,y])=>`${x},${y}`));
-const rows=[...C.hokkaido.rows];
+for(let y=coastRegion.minY;y<=coastRegion.maxY;y++){
+ for(let x=coastRegion.minX;x<=coastRegion.maxX;x++){
+  if(source[y]?.[x]!=='~')continue;
+  const touchesCoast=directions.some(([dx,dy])=>{
+   const row=source[y+dy];
+   return row&&landCodes.has(row[x+dx]);
+  });
+  if(!touchesCoast)continue;
+  cells.push([x,y]);
+  keys.add(`${x},${y}`);
+ }
+}
+
+// Movement remains tile-based: shallow water is converted to the normal walkable code,
+// while Phase8Coast keeps the original coordinates so the renderer can paint it blue.
+const rows=[...source];
 for(const [x,y] of cells){
- if(!rows[y]||rows[y][x]!=='~')continue;
  rows[y]=rows[y].slice(0,x)+'L'+rows[y].slice(x+1);
 }
 C.hokkaido.rows=rows;
