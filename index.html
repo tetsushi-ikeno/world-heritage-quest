@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>世界遺産クエスト α v17 Phase 7.5</title>
+<title>世界遺産クエスト α v18 Phase 8</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="phase1.css">
 <link rel="stylesheet" href="phase41.css">
@@ -15,30 +15,12 @@
 <link rel="stylesheet" href="phase72.css">
 <link rel="stylesheet" href="phase73.css?v=1">
 <link rel="stylesheet" href="phase75.css?v=1">
+<link rel="stylesheet" href="phase8.css?v=3">
 </head>
 <body>
 <div id="encounterOverlay"></div>
 <div id="app">
-<h1>世界遺産クエスト α v17 Phase 7.5</h1>
-
-<section id="avatarScreen" class="panel">
-  <div class="discoveryKicker">CHARACTER CREATE</div>
-  <h2>ぼうけんしゃをつくろう</h2>
-  <p>「つくる」を押すたびに、見た目がランダムで変わります。</p>
-  <div class="avatarStage">
-    <div id="avatarPreview" class="avatarPreview">
-      <div id="avHair" class="avHair hair1"></div>
-      <div id="avFace" class="avFace"></div>
-      <div id="avBody" class="avBody"></div>
-      <div id="avItem" class="avItem">⚔</div>
-    </div>
-  </div>
-  <div id="avatarMeta" class="avatarMeta"></div>
-  <div class="avatarButtons">
-    <button class="bigbtn" onclick="randomizeAvatar()">つくる</button>
-    <button class="bigbtn" onclick="confirmAvatar()">この主人公にする</button>
-  </div>
-</section>
+<h1>世界遺産クエスト α v18 Phase 8</h1>
 
 <section id="game" class="panel hidden">
   <div class="gameLandscape">
@@ -46,8 +28,8 @@
       <div class="guideSection">
         <div class="sideTitle">ぼうけんガイド</div>
         <div class="guideBox">
-          <div class="guidePortrait"><div class="pyramidBody"></div><div class="pyramidFace"></div><div class="pyramidMouth"></div><div class="pyramidHand left"></div><div class="pyramidHand right"></div></div>
-          <div class="guideText"><div class="guideName">ピラミトン</div><div id="guideMessage">まずは村のみんなに話を聞いてみよう！</div></div>
+          <div class="guidePortrait"></div>
+          <div class="guideText"><div class="guideName">ピラミトン</div><div id="guideMessage">北海道へ向かう準備をしよう！</div></div>
         </div>
       </div>
       <div class="recordSection">
@@ -55,86 +37,37 @@
         <div id="progressHud" class="sideProgress">
           <div class="hudItem"><span class="hudLabel">POINT</span><span class="hudValue" id="totalPoints">0 pt</span></div>
           <div class="hudItem"><span class="hudLabel">★</span><span class="hudValue" id="starCount">0</span></div>
-          <div class="hudItem"><span class="hudLabel">CLEAR</span><span class="hudValue" id="clearCount">0 / 5</span></div>
-          <div class="hudItem"><span class="hudLabel">MASTER</span><span class="hudValue" id="masterCount">0 / 5</span></div>
+          <div class="hudItem"><span class="hudLabel">CLEAR</span><span class="hudValue" id="clearCount">0 / 2</span></div>
+          <div class="hudItem"><span class="hudLabel">MASTER</span><span class="hudValue" id="masterCount">0 / 2</span></div>
         </div>
       </div>
       <div class="sideControls">
         <div class="sideTitle">いどう</div>
-        <div class="controlHint">十字キー / キーボード / となりのマスをタップ</div>
-        <div class="controls" role="group" aria-label="移動操作">
-          <button class="up" aria-label="上へ移動" onclick="move(0,-1)">▲</button>
-          <button class="left" aria-label="左へ移動" onclick="move(-1,0)">◀</button>
-          <div class="dpadCenter" aria-hidden="true"></div>
-          <button class="right" aria-label="右へ移動" onclick="move(1,0)">▶</button>
-          <button class="down" aria-label="下へ移動" onclick="move(0,1)">▼</button>
-        </div>
       </div>
       <div id="status" class="sideLegend"></div>
       <div id="legend" class="sideLegend"></div>
     </aside>
     <main class="gameMapSide">
-      <div class="mapHeader"><span id="mapTitle">はじまりの村</span><span>世界遺産クエスト</span></div>
+      <div class="mapHeader"><span id="mapTitle">北海道エリア</span><span>世界遺産クエスト</span></div>
       <div id="mapWrap" class="mapWrap"><div id="map" class="map"></div></div>
     </main>
   </div>
 </section>
 
-<section id="dialog" class="panel hidden">
-  <div class="dialogBox" onclick="nextDialog()">
-    <div id="speaker" class="speaker"></div>
-    <div id="dialogText" class="dialogText"></div>
-    <div class="tapHint">タップしてつづく ▶</div>
-  </div>
-</section>
-
-<section id="discovery" class="panel hidden">
-  <div class="discoveryKicker">NEW WORLD HERITAGE</div>
-  <div class="discoveryMark">!</div>
-  <div>新しい世界遺産を発見！</div>
-  <h2 id="discoveryName"></h2>
-  <button class="bigbtn">里へ</button>
-</section>
-
-<section id="siteDialog" class="panel hidden">
-  <h2 id="siteName"></h2>
-  <p>世界遺産ポイントに到着しました。</p>
-  <p id="siteStatus" style="font-weight:700"></p>
-  <p id="sitePoints" style="font-weight:700"></p>
-  <p>難易度を選んでください。</p>
-  <div id="questionBankStatus" class="bankStatus">過去問題データを読み込み中...</div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap">
-    <button id="levelBtn1" class="bigbtn" onclick="startQuiz(1)" disabled>難易度1<br><span id="levelInfo1" class="small">確認中...</span></button>
-    <button id="levelBtn2" class="bigbtn" onclick="startQuiz(2)" disabled>難易度2<br><span id="levelInfo2" class="small">確認中...</span></button>
-    <button id="levelBtn3" class="bigbtn" onclick="startQuiz(3)" disabled>難易度3<br><span id="levelInfo3" class="small">確認中...</span></button>
-  </div>
-  <br>
-  <button class="bigbtn" onclick="backToMap()">マップへ戻る</button>
-</section>
-
-<section id="quiz" class="panel hidden">
-  <div class="doctorBox"><div class="doctorPortrait"><div class="doctorHair"></div><div class="doctorHead"></div><div class="doctorCoat"></div></div><div><div class="doctorName">セカイ博士</div><div class="doctorText">この世界遺産について、わしから問題じゃ！</div></div></div>
-  <h2 id="quizSite"></h2>
-  <p id="question">サンプル問題</p>
-  <div id="questionSource" class="sourceNote"></div>
-  <div class="answers" id="answers"></div>
-  <div id="feedback"></div>
-  <button id="quizBack" class="bigbtn hidden" onclick="backToMap()">マップへ戻る</button>
-</section>
+<!-- Legacy panels are kept for markup/style compatibility. Phase 8 does not load legacy controllers. -->
+<section id="dialog" class="panel hidden"><div class="dialogBox"><div id="speaker" class="speaker"></div><div id="dialogText" class="dialogText"></div></div></section>
+<section id="discovery" class="panel hidden"><div class="discoveryKicker">NEW WORLD HERITAGE</div><div class="discoveryMark">!</div><div>新しい世界遺産を発見！</div><h2 id="discoveryName"></h2></section>
+<section id="siteDialog" class="panel hidden"><h2 id="siteName"></h2></section>
+<section id="quiz" class="panel hidden"><h2 id="quizSite"></h2><div id="answers"></div></section>
 </div>
 
-<script src="app.js"></script>
-<script src="phase1.js"></script>
-<script src="phase41.js"></script>
-<script src="phase56.js"></script>
-<script src="phase57.js"></script>
-<script src="phase62.js?v=4"></script>
-<script src="phase7.js"></script>
-<script src="phase71.js"></script>
-<script src="phase72.js"></script>
-<script src="piramiton-expr.js?v=1"></script>
-<script src="piramiton-action.js?v=1"></script>
-<script src="phase73.js?v=1"></script>
-<script src="phase75.js?v=1"></script>
+<script src="piramiton-svg.js?v=1"></script>
+<script src="phase8-content.js?v=1"></script>
+<script src="phase8-coast.js?v=1"></script>
+<script src="phase8-engine.js?v=1"></script>
+<script src="phase8-piramiton.js?v=2"></script>
+<script src="phase8-render.js?v=1"></script>
+<script src="phase8-input.js?v=2"></script>
+<script src="phase8-main.js?v=2"></script>
 </body>
 </html>
