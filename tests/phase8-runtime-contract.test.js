@@ -25,6 +25,13 @@ assert(html.indexOf('phase8-content.js')<html.indexOf('phase8-coast.js'),'Coasta
 assert(html.indexOf('phase8-coast.js')<html.indexOf('phase8-engine.js'),'Coastal config must load before the Phase 8 engine');
 assert(!html.includes('<script src="piramiton-expr.js'),'Phase 8 should no longer load Piramiton expression sprite sheet');
 assert(!html.includes('<script src="piramiton-action.js'),'Phase 8 should no longer load Piramiton action sprite sheet');
+assert(!html.includes('id="avatarScreen"'),'Phase 8 must not show the paused character creator');
+assert(!html.includes('CHARACTER CREATE'),'Phase 8 must not include character-creation copy');
+
+const main=fs.readFileSync(path.join(__dirname,'..','phase8-main.js'),'utf8');
+assert(!main.includes('randomizeAvatar'),'Phase 8 boot must not include avatar randomization');
+assert(!main.includes('avatarParts'),'Phase 8 boot must not include character-creation option lists');
+assert(main.includes("Phase8AvatarItem='✦'"),'Phase 8 should use a stable default explorer while creation is paused');
 
 const coast=global.Phase8Coast;
 assert(coast&&typeof coast.isShallow==='function','Phase 8 coastal config must exist');
