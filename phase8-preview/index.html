@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>世界遺産クエスト Phase 8 PREVIEW</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../phase1.css">
+<link rel="stylesheet" href="../phase41.css">
+<link rel="stylesheet" href="../phase56.css">
+<link rel="stylesheet" href="../phase57.css">
+<link rel="stylesheet" href="../phase62.css?v=4">
+<link rel="stylesheet" href="../phase7.css">
+<link rel="stylesheet" href="../phase71.css">
+<link rel="stylesheet" href="../phase72.css">
+<link rel="stylesheet" href="../phase73.css?v=1">
+<link rel="stylesheet" href="../phase75.css?v=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8.css">
+<style>
+.previewBadge{position:fixed;right:10px;top:10px;z-index:9999;background:#172238;color:#fff;border:2px solid #ffcf66;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.18);pointer-events:none}
+</style>
+</head>
+<body>
+<div class="previewBadge">PHASE 8 PREVIEW</div>
+<div id="encounterOverlay"></div>
+<div id="app">
+<h1>世界遺産クエスト α v18 Phase 8</h1>
+
+<section id="avatarScreen" class="panel">
+  <div class="discoveryKicker">CHARACTER CREATE</div>
+  <h2>ぼうけんしゃをつくろう</h2>
+  <p>「つくる」を押すたびに、見た目がランダムで変わります。</p>
+  <div class="avatarStage">
+    <div id="avatarPreview" class="avatarPreview">
+      <div id="avHair" class="avHair hair1"></div>
+      <div id="avFace" class="avFace"></div>
+      <div id="avBody" class="avBody"></div>
+      <div id="avItem" class="avItem">⚔</div>
+    </div>
+  </div>
+  <div id="avatarMeta" class="avatarMeta"></div>
+  <div class="avatarButtons">
+    <button class="bigbtn" onclick="randomizeAvatar()">つくる</button>
+    <button class="bigbtn" onclick="confirmAvatar()">この主人公にする</button>
+  </div>
+</section>
+
+<section id="game" class="panel hidden">
+  <div class="gameLandscape">
+    <aside class="gameSide">
+      <div class="guideSection">
+        <div class="sideTitle">ぼうけんガイド</div>
+        <div class="guideBox">
+          <div class="guidePortrait"></div>
+          <div class="guideText"><div class="guideName">ピラミトン</div><div id="guideMessage">北海道へ向かう準備をしよう！</div></div>
+        </div>
+      </div>
+      <div class="recordSection">
+        <div class="sideTitle">ぼうけんのきろく</div>
+        <div id="progressHud" class="sideProgress">
+          <div class="hudItem"><span class="hudLabel">POINT</span><span class="hudValue" id="totalPoints">0 pt</span></div>
+          <div class="hudItem"><span class="hudLabel">★</span><span class="hudValue" id="starCount">0</span></div>
+          <div class="hudItem"><span class="hudLabel">CLEAR</span><span class="hudValue" id="clearCount">0 / 2</span></div>
+          <div class="hudItem"><span class="hudLabel">MASTER</span><span class="hudValue" id="masterCount">0 / 2</span></div>
+        </div>
+      </div>
+      <div class="sideControls"><div class="sideTitle">いどう</div></div>
+      <div id="status" class="sideLegend"></div>
+      <div id="legend" class="sideLegend"></div>
+    </aside>
+    <main class="gameMapSide">
+      <div class="mapHeader"><span id="mapTitle">北海道エリア</span><span>世界遺産クエスト</span></div>
+      <div id="mapWrap" class="mapWrap"><div id="map" class="map"></div></div>
+    </main>
+  </div>
+</section>
+
+<section id="dialog" class="panel hidden"><div class="dialogBox"><div id="speaker" class="speaker"></div><div id="dialogText" class="dialogText"></div></div></section>
+<section id="discovery" class="panel hidden"><div class="discoveryKicker">NEW WORLD HERITAGE</div><div class="discoveryMark">!</div><div>新しい世界遺産を発見！</div><h2 id="discoveryName"></h2></section>
+<section id="siteDialog" class="panel hidden"><h2 id="siteName"></h2></section>
+<section id="quiz" class="panel hidden"><h2 id="quizSite"></h2><div id="answers"></div></section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/piramiton-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8-content.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8-engine.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8-piramiton.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8-render.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8-input.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tetsushi-ikeno/world-heritage-quest@4e0a6e509408335308b37d39227bd531c1c0844c/phase8-main.js"></script>
+</body>
+</html>
