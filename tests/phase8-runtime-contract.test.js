@@ -2,6 +2,7 @@ global.window=global;
 const fs=require('fs');
 const path=require('path');
 require('../phase8-content.js');
+require('../phase8-coast.js');
 require('../phase8-engine.js');
 
 const E=global.Phase8Engine;
@@ -19,9 +20,16 @@ assert(state.ui && Object.prototype.hasOwnProperty.call(state.ui,'overlay'),'ove
 const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 const legacyControllers=['app.js','phase1.js','phase41.js','phase56.js','phase57.js','phase62.js','phase7.js','phase71.js','phase72.js','phase73.js','phase75.js'];
 legacyControllers.forEach(file=>assert(!html.includes(`<script src="${file}`),`Phase 8 runtime must not load legacy controller ${file}`));
-['piramiton-svg.js','phase8-content.js','phase8-engine.js','phase8-piramiton.js','phase8-render.js','phase8-input.js','phase8-main.js'].forEach(file=>assert(html.includes(`<script src="${file}`),`Phase 8 runtime must load ${file}`));
+['piramiton-svg.js','phase8-content.js','phase8-coast.js','phase8-engine.js','phase8-piramiton.js','phase8-render.js','phase8-input.js','phase8-main.js'].forEach(file=>assert(html.includes(`<script src="${file}`),`Phase 8 runtime must load ${file}`));
+assert(html.indexOf('phase8-content.js')<html.indexOf('phase8-coast.js'),'Coastal config must load after Phase 8 content');
+assert(html.indexOf('phase8-coast.js')<html.indexOf('phase8-engine.js'),'Coastal config must load before the Phase 8 engine');
 assert(!html.includes('<script src="piramiton-expr.js'),'Phase 8 should no longer load Piramiton expression sprite sheet');
 assert(!html.includes('<script src="piramiton-action.js'),'Phase 8 should no longer load Piramiton action sprite sheet');
+
+const coast=global.Phase8Coast;
+assert(coast&&typeof coast.isShallow==='function','Phase 8 coastal config must exist');
+assert(coast.isShallow(26,4),'Shiretoko approach must include walkable shallow water');
+assert(global.Phase8Content.hokkaido.rows[4][26]==='L','Shallow coastal cells must be walkable in the movement grid');
 
 const input=fs.readFileSync(path.join(__dirname,'..','phase8-input.js'),'utf8');
 assert(input.includes('if(dx===0&&dy===0)'), 'Map tap must support interacting with the tile the player already occupies');
