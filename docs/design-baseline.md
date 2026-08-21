@@ -30,16 +30,16 @@
 
 ## Nationwide Movement
 - Status: **APPROVED**
-- Canonical Lab: `japan-follow-camera-lab.html`
-- Approved blob SHA: `0d84c78f629292aa9a164040a20e35eb77b5da49`
+- Canonical Lab: `area-map-lab.html`
 - Scope: 旧4エリア切替を廃止し、北海道から沖縄までを一枚の日本地図として自由に移動する方式を定義する。
+- Map rule: `area-map-lab.html` で確定した地形生成を正本とし、統合Preview側で日本地図を再生成しない。
 - Map rule: 旧4エリアLabで確認したマス粒度を維持し、日本列島であることを視認できる縮尺を優先する。
 - Map rule: 旧エリア境界のグレー部分は全国版では通常の陸地として接続し、画面切替用の境界は設けない。
-- World size in approved Lab: **78 × 70 tiles**。
+- World size in canonical Lab: **86 × 75 tiles**。
 - Movement rule: 北海道〜沖縄まで、浅瀬を含む一枚のマップ内を移動する。エリアCLEARを移動解放条件にはしない。
-- Camera rule: **デッドゾーン追従方式**。画面中央の約 **28% × 32%** の範囲では主人公だけが動き、その範囲を越えると地図側が追従する。
-- Camera edge rule: 日本地図の端ではカメラを停止し、主人公が画面中央に固定され続ける不自然さを避ける。
-- UX intent: 主人公の移動感を残しながら、長距離移動時は日本列島のどこにいるかを把握できることを優先する。
+- Camera rule: **主人公固定・地図移動方式**。主人公は常に画面中央に表示し、移動操作に応じて地図全体を反対方向へ動かす。
+- Camera rule: 以前検討したデッドゾーン追従方式 `japan-follow-camera-lab.html` は採用しない。
+- UX intent: 操作中も主人公の位置を見失いにくくしつつ、日本地図そのものを移動している感覚を優先する。
 - Tutorial rule: 北海道は開始推奨地点として案内してよいが、全国移動そのものを北海道エリアに限定しない。
 
 ## Research Center Growth
@@ -69,10 +69,12 @@
 ## Integrated Preview
 - Status: **PREVIEW**
 - Page: `integrated-preview.html`
-- Purpose: APPROVED済みのチュートリアル・全国移動・研究センター成長を、一つの体験として接続して確認する。
-- Flow: チュートリアル完了 → 日本全国マップ → 知床の `?` を発見 → LV2研究拠点 → 調査・成長確認 → 全国マップへ戻る。
+- Purpose: 細部を完成させる前に、チュートリアル → 全国移動 → 遺産発見 → 研究センター成長というゲーム全体像を最短で確認する。
+- Flow: チュートリアル完了 → `area-map-lab.html` ベースの日本全国マップ → 知床の `?` を発見 → LV2研究拠点 → 調査・成長確認 → 全国マップへ戻る。
+- Preview rule: 全国マップは `area-map-lab.html` を直接利用し、地形・移動方式をPreview側で複製しない。
 - Preview rule: 知床を代表地点として、全国マップ上の表示も `? → LV2 → LV3 → LV4` に同期させる。
 - Preview rule: 研究センター内部は `research-center-style-lab.html` の確定仕様を直接利用し、Preview側で別デザインを作らない。
+- Priority: 現段階では細かなセリフ・演出・個別遺産コンテンツの完成度よりも、ゲーム全体のループを早く把握できることを優先する。
 - Query shortcuts: `?start=tutorial|map|center`、研究センターは `?start=center&level=1..4` で個別確認できる。
 
 ## Workflow rule
