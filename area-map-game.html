@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>世界遺産クエスト｜日本全国</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#63a7cd;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif}#mapFrame{width:100%;height:100%;border:0;display:block;background:#63a7cd}
+</style>
+</head>
+<body>
+<iframe id="mapFrame" src="area-map-lab.html?game=1" title="日本全国マップ"></iframe>
+<script>
+(()=>{'use strict';
+const frame=document.getElementById('mapFrame');
+const KEY='whqGameCenterLevel';
+let poll=null;
+function level(){return Math.min(4,Math.max(1,Number(sessionStorage.getItem(KEY))||1))}
+function setLevel(v){sessionStorage.setItem(KEY,String(v));return v}
+function sprite(lv){
+  if(lv===1)return '<span class="gameQ">?</span>';
+  return `<span class="gameFacility lv${lv}"><i class="roof"></i><i class="body"><i class="door"></i><i class="win l"></i><i class="win r"></i></i>${lv===4?'<i class="flag"></i>':''}</span>`;
+}
+function postOpen(){
+  let lv=level();
+  if(lv===1){lv=setLevel(2);showNotice('世界遺産を発見！','知床を発見した！ 小さな研究拠点ができた。');setTimeout(()=>window.parent.postMessage({type:'whqOpenCenter',level:lv,site:'shiretoko'},'*'),450);return}
+  window.parent.postMessage({type:'whqOpenCenter',level:lv,site:'shiretoko'},'*');
+}
+function showNotice(title,text){
+  const doc=frame.contentDocument;if(!doc)return;const box=doc.getElementById('gameNotice');if(!box)return;box.innerHTML=`<b>${title}</b><span>${text}</span>`;box.classList.add('show');clearTimeout(showNotice.t);showNotice.t=setTimeout(()=>box.classList.remove('show'),2600)
+}
+function patch(){
+  let doc;try{doc=frame.contentDocument}catch(e){return}if(!doc?.body)return;
+  if(!doc.getElementById('gameMapStyle')){
+    const s=doc.createElement('style');s.id='gameMapStyle';s.textContent=`
+      html,body{height:100%;overflow:hidden!important;background:var(--sea)!important}
+      .wrap{max-width:none!important;width:100%!important;height:100%!important;padding:0!important;margin:0!important}
+      .head,.controls,.cameraMode,.status,.jumpTitle,.jumpGrid{display:none!important}
+      .layout{display:block!important;height:100%!important}
+      .mapPanel{height:100%!important;display:grid!important;grid-template-columns:minmax(0,1fr) 176px!important;gap:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+      .camera{height:100%!important;min-height:0!important;border:0!important;border-radius:0!important}
+      .side{display:grid!important;grid-template-columns:1fr!important;align-content:center!important;gap:12px!important;border:0!important;border-left:1px solid rgba(32,57,82,.18)!important;border-radius:0!important;background:rgba(244,247,251,.94)!important;padding:10px!important}
+      .joy{width:140px!important;height:140px!important;grid-row:auto!important}.knob{width:58px!important;height:58px!important}
+      .marker{width:18px!important;height:18px!important;font-size:0!important;background:#fff!important;border:2px solid #315d41!important;color:#315d41!important}
+      .marker:after{content:'?';font-size:11px;font-weight:1000;line-height:1}
+      .marker.previewCenter{width:30px!important;height:30px!important;border:0!important;background:transparent!important;overflow:visible!important;display:grid!important;place-items:center!important}
+      .marker.previewCenter:after{display:none}
+      .gameHud{position:absolute;left:12px;top:12px;z-index:80;display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.94);border:1px solid #c6d0dc;border-radius:12px;padding:8px 10px;box-shadow:0 4px 14px #20385026;color:#22334a;font-weight:900}
+      .gameHud b{font-size:13px}.gameHud small{font-size:10px;color:#66768b}.gameHud button{border:1px solid #b9c5d2;background:#fff;border-radius:8px;padding:6px 8px;font-size:10px;font-weight:900;color:#40516a}
+      .gameMenu{position:absolute;left:12px;top:62px;z-index:90;width:220px;background:#fff;border:1px solid #c6d0dc;border-radius:12px;padding:10px;box-shadow:0 7px 22px #20385035;display:none;font-size:11px;line-height:1.6}.gameMenu.show{display:block}.gameMenu b{display:block;font-size:13px;margin-bottom:4px}.gameMenu button{margin-top:8px;width:100%;border:0;background:#253149;color:#fff;border-radius:8px;padding:7px;font-weight:900}
+      .gameAction{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:85;display:none;background:#172238;color:#fff;border:2px solid #e3b53c;border-radius:12px;padding:8px 10px;font-size:11px;font-weight:900;box-shadow:0 5px 16px #0004;white-space:nowrap}.gameAction.show{display:flex;align-items:center;gap:8px}.gameAction button{border:0;border-radius:8px;background:#fff;color:#26354b;padding:7px 10px;font-weight:1000}
+      .gameNotice{position:absolute;left:50%;top:18%;transform:translate(-50%,-8px);z-index:100;min-width:280px;background:#172238;color:#fff;border:2px solid #e3b53c;border-radius:14px;padding:12px 16px;box-shadow:0 8px 26px #0005;opacity:0;pointer-events:none;transition:.18s;text-align:center}.gameNotice.show{opacity:1;transform:translate(-50%,0)}.gameNotice b{display:block;font-size:15px;margin-bottom:3px}.gameNotice span{font-size:11px}
+      .gameQ{width:19px;height:19px;border-radius:50%;background:#fff;border:2px solid #246a47;color:#246a47;display:grid;place-items:center;font:1000 12px/1 sans-serif;box-shadow:0 1px 2px #2346}
+      .gameFacility{position:relative;display:block;image-rendering:pixelated}.gameFacility .body{position:absolute;left:50%;bottom:0;transform:translateX(-50%);background:#e5efe1;border:2px solid #3f4a5d}.gameFacility .roof{position:absolute;left:50%;transform:translateX(-50%);background:#46536a;clip-path:polygon(12% 100%,27% 0,73% 0,88% 100%)}.gameFacility .door{position:absolute;left:50%;bottom:0;transform:translateX(-50%);background:#8ea8b8;border:1px solid #38465b}.gameFacility .win{position:absolute;background:#b9dce8;border:1px solid #40516b}
+      .gameFacility.lv2{width:15px;height:14px}.gameFacility.lv2 .body{width:12px;height:9px}.gameFacility.lv2 .roof{width:15px;height:6px;bottom:9px}.gameFacility.lv2 .door{width:4px;height:5px}.gameFacility.lv2 .win{width:3px;height:3px;left:2px;bottom:3px}.gameFacility.lv2 .win.r{left:auto;right:2px}
+      .gameFacility.lv3{width:21px;height:19px}.gameFacility.lv3 .body{width:18px;height:12px}.gameFacility.lv3 .roof{width:21px;height:7px;bottom:12px}.gameFacility.lv3 .door{width:5px;height:7px}.gameFacility.lv3 .win{width:4px;height:4px;left:2px;bottom:5px}.gameFacility.lv3 .win.r{left:auto;right:2px}
+      .gameFacility.lv4{width:26px;height:24px}.gameFacility.lv4 .body{width:23px;height:15px}.gameFacility.lv4 .roof{width:26px;height:8px;bottom:15px}.gameFacility.lv4 .door{width:6px;height:9px}.gameFacility.lv4 .win{width:5px;height:5px;left:3px;bottom:6px}.gameFacility.lv4 .win.r{left:auto;right:3px}.gameFacility .flag{position:absolute;width:2px;height:14px;background:#46536a;right:0;top:-1px}.gameFacility .flag:after{content:'';position:absolute;left:2px;top:0;width:8px;height:5px;background:#e3b53c;clip-path:polygon(0 0,100% 25%,0 100%)}
+      @media(max-width:850px){.mapPanel{grid-template-columns:minmax(0,1fr) 150px!important}.side{display:grid!important}.joy{width:124px!important;height:124px!important}}
+    `;doc.head.appendChild(s);
+  }
+  if(!doc.documentElement.dataset.gameStarted){doc.documentElement.dataset.gameStarted='1';doc.querySelector('[data-jump="hokkaido"]')?.click()}
+  const camera=doc.getElementById('camera');if(!camera)return;
+  if(!doc.getElementById('gameHud')){
+    const hud=doc.createElement('div');hud.id='gameHud';hud.className='gameHud';hud.innerHTML='<div><b>日本全国</b><small id="gameProgress">　調査済み 0 / 27</small></div><button type="button">メニュー</button>';camera.appendChild(hud);
+    const menu=doc.createElement('div');menu.id='gameMenu';menu.className='gameMenu';menu.innerHTML='<b>調査記録</b><div>世界遺産を見つけて研究センターを育てよう。</div><div id="gameMenuProgress">調査済み 0 / 27</div><button type="button">閉じる</button>';camera.appendChild(menu);
+    hud.querySelector('button').addEventListener('click',()=>menu.classList.toggle('show'));menu.querySelector('button').addEventListener('click',()=>menu.classList.remove('show'));
+    const action=doc.createElement('div');action.id='gameAction';action.className='gameAction';action.innerHTML='<span></span><button type="button">しらべる</button>';camera.appendChild(action);action.querySelector('button').addEventListener('click',postOpen);
+    const notice=doc.createElement('div');notice.id='gameNotice';notice.className='gameNotice';camera.appendChild(notice);
+  }
+  const lv=level();const discovered=lv>=2?1:0;const p=doc.getElementById('gameProgress');const mp=doc.getElementById('gameMenuProgress');if(p)p.textContent=`　調査済み ${discovered} / 27`;if(mp)mp.textContent=`調査済み ${discovered} / 27`;
+  const markers=[...doc.querySelectorAll('.marker')];let shiretoko=null;
+  for(const m of markers){if(!m.dataset.heritageId){const t=m.textContent.trim();if(/^\d+$/.test(t))m.dataset.heritageId=t}if(m.dataset.heritageId==='13')shiretoko=m}
+  if(!shiretoko)return;shiretoko.classList.add('previewCenter');shiretoko.innerHTML=sprite(lv);shiretoko.title=lv===1?'？':`知床研究センター LV${lv}`;shiretoko.onclick=e=>{e.stopPropagation();postOpen()};
+  const player=doc.querySelector('.playerFixed'),action=doc.getElementById('gameAction');if(!player||!action)return;
+  const a=player.getBoundingClientRect(),b=shiretoko.getBoundingClientRect(),c=camera.getBoundingClientRect();const dist=Math.hypot((a.left+a.width/2)-(b.left+b.width/2),(a.top+a.height/2)-(b.top+b.height/2));const near=dist<64&&b.right>c.left&&b.left<c.right&&b.bottom>c.top&&b.top<c.bottom;action.classList.toggle('show',near);action.querySelector('span').textContent=lv===1?'「？」をみつけた！':'知床研究センター';action.querySelector('button').textContent=lv===1?'しらべる':'入る';
+}
+frame.addEventListener('load',()=>{clearInterval(poll);patch();poll=setInterval(patch,180)});
+window.addEventListener('message',e=>{if(e.data?.type==='whqRefreshMap')patch()});
+})();
+</script>
+</body>
+</html>
