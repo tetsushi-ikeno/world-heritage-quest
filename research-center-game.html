@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>世界遺産クエスト｜知床研究センター</title>
+<style>
+:root{--ink:#1d2940;--muted:#68768b;--navy:#253149;--gold:#e3b53c;--bg:#e9edf2;--line:#c6cfdb;--nature:#5f9270;--floor:#d2bc96;--wall:#d8e3d6;--cell:42px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif;user-select:none}button{font:inherit;touch-action:manipulation}.game{height:100%;display:grid;grid-template-rows:auto 1fr auto}.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border-bottom:1px solid var(--line);padding:9px 12px}.hudTitle{display:flex;align-items:center;gap:8px}.hudTitle b{font-size:15px}.pill{background:var(--nature);color:#fff;border-radius:999px;padding:4px 8px;font-size:9px;font-weight:1000}.progress{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900}.bar{width:120px;height:9px;background:#e2e7ec;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gold);width:0;transition:.25s}.main{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 185px;gap:0}.roomWrap{position:relative;display:grid;place-items:center;min-width:0;overflow:hidden;background:#e9edf2}.room{display:grid;position:relative;image-rendering:pixelated;box-shadow:0 9px 24px rgba(40,52,69,.18)}.cell{width:var(--cell);height:var(--cell);position:relative;display:grid;place-items:center}.wall{background:var(--wall);border:1px solid #bfc8c2}.floor{background:var(--floor);border:1px solid #c3a87e}.exit{background:#a7b6c2;border:2px solid #62758a}.exit:after{content:'出';font-size:10px;color:#fff;font-weight:1000}.obj{width:82%;height:82%;display:grid;place-items:center;border:2px solid #596678;background:#f6f1e6;border-radius:4px;font-size:15px;position:relative}.obj.done:after{content:'✓';position:absolute;right:-6px;top:-7px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#26354b;border:2px solid #fff;font-size:10px;font-weight:1000}.obj.display{background:#dce8dc}.obj.display:before{content:'展';font-size:12px;font-weight:1000}.obj.book{background:#d8bd88}.obj.book:before{content:'本';font-size:12px;font-weight:1000}.obj.shelf{background:repeating-linear-gradient(90deg,#405675 0 5px,#d8a347 5px 9px,#8d5b4c 9px 13px,#6c875e 13px 18px)}.obj.researcher{background:transparent;border:0}.obj.researcher:before{content:'';width:42%;height:42%;border-radius:50%;background:#e2ba95;border:2px solid #594c42;position:absolute;top:2%}.obj.researcher:after{content:'';width:58%;height:54%;border-radius:6px;background:#eef2f5;border:2px solid #58697b;position:absolute;bottom:2%}.obj.plaque{background:#fff8e4;border:4px solid #6b5742}.obj.plaque:before{content:'知';font-weight:1000}.player{position:absolute;width:70%;height:70%;background:#3157a3;border:2px solid #243b69;z-index:7;box-shadow:0 -7px 0 -4px #f1c49e}.player:after{content:'';position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);width:75%;height:7px;border-radius:50%;background:#293b5533;z-index:-1}.side{background:rgba(255,255,255,.94);border-left:1px solid #cbd4de;display:grid;align-content:center;gap:12px;padding:10px}.joy{position:relative;width:142px;height:142px;margin:auto;border-radius:50%;background:radial-gradient(circle,#e3ebf4 0 30%,#263a59 31% 34%,#18263e 35% 100%);border:2px solid #879bb8;touch-action:none}.knob{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(#edf3fa,#bac9dc);border:2px solid #fff;box-shadow:0 2px 5px #0005}.mark{position:absolute;color:#dce6f4;font-weight:1000}.u{top:7px;left:50%;transform:translateX(-50%)}.d{bottom:7px;left:50%;transform:translateX(-50%)}.l{left:8px;top:50%;transform:translateY(-50%)}.r{right:8px;top:50%;transform:translateY(-50%)}.hint{text-align:center;font-size:10px;color:#617087;font-weight:900;line-height:1.5}.action{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:30;background:#172238;color:#fff;border:2px solid var(--gold);border-radius:12px;padding:8px 10px;display:none;align-items:center;gap:8px;font-size:11px;font-weight:900;box-shadow:0 5px 16px #0004}.action.show{display:flex}.action button{border:0;border-radius:8px;background:#fff;color:#26354b;padding:7px 11px;font-weight:1000}.message{background:#fff9e8;border-top:1px solid #dccb95;padding:10px 14px;min-height:74px;display:grid;align-content:center}.message b{font-size:11px}.message p{font-size:12px;line-height:1.5;font-weight:800;margin:3px 0 0}.growth{position:absolute;inset:0;z-index:50;display:grid;place-items:center;background:rgba(29,41,64,.55);opacity:0;pointer-events:none;transition:.22s}.growth.show{opacity:1}.growthBox{background:#fff;border:3px solid var(--gold);border-radius:17px;padding:22px 28px;text-align:center;box-shadow:0 12px 30px #0005}.growthBox b{display:block;font-size:21px}.growthBox span{display:block;margin-top:6px;font-size:12px;font-weight:900;color:#5f6e82}
+@media(max-width:1050px) and (orientation:landscape){:root{--cell:36px}.main{grid-template-columns:minmax(0,1fr) 160px}.joy{width:126px;height:126px}.bar{width:90px}}
+</style>
+</head>
+<body>
+<div class="game">
+  <header class="hud"><div class="hudTitle"><b id="title">知床研究センター LV2</b><span class="pill">自然遺産</span></div><div class="progress"><span id="progressText">調査 0 / 3</span><span class="bar"><i id="progressBar"></i></span></div></header>
+  <main class="main"><section class="roomWrap"><div id="room" class="room"></div><div id="action" class="action"><span></span><button type="button"></button></div><div id="growth" class="growth"><div class="growthBox"><b>研究センターが成長した！</b><span>LV2 → LV3</span></div></div></section><aside class="side"><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div><div class="hint">矢印キー / WASD / スティック<br>対象のとなりでアクション</div></aside></main>
+  <footer id="message" class="message"><b>知床研究センター</b><p>本・展示・調査員を調べて、知床の研究を進めよう。</p></footer>
+</div>
+<script>
+(()=>{'use strict';
+const LEVEL_KEY='whqGameCenterLevel',DONE_KEY='whqShiretokoInvestigated';
+const layouts={
+  2:[
+    '###########',
+    '#.........#',
+    '#....D....#',
+    '#.........#',
+    '#..B...R..#',
+    '#.........#',
+    '#.........#',
+    '#####E#####'
+  ],
+  3:[
+    '#############',
+    '#S.........S#',
+    '#.....D.....#',
+    '#...........#',
+    '#..B.....R..#',
+    '#...........#',
+    '#S....P....S#',
+    '#...........#',
+    '######E######'
+  ],
+  4:[
+    '#############',
+    '#S..S...S..S#',
+    '#.....D.....#',
+    '#...........#',
+    '#..B..R..R..#',
+    '#...........#',
+    '#S....P....S#',
+    '#...........#',
+    '######E######'
+  ]
+};
+const meta={D:{id:'display',label:'大きな展示がある！',action:'しらべる',title:'知床の自然',text:'知床は、流氷がもたらす豊かな栄養と、海・川・森がつながる生態系が大きな特徴です。'},B:{id:'book',label:'本をみつけた！',action:'読む',title:'知床についての本',text:'知床は北海道の東にある世界自然遺産。海と陸の生きものが深く関わり合って暮らしています。'},R:{id:'researcher',label:'ちょうさいんがいる！',action:'はなす',title:'調査員',text:'冬にやってくる流氷は、知床の豊かな生態系を支える大切な存在なんだ。'}};
+let level=Math.max(2,Math.min(4,Number(sessionStorage.getItem(LEVEL_KEY))||2));
+let done=new Set();try{done=new Set(JSON.parse(sessionStorage.getItem(DONE_KEY)||'[]'))}catch(e){}
+let player={x:5,y:6},target=null,pid=null,timer=null,dir=null;
+const room=document.getElementById('room'),action=document.getElementById('action'),message=document.getElementById('message'),joy=document.getElementById('joy'),knob=document.getElementById('knob');
+function layout(){return layouts[level]||layouts[3]}
+function save(){sessionStorage.setItem(LEVEL_KEY,String(level));sessionStorage.setItem(DONE_KEY,JSON.stringify([...done]));window.parent.postMessage({type:'whqCenterLevel',level,done:[...done]},'*')}
+function setMsg(title,text){message.innerHTML=`<b>${title}</b><p>${text}</p>`}
+function tileChar(x,y){return layout()[y]?.[x]||'#'}
+function blocked(x,y){const c=tileChar(x,y);return c==='#'||'DBRSP'.includes(c)}
+function render(){
+  const rows=layout(),h=rows.length,w=rows[0].length;room.innerHTML='';room.style.gridTemplateColumns=`repeat(${w},var(--cell))`;room.style.gridTemplateRows=`repeat(${h},var(--cell))`;document.getElementById('title').textContent=`知床研究センター LV${level}`;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const c=rows[y][x],cell=document.createElement('div');cell.className='cell '+(c==='#'?'wall':c==='E'?'exit':'floor');cell.dataset.x=x;cell.dataset.y=y;if(meta[c]){const o=document.createElement('div');o.className=`obj ${meta[c].id}${done.has(meta[c].id)?' done':''}`;cell.appendChild(o)}else if(c==='S'){const o=document.createElement('div');o.className='obj shelf';cell.appendChild(o)}else if(c==='P'){const o=document.createElement('div');o.className='obj plaque';cell.appendChild(o)}if(x===player.x&&y===player.y){const p=document.createElement('div');p.className='player';cell.appendChild(p)}room.appendChild(cell)}
+  updateProgress();findTarget();
+}
+function updateProgress(){const n=['display','book','researcher'].filter(x=>done.has(x)).length;document.getElementById('progressText').textContent=`調査 ${n} / 3`;document.getElementById('progressBar').style.width=`${n/3*100}%`}
+function findTarget(){target=null;const around=[[0,-1],[0,1],[-1,0],[1,0]];for(const [dx,dy] of around){const x=player.x+dx,y=player.y+dy,c=tileChar(x,y);if(meta[c]){target={type:'object',c,x,y,...meta[c]};break}if(c==='E'){target={type:'exit',label:'出口がある',action:'外へ出る'};break}}
+  action.classList.toggle('show',!!target);if(!target)return;action.querySelector('span').textContent=target.label;action.querySelector('button').textContent=target.action;
+}
+function move(dx,dy){const nx=player.x+dx,ny=player.y+dy;if(blocked(nx,ny))return;player={x:nx,y:ny};render()}
+function interact(){if(!target)return;if(target.type==='exit'){window.parent.postMessage({type:'whqExitCenter',level},'*');return}const first=!done.has(target.id);done.add(target.id);setMsg(target.title,target.text);save();render();if(first&&done.has('display')&&done.has('book')&&done.has('researcher')&&level===2){setTimeout(grow,350)}}
+function grow(){level=3;sessionStorage.setItem(LEVEL_KEY,'3');save();document.getElementById('growth').classList.add('show');setTimeout(()=>{document.getElementById('growth').classList.remove('show');player={x:6,y:7};render();setMsg('研究センター LV3','研究が進み、資料や設備が増えた！ 外へ出ると全国マップの施設も成長しています。')},900)}
+action.querySelector('button').addEventListener('click',interact);
+window.addEventListener('keydown',e=>{const d={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];if(!d)return;e.preventDefault();move(...d)});
+function direction(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;if(Math.hypot(dx,dy)<12)return null;return Math.abs(dx)>Math.abs(dy)?[Math.sign(dx),0]:[0,Math.sign(dy)]}
+function place(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,m=40,dist=Math.hypot(dx,dy)||1,q=Math.min(1,m/dist);knob.style.transform=`translate(calc(-50% + ${dx*q}px),calc(-50% + ${dy*q}px))`}
+function stop(){pid=null;dir=null;clearInterval(timer);timer=null;knob.style.transform='translate(-50%,-50%)'}
+joy.addEventListener('pointerdown',e=>{pid=e.pointerId;joy.setPointerCapture(pid);place(e);dir=direction(e);if(dir)move(...dir);clearInterval(timer);timer=setInterval(()=>{if(dir)move(...dir)},180)});joy.addEventListener('pointermove',e=>{if(e.pointerId!==pid)return;place(e);dir=direction(e)});joy.addEventListener('pointerup',stop);joy.addEventListener('pointercancel',stop);
+if(level>=3&&done.size<3){done=new Set(['display','book','researcher']);sessionStorage.setItem(DONE_KEY,JSON.stringify([...done]))}
+const rows=layout();player={x:Math.floor(rows[0].length/2),y:rows.length-2};render();save();
+})();
+</script>
+</body>
+</html>
