@@ -3,205 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>世界遺産クエスト 日本エリア MAP LAB</title>
+<title>世界遺産クエスト 日本全域 MAP LAB</title>
 <style>
-:root{--sea:#63a7cd;--shallow:#b9deef;--land:#74ad57;--block:#4f5d6f;--tile:29px;--heritage:#8f3b2f;--natural:#246a47}
+:root{--sea:#63a7cd;--shallow:#b9deef;--land:#74ad57;--tile:28px;--heritage:#8f3b2f;--natural:#246a47}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{overscroll-behavior:none}
 body{margin:0;background:#eef3f8;color:#1c2a40;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;user-select:none}
-.wrap{max-width:1500px;margin:auto;padding:12px}
-.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:12px}.head h1{font-size:21px;margin:0}.badge{background:#172238;color:#fff;border:2px solid #e9b84c;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;white-space:nowrap}
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:9px}.tabs button{border:1px solid #b9c7d9;background:#fff;border-radius:10px;min-height:42px;font:inherit;font-weight:900;color:#2d405c;padding:7px 6px}.tabs button.active{background:#203b65;color:#fff;border-color:#203b65}
-.layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:11px}.panel{background:#fff;border:1px solid #cad5e4;border-radius:14px;padding:11px;box-shadow:0 5px 15px rgba(24,43,72,.08)}.controls{display:grid;gap:9px;align-content:start}.info{background:#edf4fb;border:1px solid #d6e2ef;border-radius:10px;padding:9px}.info b{font-size:16px}.info p,.note,.status,.summary,.heritageList{font-size:12px;line-height:1.5;margin:5px 0 0}.routeNote{font-size:12px;line-height:1.5;background:#e9f6fb;border-left:4px solid #5aa7ca;border-radius:8px;padding:8px;color:#365673}
-.control label{display:flex;justify-content:space-between;font-size:13px;font-weight:800}.control input{width:100%;margin-top:4px}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button,.jump button{border:1px solid #b9c7d9;background:#fff;border-radius:9px;padding:8px 10px;min-height:38px;font:inherit;font-weight:800;color:#263a55}.actions button.active{background:#203b65;color:#fff}.legend{display:flex;gap:9px;flex-wrap:wrap;font-size:12px}.key{display:flex;align-items:center;gap:4px}.sw{width:16px;height:16px;border-radius:2px}.note{background:#f4f7fb;padding:8px;border-radius:8px;color:#58697f}
+button,input{font:inherit}
+.wrap{max-width:1600px;margin:auto;padding:12px}
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;gap:12px}.head h1{font-size:21px;margin:0}.badge{background:#172238;color:#fff;border:2px solid #e9b84c;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;white-space:nowrap}
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:11px}.panel{background:#fff;border:1px solid #cad5e4;border-radius:14px;padding:11px;box-shadow:0 5px 15px rgba(24,43,72,.08)}
+.controls{display:grid;gap:9px;align-content:start}.info{background:#edf4fb;border:1px solid #d6e2ef;border-radius:10px;padding:9px}.info b{font-size:16px}.info p,.note,.status,.summary,.heritageList{font-size:12px;line-height:1.5;margin:5px 0 0}.control label{display:flex;justify-content:space-between;font-size:13px;font-weight:800}.control input{width:100%;margin-top:4px}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button,.jumpGrid button{border:1px solid #b9c7d9;background:#fff;border-radius:9px;padding:8px 9px;min-height:38px;font-weight:800;color:#263a55}.actions button.active{background:#203b65;color:#fff}.legend{display:flex;gap:9px;flex-wrap:wrap;font-size:12px}.key{display:flex;align-items:center;gap:4px}.sw{width:16px;height:16px;border-radius:2px}.note{background:#f4f7fb;padding:8px;border-radius:8px;color:#58697f}
 .heritageBox{border:1px solid #d8c9c5;background:#fffaf8;border-radius:9px;padding:8px}.heritageHead{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900}.heritageList{max-height:190px;overflow:auto;padding-right:3px;margin-top:6px}.heritageItem{display:flex;gap:6px;padding:3px 0;border-bottom:1px dotted #ddd}.heritageItem:last-child{border-bottom:0}.num{font-weight:900;min-width:20px}.tag{font-size:10px;border:1px solid #c5b7b2;border-radius:999px;padding:1px 4px;white-space:nowrap}.tag.natural{border-color:#78a58d;color:#246a47}
-.mapPanel{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:9px}.scroll{overflow:auto;border-radius:10px;-webkit-overflow-scrolling:touch}.frame{background:var(--sea);padding:9px;border-radius:10px;min-width:max-content}.map{display:grid;grid-template-columns:repeat(32,var(--tile));grid-template-rows:repeat(24,var(--tile));width:max-content;background:var(--sea);touch-action:manipulation}.tile{width:var(--tile);height:var(--tile);position:relative;border:1px solid var(--c,transparent)}.sea{background:var(--sea);--c:var(--sea)}.shallow,.fixed{background:var(--shallow);--c:var(--shallow)}.land{background:var(--land);--c:var(--land)}.block{background:var(--block);--c:var(--block)}.grid .tile{border-color:rgba(255,255,255,.65)}
-.markerStack{position:absolute;inset:1px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:1px;z-index:4;pointer-events:none}.marker{width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:var(--heritage);border:2px solid var(--heritage);font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(0,0,0,.25);pointer-events:auto;cursor:pointer}.marker.natural{color:var(--natural);border-color:var(--natural)}
-.side{display:grid;gap:9px;align-content:start;background:#f4f7fb;border:1px solid #d7e0ec;border-radius:12px;padding:9px}.joy{position:relative;width:138px;height:138px;margin:auto;border-radius:50%;background:radial-gradient(circle,#e3ebf4 0 30%,#263a59 31% 34%,#18263e 35% 100%);border:2px solid #879bb8;touch-action:none}.knob{position:absolute;left:50%;top:50%;width:56px;height:56px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(#edf3fa,#bac9dc);border:2px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.3)}.mark{position:absolute;color:#dce6f4;font-weight:900}.u{top:6px;left:50%;transform:translateX(-50%)}.d{bottom:6px;left:50%;transform:translateX(-50%)}.l{left:7px;top:50%;transform:translateY(-50%)}.rr{right:7px;top:50%;transform:translateY(-50%)}.status{text-align:center;font-weight:800;min-height:40px;margin:0}.blockedStatus{color:#a1473d}.jump{display:grid;gap:6px}
-.player{position:absolute;left:50%;top:50%;width:15px;height:21px;transform:translate(-50%,-57%);z-index:6;filter:drop-shadow(0 1px 1px #333)}.ph{position:absolute;left:4px;top:0;width:8px;height:8px;background:#f1c391;border:1px solid #3b2f2a}.pb{position:absolute;left:2px;bottom:0;width:12px;height:11px;background:#2d4c9b;border:1px solid #27354d}.pe{position:absolute;left:6px;top:3px;width:1px;height:1px;background:#30251f;box-shadow:4px 0 #30251f}
-@media(max-width:1180px){:root{--tile:22px}.layout{grid-template-columns:285px minmax(0,1fr)}.mapPanel{grid-template-columns:minmax(0,1fr) 154px}.joy{width:124px;height:124px}.marker{width:12px;height:12px;font-size:7px;border-width:1.5px}}
-@media(max-width:850px){.tabs{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.mapPanel{grid-template-columns:1fr}.side{grid-template-columns:150px 1fr;align-items:center}.joy{grid-row:1/4}}
+.mapPanel{display:grid;grid-template-columns:minmax(0,1fr) 184px;gap:9px;min-width:0}.camera{position:relative;overflow:hidden;min-width:0;height:min(76vh,760px);min-height:520px;background:var(--sea);border-radius:10px;border:1px solid #87b5cf;touch-action:none}.world{position:absolute;left:0;top:0;display:grid;width:max-content;will-change:transform}.tile{width:var(--tile);height:var(--tile);position:relative;border:1px solid var(--c,transparent)}.sea{background:var(--sea);--c:var(--sea)}.shallow,.fixed{background:var(--shallow);--c:var(--shallow)}.land{background:var(--land);--c:var(--land)}.grid .tile{border-color:rgba(255,255,255,.58)}
+.playerFixed{position:absolute;left:50%;top:50%;width:20px;height:28px;transform:translate(-50%,-59%);z-index:20;filter:drop-shadow(0 2px 2px rgba(0,0,0,.45));pointer-events:none}.playerFixed:after{content:"";position:absolute;left:50%;bottom:-5px;width:19px;height:7px;transform:translateX(-50%);border-radius:50%;background:rgba(28,43,58,.24);z-index:-1}.ph{position:absolute;left:5px;top:0;width:10px;height:10px;background:#f1c391;border:1px solid #3b2f2a}.hair{position:absolute;left:4px;top:-1px;width:12px;height:4px;background:#6a3d29}.pb{position:absolute;left:2px;bottom:0;width:16px;height:15px;background:#2d4c9b;border:1px solid #27354d}.pe{position:absolute;left:7px;top:4px;width:1px;height:1px;background:#30251f;box-shadow:4px 0 #30251f}
+.markerStack{position:absolute;inset:1px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:1px;z-index:5;pointer-events:none}.marker{width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:var(--heritage);border:2px solid var(--heritage);font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(0,0,0,.25);pointer-events:auto;cursor:pointer}.marker.natural{color:var(--natural);border-color:var(--natural)}
+.side{display:grid;gap:9px;align-content:start;background:#f4f7fb;border:1px solid #d7e0ec;border-radius:12px;padding:9px}.cameraMode{font-size:11px;font-weight:900;text-align:center;background:#e8eff8;border-radius:999px;padding:5px 7px;color:#36506f}.status{text-align:center;font-weight:800;min-height:44px;margin:0}.blockedStatus{color:#a1473d}.joy{position:relative;width:146px;height:146px;margin:auto;border-radius:50%;background:radial-gradient(circle,#e3ebf4 0 30%,#263a59 31% 34%,#18263e 35% 100%);border:2px solid #879bb8;touch-action:none}.knob{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(#edf3fa,#bac9dc);border:2px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.3)}.mark{position:absolute;color:#dce6f4;font-weight:900}.u{top:7px;left:50%;transform:translateX(-50%)}.d{bottom:7px;left:50%;transform:translateX(-50%)}.l{left:8px;top:50%;transform:translateY(-50%)}.rr{right:8px;top:50%;transform:translateY(-50%)}.jumpTitle{font-size:11px;font-weight:900;color:#607087}.jumpGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.jumpGrid button{font-size:11px;padding:7px 5px;min-height:36px}
+@media(max-width:1180px){:root{--tile:22px}.layout{grid-template-columns:285px minmax(0,1fr)}.mapPanel{grid-template-columns:minmax(0,1fr) 160px}.camera{height:min(73vh,650px);min-height:450px}.joy{width:126px;height:126px}.marker{width:12px;height:12px;font-size:7px;border-width:1.5px}}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.mapPanel{grid-template-columns:1fr}.camera{height:58vh;min-height:390px}.side{grid-template-columns:145px 1fr;align-items:center}.joy{grid-row:1/5}.jumpGrid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="head"><h1>日本エリア MAP LAB</h1><div class="badge">24 ROWS / 27 WORLD HERITAGE</div></div>
-<nav id="tabs" class="tabs"></nav>
-<div class="layout">
-<section class="panel controls">
-  <div class="info"><b id="areaName"></b><p id="areaDesc"></p></div>
-  <div class="control"><label><span>海岸の浅瀬</span><b id="wVal">1マス</b></label><input id="width" type="range" min="0" max="2" step="1" value="1"></div>
-  <div class="actions"><button id="finish" class="active">仕上げ表示</button><button id="shape">地形のみ</button><button id="gridBtn">マス境界</button><button id="heritageBtn" class="active">世界遺産27件 ON</button></div>
-  <div id="routeNote" class="routeNote"></div>
-  <div class="legend"><span class="key"><i class="sw" style="background:var(--land)"></i>陸地</span><span class="key"><i class="sw" style="background:var(--shallow)"></i>浅瀬</span><span class="key"><i class="sw" style="background:var(--block)"></i>他エリアへ続く陸地境界</span></div>
-  <div class="note">グレーは「別エリアへ陸続きになる場所」だけです。海岸線には使いません。四国・九州・北海道など独立した島は海岸浅瀬で囲みます。</div>
-  <div id="summary" class="summary"></div>
-  <div class="heritageBox"><div class="heritageHead"><span>このエリアの世界遺産</span><span id="heritageCount"></span></div><div id="heritageList" class="heritageList"></div></div>
-</section>
-<section class="panel mapPanel">
-  <div id="scroll" class="scroll"><div class="frame"><div id="map" class="map"></div></div></div>
-  <aside class="side"><div id="status" class="status">矢印キーまたはスティックで移動できます</div><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark rr">▶</span><div id="knob" class="knob"></div></div><div class="jump"><button id="jumpStart">初期位置へ</button><button id="jumpFocus"></button></div></aside>
-</section>
-</div></div>
+  <div class="head"><h1>日本全域 MAP LAB</h1><div class="badge">ONE WORLD / CENTER CAMERA</div></div>
+  <div class="layout">
+    <section class="panel controls">
+      <div class="info"><b>4エリアを1枚の日本地図へ統合</b><p>エリア境界のグレーは廃止し、本州は一続きの陸地として結合しました。北海道・四国・九州は海を挟み、浅瀬を通って自由に移動できます。</p></div>
+      <div class="control"><label><span>海岸の浅瀬</span><b id="wVal">1マス</b></label><input id="width" type="range" min="0" max="2" step="1" value="1"></div>
+      <div class="actions"><button id="finish" class="active">仕上げ表示</button><button id="shape">地形のみ</button><button id="gridBtn">マス境界</button><button id="heritageBtn" class="active">世界遺産27件 ON</button></div>
+      <div class="legend"><span class="key"><i class="sw" style="background:var(--land)"></i>陸地</span><span class="key"><i class="sw" style="background:var(--shallow)"></i>浅瀬</span><span class="key"><i class="sw" style="background:var(--sea)"></i>深い海</span></div>
+      <div class="note">主人公の表示位置は常に画面中央です。移動すると地図全体が反対方向へ動きます。浅瀬1マスでは北海道・四国・九州も徒歩で渡れます。</div>
+      <div id="summary" class="summary"></div>
+      <div class="heritageBox"><div class="heritageHead"><span>日本の世界遺産</span><span>27件</span></div><div id="heritageList" class="heritageList"></div></div>
+    </section>
+    <section class="panel mapPanel">
+      <div id="camera" class="camera">
+        <div id="world" class="world"></div>
+        <div class="playerFixed" aria-label="主人公"><div class="ph"></div><div class="hair"></div><div class="pe"></div><div class="pb"></div></div>
+      </div>
+      <aside class="side">
+        <div class="cameraMode">主人公固定カメラ</div>
+        <div id="status" class="status">矢印キーまたはスティックで移動できます</div>
+        <div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark rr">▶</span><div id="knob" class="knob"></div></div>
+        <div class="jumpTitle">位置をすぐ確認</div>
+        <div class="jumpGrid"><button data-jump="hokkaido">北海道</button><button data-jump="tohoku">東北</button><button data-jump="tokyo">関東</button><button data-jump="kansai">関西</button><button data-jump="shikoku">四国</button><button data-jump="kyushu">九州</button><button data-jump="okinawa">沖縄</button><button data-jump="ogasawara">小笠原</button></div>
+      </aside>
+    </section>
+  </div>
+</div>
 <script>
 (()=>{'use strict';
-const W=32,H=24;
-const AREAS={
-  hokkaido:{order:'①',tab:'北海道',name:'① 北海道',desc:'北海道は島なので、陸地境界のグレーはありません。',route:'海岸浅瀬で北海道全体を囲みます。',start:[12,11],focus:[27,6],focusLabel:'知床へ',rows:[
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~LL~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~LLLL~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~LLLL~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~LLLLL~~~~~~~~~~~L~~~~',
-      '~~~~~~~~~~~LLLLLL~~~~~~~~~LL~~~~',
-      '~~~~~~~~~~LLLLLLLL~~~~~~~LL~~~~~',
-      '~~~~~~~~~~LLLLLLLLLL~LL~LL~~~~~~',
-      '~~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~~',
-      '~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~~~',
-      '~~~~~~~~~LLLLLLLLLLLLLLLLL~~~~~~',
-      '~~~~~~L~~LLLLLLLLLLLLLLL~~~~~~~~',
-      '~~~~~~LLLLLLLLLLLLLLLLL~~~~~~~~~',
-      '~~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~',
-      '~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~~',
-      '~~~~LLLLLLL~LLLLLLL~~~~~~~~~~~~~',
-      '~~~~LL~L~~~~~LLLLL~~~~~~~~~~~~~~',
-      '~~~~LLL~~~~~~~~LL~~~~~~~~~~~~~~~',
-      '~~~~~LLL~~~~~~~~L~~~~~~~~~~~~~~~',
-      '~~~~~LLLL~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-  ]},
-  east:{order:'②',tab:'東北・関東',name:'② 東北・関東',desc:'東北・関東を24マス高で表現。中部へ陸続きになる箇所だけをグレーで止めています。',route:'小笠原諸島は24段内へ近づけ、通常の浅瀬と同じ見た目の固定浅瀬で接続します。',start:[19,18],focus:[25,23],focusLabel:'小笠原へ',rows:[
-      '~~~~~~~~~~~~~~~~~~~~~LL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~LLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLL~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~BLLLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~BLLLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~',
-      '~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~B~LL=~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~===~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~==L~~~~~~'
-  ]},
-  west:{order:'③',tab:'中部・近畿・中国・四国',name:'③ 中部・近畿・中国・四国',desc:'参考画像の水色・オレンジ・黄緑・ピンク部分を同じマス粒度で再構成。四国は20マス規模まで広げました。',route:'四国は本州と陸続きではない独立した島として、全周を海岸浅瀬で囲みます。東北・関東へ続く陸地だけグレーです。',start:[17,13],focus:[8,19],focusLabel:'四国へ',rows:[
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~B~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~LB~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~L~LLB~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~L~LLB~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~LLB~~~~~~',
-      '~~~~~~~~~~~~~~~~~~LL~~LLLB~~~~~~',
-      '~~~~~~~~~~~~~~~~~~L~~LLLB~~~~~~~',
-      '~~~~~~~~~~~~~~~~~LLLLLLB~~~~~~~~',
-      '~~~~~~~~~~~~~~~~LLLLLLLB~~~~~~~~',
-      '~~~~~~~~~~~~~~~~LLLLLLLB~~~~~~~~',
-      '~~~~~~~~~~~~~~~~LLLLLLLLB~~~~~~~',
-      '~~~~~~LLLLLLLLLLLLLLLLLLB~~~~~~~',
-      '~~~~~LLLLLLLLLLLLLLLLLLLL~~~~~~~',
-      '~~~~LLLLLLLLLLLLLLLLLLL~L~~~~~~~',
-      '~~LLLLLLLLL~~~LLLL~LLL~~L~~~~~~~',
-      '~~LLLL~~~~~~L~LLLL~~~~~~~~~~~~~~',
-      '~~~~~~~L~LLL~~LLL~~~~~~~~~~~~~~~',
-      '~~~~~~LLLLLL~~LL~~~~~~~~~~~~~~~~',
-      '~~~~~LLLLLL~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~LL~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~LL~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-  ]},
-  kyushu:{order:'④',tab:'九州・沖縄',name:'④ 九州・沖縄',desc:'参考画像の九州シルエットを同じ粒度で再現し、南西諸島は24段内に圧縮して追加しています。',route:'九州から屋久島・奄美・沖縄・先島方面まで、島と固定浅瀬をたどって移動できます。陸続きの他エリアがないためグレー境界はありません。',start:[22,5],focus:[17,18],focusLabel:'沖縄へ',rows:[
-      '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~L~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~L~~~~LL~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~LLLLLLL~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~LLLLL~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~=~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~L~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~~~=~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~==~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~~L~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~~~=~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~==~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~~~~LL~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~==L~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~~~L=~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~~==~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~LL~~~~~~~~~~~~~~~~~~~',
-      '~~~~~~~~~~~L~~~~~~~~~~~~~~~~~~~~'
-  ]}
+const W=86,H=75;
+const REGIONS={
+  hokkaido:{ox:50,oy:3,rows:[
+    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LL~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~LLLL~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LLLL~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LLLLL~~~~~~~~~~~L~~~~','~~~~~~~~~~~LLLLLL~~~~~~~~~LL~~~~','~~~~~~~~~~LLLLLLLL~~~~~~~LL~~~~~','~~~~~~~~~~LLLLLLLLLL~LL~LL~~~~~~','~~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~~','~~~~~~~~~LLLLLLLLLLLLLLL~~~~~~~~','~~~~~~~~~LLLLLLLLLLLLLLLLL~~~~~~','~~~~~~L~~LLLLLLLLLLLLLLL~~~~~~~~','~~~~~~LLLLLLLLLLLLLLLLL~~~~~~~~~','~~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~','~~~~~LLLLLLLLLLLLLL~~~~~~~~~~~~~','~~~~LLLLLLL~LLLLLLL~~~~~~~~~~~~~','~~~~LL~L~~~~~LLLLL~~~~~~~~~~~~~~','~~~~LLL~~~~~~~~LL~~~~~~~~~~~~~~~','~~~~~LLL~~~~~~~~L~~~~~~~~~~~~~~~','~~~~~LLLL~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~']},
+  east:{ox:36,oy:26,rows:[
+    '~~~~~~~~~~~~~~~~~~~~~LL~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~LLL~~~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLL~~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~','~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~~~','~~~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~','~~~~~~~~~~~~~~~~~~BLLLL~~~~~~~~~','~~~~~~~~~~~~~~~~~~BLLLL~~~~~~~~~','~~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~','~~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~','~~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~','~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~~','~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~~','~~~~~~~~~~~~~~~BLLLLLL~~~~~~~~~~','~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~~','~~~~~~~~~~~~~~~~BLLLLL~~~~~~~~~~','~~~~~~~~~~~~~~~~~B~LL=~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~===~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~==L~~~~~~']},
+  west:{ox:28,oy:34,rows:[
+    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~B~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~LB~~~~~','~~~~~~~~~~~~~~~~~~~~~~L~LLB~~~~~','~~~~~~~~~~~~~~~~~~~~~~L~LLB~~~~~','~~~~~~~~~~~~~~~~~~~~~~~LLB~~~~~~','~~~~~~~~~~~~~~~~~~LL~~LLLB~~~~~~','~~~~~~~~~~~~~~~~~~L~~LLLB~~~~~~~','~~~~~~~~~~~~~~~~~LLLLLLB~~~~~~~~','~~~~~~~~~~~~~~~~LLLLLLLB~~~~~~~~','~~~~~~~~~~~~~~~~LLLLLLLB~~~~~~~~','~~~~~~~~~~~~~~~~LLLLLLLLB~~~~~~~','~~~~~~LLLLLLLLLLLLLLLLLLB~~~~~~~','~~~~~LLLLLLLLLLLLLLLLLLLL~~~~~~~','~~~~LLLLLLLLLLLLLLLLLLL~L~~~~~~~','~~LLLLLLLLL~~~LLLL~LLL~~L~~~~~~~','~~LLLL~~~~~~L~LLLL~~~~~~~~~~~~~~','~~~~~~~L~LLL~~LLL~~~~~~~~~~~~~~~','~~~~~~LLLLLL~~LL~~~~~~~~~~~~~~~~','~~~~~LLLLLL~~~~~~~~~~~~~~~~~~~~~','~~~~~~LL~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~LL~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~']},
+  kyushu:{ox:3,oy:47,rows:[
+    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~L~~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~L~~~~LL~~~~~~~~','~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~','~~~~~~~~~~~~~~~~~~~LLLLLLL~~~~~~','~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~','~~~~~~~~~~~~~~~~~~~~LLLLLL~~~~~~','~~~~~~~~~~~~~~~~~~~~~LLLLL~~~~~~','~~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~~~LLLL~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~=~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~L~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~~~=~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~==~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~~L~~~~~~~~~~~','~~~~~~~~~~~~~~~~~~~=~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~==~~~~~~~~~~~~~','~~~~~~~~~~~~~~~~~LL~~~~~~~~~~~~~','~~~~~~~~~~~~~~==L~~~~~~~~~~~~~~~','~~~~~~~~~~~~~~L=~~~~~~~~~~~~~~~~','~~~~~~~~~~~~==~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~LL~~~~~~~~~~~~~~~~~~~','~~~~~~~~~~~L~~~~~~~~~~~~~~~~~~~~']}
 };
+const cells=Array.from({length:H},()=>Array(W).fill('~'));
+for(const r of Object.values(REGIONS))for(let y=0;y<r.rows.length;y++)for(let x=0;x<r.rows[y].length;x++){
+  const c=r.rows[y][x],gx=r.ox+x,gy=r.oy+y;if(gx<0||gx>=W||gy<0||gy>=H)continue;
+  if(c==='L'||c==='B')cells[gy][gx]='L';else if(c==='='&&cells[gy][gx]!=='L')cells[gy][gx]='=';
+}
 const HERITAGE=[
-  {id:1,name:'法隆寺地域の仏教建造物',area:'west',x:16,y:15,type:'文化'},
-  {id:2,name:'姫路城',area:'west',x:12,y:14,type:'文化'},
-  {id:3,name:'屋久島',area:'kyushu',x:22,y:12,type:'自然'},
-  {id:4,name:'白神山地',area:'east',x:21,y:3,type:'自然'},
-  {id:5,name:'古都京都の文化財',area:'west',x:18,y:13,type:'文化'},
-  {id:6,name:'白川郷・五箇山の合掌造り集落',area:'west',x:22,y:8,type:'文化'},
-  {id:7,name:'原爆ドーム',area:'west',x:8,y:14,type:'文化'},
-  {id:8,name:'厳島神社',area:'west',x:7,y:15,type:'文化'},
-  {id:9,name:'古都奈良の文化財',area:'west',x:17,y:14,type:'文化'},
-  {id:10,name:'日光の社寺',area:'east',x:18,y:18,type:'文化'},
-  {id:11,name:'琉球王国のグスク及び関連遺産群',area:'kyushu',x:17,y:18,type:'文化'},
-  {id:12,name:'紀伊山地の霊場と参詣道',area:'west',x:19,y:16,type:'文化'},
-  {id:13,name:'知床',area:'hokkaido',x:27,y:6,type:'自然'},
-  {id:14,name:'石見銀山遺跡とその文化的景観',area:'west',x:8,y:13,type:'文化'},
-  {id:15,name:'小笠原諸島',area:'east',x:25,y:23,type:'自然'},
-  {id:16,name:'平泉',area:'east',x:21,y:8,type:'文化'},
-  {id:17,name:'富士山―信仰の対象と芸術の源泉',area:'west',x:23,y:10,type:'文化'},
-  {id:18,name:'富岡製糸場と絹産業遺産群',area:'east',x:17,y:17,type:'文化'},
-  {id:19,name:'明治日本の産業革命遺産',area:'kyushu',x:21,y:6,type:'文化'},
-  {id:20,name:'ル・コルビュジエの建築作品（国立西洋美術館）',area:'east',x:20,y:20,type:'文化'},
-  {id:21,name:'「神宿る島」宗像・沖ノ島と関連遺産群',area:'kyushu',x:23,y:3,type:'文化'},
-  {id:22,name:'長崎と天草地方の潜伏キリシタン関連遺産',area:'kyushu',x:20,y:7,type:'文化'},
-  {id:23,name:'百舌鳥・古市古墳群',area:'west',x:15,y:16,type:'文化'},
-  {id:24,name:'奄美大島、徳之島、沖縄島北部及び西表島',area:'kyushu',x:20,y:15,type:'自然'},
-  {id:25,name:'北海道・北東北の縄文遺跡群',area:'east',x:20,y:1,type:'文化'},
-  {id:26,name:'佐渡島の金山',area:'west',x:22,y:3,type:'文化'},
-  {id:27,name:'飛鳥・藤原の宮都',area:'west',x:17,y:15,type:'文化'}
-];
-let areaKey='east',player={x:AREAS.east.start[0],y:AREAS.east.start[1]},shallow=new Set(),showHeritage=true,active=false,pid=null,dir=null,timer=null;
-const map=document.getElementById('map'),scroll=document.getElementById('scroll'),width=document.getElementById('width'),status=document.getElementById('status'),joy=document.getElementById('joy'),knob=document.getElementById('knob');
+  {id:1,name:'法隆寺地域の仏教建造物',region:'west',x:16,y:15,type:'文化'},{id:2,name:'姫路城',region:'west',x:12,y:14,type:'文化'},{id:3,name:'屋久島',region:'kyushu',x:22,y:12,type:'自然'},{id:4,name:'白神山地',region:'east',x:21,y:3,type:'自然'},{id:5,name:'古都京都の文化財',region:'west',x:18,y:13,type:'文化'},{id:6,name:'白川郷・五箇山の合掌造り集落',region:'west',x:22,y:8,type:'文化'},{id:7,name:'原爆ドーム',region:'west',x:8,y:14,type:'文化'},{id:8,name:'厳島神社',region:'west',x:7,y:15,type:'文化'},{id:9,name:'古都奈良の文化財',region:'west',x:17,y:14,type:'文化'},{id:10,name:'日光の社寺',region:'east',x:18,y:18,type:'文化'},{id:11,name:'琉球王国のグスク及び関連遺産群',region:'kyushu',x:17,y:18,type:'文化'},{id:12,name:'紀伊山地の霊場と参詣道',region:'west',x:19,y:16,type:'文化'},{id:13,name:'知床',region:'hokkaido',x:27,y:6,type:'自然'},{id:14,name:'石見銀山遺跡とその文化的景観',region:'west',x:8,y:13,type:'文化'},{id:15,name:'小笠原諸島',region:'east',x:25,y:23,type:'自然'},{id:16,name:'平泉',region:'east',x:21,y:8,type:'文化'},{id:17,name:'富士山―信仰の対象と芸術の源泉',region:'west',x:23,y:10,type:'文化'},{id:18,name:'富岡製糸場と絹産業遺産群',region:'east',x:17,y:17,type:'文化'},{id:19,name:'明治日本の産業革命遺産',region:'kyushu',x:21,y:6,type:'文化'},{id:20,name:'ル・コルビュジエの建築作品（国立西洋美術館）',region:'east',x:20,y:20,type:'文化'},{id:21,name:'「神宿る島」宗像・沖ノ島と関連遺産群',region:'kyushu',x:23,y:3,type:'文化'},{id:22,name:'長崎と天草地方の潜伏キリシタン関連遺産',region:'kyushu',x:20,y:7,type:'文化'},{id:23,name:'百舌鳥・古市古墳群',region:'west',x:15,y:16,type:'文化'},{id:24,name:'奄美大島、徳之島、沖縄島北部及び西表島',region:'kyushu',x:20,y:15,type:'自然'},{id:25,name:'北海道・北東北の縄文遺跡群',region:'east',x:20,y:1,type:'文化'},{id:26,name:'佐渡島の金山',region:'west',x:22,y:3,type:'文化'},{id:27,name:'飛鳥・藤原の宮都',region:'west',x:17,y:15,type:'文化'}
+].map(h=>({...h,x:REGIONS[h.region].ox+h.x,y:REGIONS[h.region].oy+h.y}));
+const JUMPS={hokkaido:[62,14],tohoku:[57,31],tokyo:[55,44],kansai:[45,47],shikoku:[36,53],kyushu:[25,52],okinawa:[20,65],ogasawara:[61,49]};
+let player={x:JUMPS.tokyo[0],y:JUMPS.tokyo[1]},shallow=new Set(),showHeritage=true,active=false,pid=null,dir=null,timer=null;
+const camera=document.getElementById('camera'),world=document.getElementById('world'),width=document.getElementById('width'),status=document.getElementById('status'),joy=document.getElementById('joy'),knob=document.getElementById('knob');
 const dirs8=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
-function area(){return AREAS[areaKey]} function rows(){return area().rows} function land(c){return c==='L'}
-function buildShallow(){const n=+width.value,seed=new Set(),out=new Set();for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(land(rows()[y][x]))seed.add(`${x},${y}`);for(let z=0;z<n;z++){const add=[];for(let y=0;y<H;y++)for(let x=0;x<W;x++){const k=`${x},${y}`;if(seed.has(k)||rows()[y][x]!=='~')continue;if(dirs8.some(([dx,dy])=>seed.has(`${x+dx},${y+dy}`)))add.push(k)}add.forEach(k=>{seed.add(k);out.add(k)})}return out}
-function walk(x,y){if(x<0||x>=W||y<0||y>=H)return false;const c=rows()[y][x];return c==='L'||c==='='||shallow.has(`${x},${y}`)}
-function nearestLand(tx,ty){if(rows()[ty]?.[tx]==='L')return {x:tx,y:ty};for(let r=1;r<10;r++)for(let y=Math.max(0,ty-r);y<=Math.min(H-1,ty+r);y++)for(let x=Math.max(0,tx-r);x<=Math.min(W-1,tx+r);x++)if(rows()[y][x]==='L')return {x,y};return {x:tx,y:ty}}
-function playerHtml(){return '<div class="player"><div class="ph"></div><div class="pe"></div><div class="pb"></div></div>'}
-function areaHeritage(){return HERITAGE.filter(h=>h.area===areaKey)}
-function markerMap(){const m=new Map();if(!showHeritage)return m;for(const h of areaHeritage()){const p=nearestLand(h.x,h.y),k=`${p.x},${p.y}`;if(!m.has(k))m.set(k,[]);m.get(k).push(h)}return m}
-function render(){shallow=buildShallow();map.innerHTML='';const markers=markerMap();let fixed=0,blocks=0;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const c=rows()[y][x],d=document.createElement('div');d.className='tile';if(c==='L')d.classList.add('land');else if(c==='B'){d.classList.add('block');blocks++}else if(c==='='){d.classList.add('fixed');fixed++}else if(shallow.has(`${x},${y}`))d.classList.add('shallow');else d.classList.add('sea');const hs=markers.get(`${x},${y}`);if(hs?.length){const stack=document.createElement('div');stack.className='markerStack';hs.forEach(h=>{const b=document.createElement('button');b.type='button';b.className='marker'+(h.type==='自然'?' natural':'');b.textContent=h.id;b.title=`${h.id}. ${h.name}`;b.onclick=e=>{e.stopPropagation();msg(`${h.id}. ${h.name}（${h.type}遺産）`)};stack.appendChild(b)});d.appendChild(stack)}if(x===player.x&&y===player.y)d.insertAdjacentHTML('beforeend',playerHtml());map.appendChild(d)}document.getElementById('wVal').textContent=`${width.value}マス`;document.getElementById('areaName').textContent=area().name;document.getElementById('areaDesc').textContent=area().desc;document.getElementById('routeNote').textContent=area().route;document.getElementById('jumpFocus').textContent=area().focusLabel;document.getElementById('summary').textContent=`32×24マス ／ 自動浅瀬 ${shallow.size} ／ 固定浅瀬 ${fixed} ／ 陸地境界 ${blocks}`;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.area===areaKey));renderHeritageList();requestAnimationFrame(visible)}
-function renderHeritageList(){const list=document.getElementById('heritageList'),hs=areaHeritage();document.getElementById('heritageCount').textContent=`${hs.length}件`;list.innerHTML='';hs.forEach(h=>{const d=document.createElement('div');d.className='heritageItem';d.innerHTML=`<span class="num">${h.id}</span><span style="flex:1">${h.name}</span><span class="tag ${h.type==='自然'?'natural':''}">${h.type}</span>`;list.appendChild(d)})}
-function visible(){const t=map.children[player.y*W+player.x];if(t)t.scrollIntoView({block:'nearest',inline:'nearest'})} function msg(t,b=false){status.textContent=t;status.classList.toggle('blockedStatus',b)}
-function move(dx,dy){const nx=player.x+dx,ny=player.y+dy;if(!walk(nx,ny)){msg(rows()[ny]?.[nx]==='B'?'ここから先は別エリアです':'ここから先は深い海です',true);return}player={x:nx,y:ny};msg(rows()[ny][nx]==='='?'島へ続く固定浅瀬です':shallow.has(`${nx},${ny}`)?'浅瀬を歩いています':'陸を歩いています');render()}
-function setArea(k){areaKey=k;player={x:area().start[0],y:area().start[1]};scroll.scrollLeft=0;scroll.scrollTop=0;msg(`${area().name}の初期位置です`);render()}
-function buildTabs(){const tabs=document.getElementById('tabs');Object.entries(AREAS).forEach(([k,a])=>{const b=document.createElement('button');b.type='button';b.dataset.area=k;b.textContent=`${a.order} ${a.tab}`;b.onclick=()=>setArea(k);tabs.appendChild(b)})}
-function setWidth(v){width.value=v;document.getElementById('finish').classList.toggle('active',v===1);document.getElementById('shape').classList.toggle('active',v===0);render()}
-width.oninput=()=>{document.getElementById('finish').classList.remove('active');document.getElementById('shape').classList.remove('active');render()};document.getElementById('finish').onclick=()=>setWidth(1);document.getElementById('shape').onclick=()=>setWidth(0);document.getElementById('gridBtn').onclick=()=>map.classList.toggle('grid');document.getElementById('heritageBtn').onclick=()=>{showHeritage=!showHeritage;const b=document.getElementById('heritageBtn');b.classList.toggle('active',showHeritage);b.textContent=`世界遺産27件 ${showHeritage?'ON':'OFF'}`;render()};document.getElementById('jumpStart').onclick=()=>{player={x:area().start[0],y:area().start[1]};msg('初期位置に戻りました');render()};document.getElementById('jumpFocus').onclick=()=>{const p=nearestLand(area().focus[0],area().focus[1]);player=p;msg(`${area().focusLabel.replace('へ','')}付近です`);render()};
-window.addEventListener('keydown',e=>{const d={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];if(!d)return;e.preventDefault();move(...d)});
-function direction(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;if(Math.hypot(dx,dy)<12)return null;return Math.abs(dx)>Math.abs(dy)?[Math.sign(dx),0]:[0,Math.sign(dy)]}function place(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,m=38,dist=Math.hypot(dx,dy)||1,q=Math.min(1,m/dist);knob.style.transform=`translate(calc(-50% + ${dx*q}px),calc(-50% + ${dy*q}px))`}function stop(){active=false;pid=null;dir=null;clearInterval(timer);timer=null;knob.style.transform='translate(-50%,-50%)'}joy.addEventListener('pointerdown',e=>{e.preventDefault();active=true;pid=e.pointerId;joy.setPointerCapture?.(e.pointerId);place(e);dir=direction(e);if(dir)move(...dir);timer=setInterval(()=>{if(dir)move(...dir)},150)});joy.addEventListener('pointermove',e=>{if(!active||e.pointerId!==pid)return;place(e);dir=direction(e)});['pointerup','pointercancel','lostpointercapture'].forEach(n=>joy.addEventListener(n,stop));
-buildTabs();render();
+function isLand(x,y){return cells[y]?.[x]==='L'}
+function buildShallow(){const n=+width.value,seed=new Set(),out=new Set();for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(isLand(x,y))seed.add(`${x},${y}`);for(let z=0;z<n;z++){const add=[];for(let y=0;y<H;y++)for(let x=0;x<W;x++){const k=`${x},${y}`;if(seed.has(k)||cells[y][x]!=='~')continue;if(dirs8.some(([dx,dy])=>seed.has(`${x+dx},${y+dy}`)))add.push(k)}for(const k of add){seed.add(k);out.add(k)}}return out}
+function walkable(x,y){if(x<0||x>=W||y<0||y>=H)return false;return cells[y][x]==='L'||cells[y][x]==='='||shallow.has(`${x},${y}`)}
+function nearestLand(tx,ty){if(isLand(tx,ty))return{x:tx,y:ty};for(let r=1;r<12;r++)for(let y=Math.max(0,ty-r);y<=Math.min(H-1,ty+r);y++)for(let x=Math.max(0,tx-r);x<=Math.min(W-1,tx+r);x++)if(isLand(x,y))return{x,y};return{x:tx,y:ty}}
+function markerMap(){const m=new Map();if(!showHeritage)return m;for(const h of HERITAGE){const p=nearestLand(h.x,h.y),k=`${p.x},${p.y}`;if(!m.has(k))m.set(k,[]);m.get(k).push(h)}return m}
+function renderWorld(){shallow=buildShallow();world.innerHTML='';world.style.gridTemplateColumns=`repeat(${W},var(--tile))`;world.style.gridTemplateRows=`repeat(${H},var(--tile))`;const markers=markerMap();let fixed=0;for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+  const c=cells[y][x],d=document.createElement('div');d.className='tile';if(c==='L')d.classList.add('land');else if(c==='='){d.classList.add('fixed');fixed++}else if(shallow.has(`${x},${y}`))d.classList.add('shallow');else d.classList.add('sea');
+  const hs=markers.get(`${x},${y}`);if(hs?.length){const stack=document.createElement('div');stack.className='markerStack';for(const h of hs){const b=document.createElement('button');b.type='button';b.className='marker'+(h.type==='自然'?' natural':'');b.textContent=h.id;b.title=`${h.id}. ${h.name}`;b.onclick=e=>{e.stopPropagation();msg(`${h.id}. ${h.name}（${h.type}遺産）`)};stack.appendChild(b)}d.appendChild(stack)}world.appendChild(d)}
+  document.getElementById('wVal').textContent=`${width.value}マス`;document.getElementById('summary').textContent=`全体 ${W}×${H}マス ／ 自動浅瀬 ${shallow.size} ／ 固定浅瀬 ${fixed}`;requestAnimationFrame(updateCamera)
+}
+function tileSize(){const v=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tile'));return Number.isFinite(v)?v:28}
+function updateCamera(){const t=tileSize(),px=(player.x+.5)*t,py=(player.y+.5)*t;world.style.transform=`translate(${camera.clientWidth/2-px}px,${camera.clientHeight/2-py}px)`}
+function msg(t,b=false){status.textContent=t;status.classList.toggle('blockedStatus',b)}
+function move(dx,dy){const nx=player.x+dx,ny=player.y+dy;if(!walkable(nx,ny)){msg('ここから先は深い海です',true);return}player={x:nx,y:ny};msg(cells[ny][nx]==='='?'島へ続く浅瀬を歩いています':shallow.has(`${nx},${ny}`)?'浅瀬を歩いています':'陸を歩いています');updateCamera()}
+function jump(name){const p=nearestLand(...JUMPS[name]);player=p;msg(`${document.querySelector(`[data-jump="${name}"]`).textContent}付近へ移動しました`);updateCamera()}
+function renderHeritageList(){const list=document.getElementById('heritageList');list.innerHTML='';for(const h of HERITAGE){const d=document.createElement('div');d.className='heritageItem';d.innerHTML=`<span class="num">${h.id}</span><span style="flex:1">${h.name}</span><span class="tag ${h.type==='自然'?'natural':''}">${h.type}</span>`;list.appendChild(d)}}
+function setWidth(v){width.value=v;document.getElementById('finish').classList.toggle('active',v===1);document.getElementById('shape').classList.toggle('active',v===0);renderWorld()}
+width.oninput=()=>{document.getElementById('finish').classList.remove('active');document.getElementById('shape').classList.remove('active');renderWorld()};document.getElementById('finish').onclick=()=>setWidth(1);document.getElementById('shape').onclick=()=>setWidth(0);document.getElementById('gridBtn').onclick=()=>world.classList.toggle('grid');document.getElementById('heritageBtn').onclick=()=>{showHeritage=!showHeritage;const b=document.getElementById('heritageBtn');b.classList.toggle('active',showHeritage);b.textContent=`世界遺産27件 ${showHeritage?'ON':'OFF'}`;renderWorld()};document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>jump(b.dataset.jump));
+window.addEventListener('keydown',e=>{const d={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];if(!d)return;e.preventDefault();move(...d)});window.addEventListener('resize',updateCamera);
+function direction(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;if(Math.hypot(dx,dy)<12)return null;return Math.abs(dx)>Math.abs(dy)?[Math.sign(dx),0]:[0,Math.sign(dy)]}
+function place(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,m=40,dist=Math.hypot(dx,dy)||1,q=Math.min(1,m/dist);knob.style.transform=`translate(calc(-50% + ${dx*q}px),calc(-50% + ${dy*q}px))`}
+function stop(){active=false;pid=null;dir=null;clearInterval(timer);timer=null;knob.style.transform='translate(-50%,-50%)'}
+joy.addEventListener('pointerdown',e=>{e.preventDefault();active=true;pid=e.pointerId;joy.setPointerCapture?.(e.pointerId);place(e);dir=direction(e);if(dir)move(...dir);timer=setInterval(()=>{if(dir)move(...dir)},145)});joy.addEventListener('pointermove',e=>{if(!active||e.pointerId!==pid)return;place(e);dir=direction(e)});['pointerup','pointercancel','lostpointercapture'].forEach(n=>joy.addEventListener(n,stop));
+renderHeritageList();renderWorld();
 })();
 </script>
-</body></html>
+</body>
+</html>
