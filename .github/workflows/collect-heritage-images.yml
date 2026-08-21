@@ -5,9 +5,10 @@ on:
     branches: [main]
     paths:
       - scripts/collect-heritage-images.mjs
+      - scripts/collect-heritage-images-with-retry.mjs
       - .github/workflows/collect-heritage-images.yml
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
   workflow_dispatch:
 
 permissions:
@@ -28,7 +29,7 @@ jobs:
           node-version: '22'
 
       - name: Collect three photos for each Japanese World Heritage site
-        run: node scripts/collect-heritage-images.mjs
+        run: node scripts/collect-heritage-images-with-retry.mjs
 
       - name: Commit generated photos and credits to main
         run: |
