@@ -9,6 +9,8 @@
 - Base tutorial flow/layout: `tutorial-lab.html`
 - Rule: チュートリアルの画面構成・色・文字階層・メッセージ領域・ボタン表現は、今後の本編UIデザインの基準として扱う。
 - Rule: 統合時に旧PhaseのCSSで見た目を上書きしない。必要な場合は共通UI側へ基準を移植する。
+- Approved copy patch: アブ・シンベル神殿は「約3300年前に建造」「今から約60年前（1960年代）にダム建設で水没危機」という時間軸が分かる説明を使用する。
+- Nationwide transition rule: 全国移動方式の採用後は、チュートリアル末尾の北海道は「最初のエリア」ではなく、**全国自由移動の中で最初に向かう推奨地点**として扱う。
 
 ## Piramiton
 - Status: **APPROVED**
@@ -25,6 +27,20 @@
   - faceX: -3
   - sideRatio: 0.20
 - Expression rule: happy / excited は通常と同じ口を使い、目だけ軽く弓形にする。
+
+## Nationwide Movement
+- Status: **APPROVED**
+- Canonical Lab: `japan-follow-camera-lab.html`
+- Approved blob SHA: `0d84c78f629292aa9a164040a20e35eb77b5da49`
+- Scope: 旧4エリア切替を廃止し、北海道から沖縄までを一枚の日本地図として自由に移動する方式を定義する。
+- Map rule: 旧4エリアLabで確認したマス粒度を維持し、日本列島であることを視認できる縮尺を優先する。
+- Map rule: 旧エリア境界のグレー部分は全国版では通常の陸地として接続し、画面切替用の境界は設けない。
+- World size in approved Lab: **78 × 70 tiles**。
+- Movement rule: 北海道〜沖縄まで、浅瀬を含む一枚のマップ内を移動する。エリアCLEARを移動解放条件にはしない。
+- Camera rule: **デッドゾーン追従方式**。画面中央の約 **28% × 32%** の範囲では主人公だけが動き、その範囲を越えると地図側が追従する。
+- Camera edge rule: 日本地図の端ではカメラを停止し、主人公が画面中央に固定され続ける不自然さを避ける。
+- UX intent: 主人公の移動感を残しながら、長距離移動時は日本列島のどこにいるかを把握できることを優先する。
+- Tutorial rule: 北海道は開始推奨地点として案内してよいが、全国移動そのものを北海道エリアに限定しない。
 
 ## Research Center Growth
 - Status: **APPROVED**
@@ -49,6 +65,15 @@
 - Heritage-specific rule: 遺産ごとの専用デザインは増やしすぎず、**壁の額などのワンポイント**で象徴を表現する。マップ上施設には原則として遺産固有アイコンを載せない。
 - Growth intent: プレイヤーの調査・再訪・やり込みに応じて、研究センターの外観と内部が育つこと自体を報酬・達成感として扱う。
 - Rule: 今後の遺産別Lab（知床、北海道・北東北の縄文遺跡群など）は、この共通仕様を土台として作成する。
+
+## Integrated Preview
+- Status: **PREVIEW**
+- Page: `integrated-preview.html`
+- Purpose: APPROVED済みのチュートリアル・全国移動・研究センター成長を、一つの体験として接続して確認する。
+- Flow: チュートリアル完了 → 日本全国マップ → 知床の `?` を発見 → LV2研究拠点 → 調査・成長確認 → 全国マップへ戻る。
+- Preview rule: 知床を代表地点として、全国マップ上の表示も `? → LV2 → LV3 → LV4` に同期させる。
+- Preview rule: 研究センター内部は `research-center-style-lab.html` の確定仕様を直接利用し、Preview側で別デザインを作らない。
+- Query shortcuts: `?start=tutorial|map|center`、研究センターは `?start=center&level=1..4` で個別確認できる。
 
 ## Workflow rule
 1. Labで単機能を確認する。
