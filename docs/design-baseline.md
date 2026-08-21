@@ -32,14 +32,11 @@
 - Status: **APPROVED**
 - Canonical Lab: `area-map-lab.html`
 - Scope: 旧4エリア切替を廃止し、北海道から沖縄までを一枚の日本地図として自由に移動する方式を定義する。
-- Map rule: `area-map-lab.html` で確定した地形生成を正本とし、統合Preview側で日本地図を再生成しない。
 - Map rule: 旧4エリアLabで確認したマス粒度を維持し、日本列島であることを視認できる縮尺を優先する。
 - Map rule: 旧エリア境界のグレー部分は全国版では通常の陸地として接続し、画面切替用の境界は設けない。
-- World size in canonical Lab: **86 × 75 tiles**。
 - Movement rule: 北海道〜沖縄まで、浅瀬を含む一枚のマップ内を移動する。エリアCLEARを移動解放条件にはしない。
-- Camera rule: **主人公固定・地図移動方式**。主人公は常に画面中央に表示し、移動操作に応じて地図全体を反対方向へ動かす。
-- Camera rule: 以前検討したデッドゾーン追従方式 `japan-follow-camera-lab.html` は採用しない。
-- UX intent: 操作中も主人公の位置を見失いにくくしつつ、日本地図そのものを移動している感覚を優先する。
+- Camera rule: **主人公を画面中央に固定し、移動すると日本地図全体が反対方向へ動く方式**を採用する。
+- Rejected approach: `japan-follow-camera-lab.html` のデッドゾーン追従方式は不採用。
 - Tutorial rule: 北海道は開始推奨地点として案内してよいが、全国移動そのものを北海道エリアに限定しない。
 
 ## Research Center Growth
@@ -66,16 +63,28 @@
 - Growth intent: プレイヤーの調査・再訪・やり込みに応じて、研究センターの外観と内部が育つこと自体を報酬・達成感として扱う。
 - Rule: 今後の遺産別Lab（知床、北海道・北東北の縄文遺跡群など）は、この共通仕様を土台として作成する。
 
-## Integrated Preview
-- Status: **PREVIEW**
-- Page: `integrated-preview.html`
-- Purpose: 細部を完成させる前に、チュートリアル → 全国移動 → 遺産発見 → 研究センター成長というゲーム全体像を最短で確認する。
-- Flow: チュートリアル完了 → `area-map-lab.html` ベースの日本全国マップ → 知床の `?` を発見 → LV2研究拠点 → 調査・成長確認 → 全国マップへ戻る。
-- Preview rule: 全国マップは `area-map-lab.html` を直接利用し、地形・移動方式をPreview側で複製しない。
-- Preview rule: 知床を代表地点として、全国マップ上の表示も `? → LV2 → LV3 → LV4` に同期させる。
-- Preview rule: 研究センター内部は `research-center-style-lab.html` の確定仕様を直接利用し、Preview側で別デザインを作らない。
-- Priority: 現段階では細かなセリフ・演出・個別遺産コンテンツの完成度よりも、ゲーム全体のループを早く把握できることを優先する。
-- Query shortcuts: `?start=tutorial|map|center`、研究センターは `?start=center&level=1..4` で個別確認できる。
+## Game Integration Preview
+- Status: **PREVIEW / PLAYABLE LOOP**
+- Integrated page: `integrated-preview.html`
+- Nationwide game page: `area-map-game.html`
+- Research center game page: `research-center-game.html`
+- Rule: Labはデザイン・単機能検証用として残し、本編プレビューではゲーム用画面からLabを直接見せない。
+- Nationwide implementation: `area-map-game.html` は `area-map-lab.html` の確定済み地形生成・中央固定移動ロジックを再利用し、Lab用タイトル、地形調整、世界遺産一覧、ジャンプ、デバッグ表示を除去する。
+- Nationwide game UI: 未発見遺産は `?`、接近時に `しらべる`、発見後は研究センター外観と `入る` を表示する。最低限の調査HUDとメニューを持つ。
+- Research center implementation: `research-center-game.html` はLabで確定した自然遺産研究センターの見た目をゲーム画面へ移植し、レベル切替・遺産選択・比較・説明UIを持たない。
+- Research center controls: 全国マップと同様にキーボード / WASD / iPad向けスティックで主人公を移動する。
+- Shiretoko playable loop:
+  1. 全国マップを移動する。
+  2. 知床の `?` に到達する。
+  3. `しらべる` で発見し、LV2研究拠点になる。
+  4. 研究センター内部へ入り、主人公を自由移動する。
+  5. `本を読む` / `展示をしらべる` / `調査員とはなす` の3項目を実行する。
+  6. 調査 3/3 でLV2 → LV3へ成長する。
+  7. 出口から全国マップへ戻る。
+  8. 全国マップ上の知床研究センター外観もLV3へ同期する。
+- State: `sessionStorage` を使い、知床の研究センターレベルと3項目の調査済み状態をプレビュー内で保持する。
+- Query shortcuts: `?start=tutorial|map|center`。`?reset=1` で知床のゲーム進行状態を初期化して確認できる。
+- Next phase: クイズ、調査記録の本格化、ピラミトン案内、セリフ、演出、効果音、UIブラッシュアップを行う。
 
 ## Workflow rule
 1. Labで単機能を確認する。
