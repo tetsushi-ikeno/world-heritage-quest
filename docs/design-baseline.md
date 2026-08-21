@@ -63,28 +63,36 @@
 - Growth intent: プレイヤーの調査・再訪・やり込みに応じて、研究センターの外観と内部が育つこと自体を報酬・達成感として扱う。
 - Rule: 今後の遺産別Lab（知床、北海道・北東北の縄文遺跡群など）は、この共通仕様を土台として作成する。
 
-## Game Integration Preview
-- Status: **PREVIEW / PLAYABLE LOOP**
+## Phase 8 — Playable Game Loop
+- Status: **APPROVED / COMPLETE**
+- Approved date: **2026-08-22**
 - Integrated page: `integrated-preview.html`
 - Nationwide game page: `area-map-game.html`
 - Research center game page: `research-center-game.html`
-- Rule: Labはデザイン・単機能検証用として残し、本編プレビューではゲーム用画面からLabを直接見せない。
+- Rule: Labはデザイン・単機能検証用として残し、本編ではゲーム用画面からLabを直接見せない。
 - Nationwide implementation: `area-map-game.html` は `area-map-lab.html` の確定済み地形生成・中央固定移動ロジックを再利用し、Lab用タイトル、地形調整、世界遺産一覧、ジャンプ、デバッグ表示を除去する。
 - Nationwide game UI: 未発見遺産は `?`、接近時に `しらべる`、発見後は研究センター外観と `入る` を表示する。最低限の調査HUDとメニューを持つ。
 - Research center implementation: `research-center-game.html` はLabで確定した自然遺産研究センターの見た目をゲーム画面へ移植し、レベル切替・遺産選択・比較・説明UIを持たない。
 - Research center controls: 全国マップと同様にキーボード / WASD / iPad向けスティックで主人公を移動する。
-- Shiretoko playable loop:
-  1. 全国マップを移動する。
-  2. 知床の `?` に到達する。
-  3. `しらべる` で発見し、LV2研究拠点になる。
-  4. 研究センター内部へ入り、主人公を自由移動する。
-  5. `本を読む` / `展示をしらべる` / `調査員とはなす` の3項目を実行する。
-  6. 調査 3/3 でLV2 → LV3へ成長する。
-  7. 出口から全国マップへ戻る。
-  8. 全国マップ上の知床研究センター外観もLV3へ同期する。
-- State: `sessionStorage` を使い、知床の研究センターレベルと3項目の調査済み状態をプレビュー内で保持する。
+- Approved Golden Path:
+  1. チュートリアルを完了する。
+  2. 日本全国マップへ移動する。
+  3. 知床の `?` に到達する。
+  4. `しらべる` で発見し、LV2研究拠点になる。
+  5. 研究センター内部へ入り、主人公を自由移動する。
+  6. `本を読む` / `展示をしらべる` / `調査員とはなす` の3項目を実行する。
+  7. 調査 3/3 でLV2 → LV3へ成長する。
+  8. 出口から全国マップへ戻る。
+  9. 全国マップ上の知床研究センター外観もLV3へ同期する。
+- State note: Phase 8統合版では確認用に `sessionStorage` を利用する。永続セーブは後続フェーズで実装する。
 - Query shortcuts: `?start=tutorial|map|center`。`?reset=1` で知床のゲーム進行状態を初期化して確認できる。
-- Next phase: クイズ、調査記録の本格化、ピラミトン案内、セリフ、演出、効果音、UIブラッシュアップを行う。
+
+## Phase 9 — UI / UX Baseline
+- Status: **NEXT**
+- Goal: Phase 8で成立したGolden Pathを、子どもが迷わず楽しく操作できる本編UIへ整える。
+- Scope: 全国マップHUD、研究センターのメッセージ・アクションUI、主人公・`?`・研究対象の視認性、iPad横向き操作、共通ボタン・文字階層、ピラミトンの配置方針を確定する。
+- Rule: Phase 9ではゲームの骨格を変えず、Phase 8で承認した遷移・全国移動方式・研究センター成長構造を前提にブラッシュアップする。
+- Deferred: クイズ本格実装、図鑑/調査記録の本格化、全27遺産展開、効果音/BGM最終調整、セリフ最終稿、最終演出磨き込みは後続フェーズへ回す。
 
 ## Workflow rule
 1. Labで単機能を確認する。
