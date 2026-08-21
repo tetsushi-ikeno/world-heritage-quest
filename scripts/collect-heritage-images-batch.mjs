@@ -20,24 +20,24 @@ function withHeaders(init = {}) {
 async function throttle() {
   const now = Date.now();
   if (now < nextAllowedAt) await sleep(nextAllowedAt - now);
-  nextAllowedAt = Date.now() + 900;
+  nextAllowedAt = Date.now() + 1600;
 }
 
 globalThis.fetch = async function fetchWithRetry(input, init = {}) {
   let lastError;
-  for (let attempt = 0; attempt < 5; attempt++) {
+  for (let attempt = 0; attempt < 7; attempt++) {
     await throttle();
     try {
       const res = await nativeFetch(input, withHeaders(init));
       if (res.ok || (res.status < 500 && res.status !== 429)) return res;
       const retryAfter = Number(res.headers.get('retry-after') || 0);
-      const waitMs = retryAfter > 0 ? retryAfter * 1000 : Math.min(8000, 1500 * (attempt + 1));
-      console.warn(`HTTP ${res.status}; retry ${attempt + 1}/5 after ${waitMs}ms`);
+      const waitMs = retryAfter > 0 ? retryAfter * 1000 : Math.min(15000, 2000 * (attempt + 1));
+      console.warn(`HTTP ${res.status}; retry ${attempt + 1}/7 after ${waitMs}ms`);
       await sleep(waitMs);
     } catch (err) {
       lastError = err;
-      const waitMs = Math.min(8000, 1500 * (attempt + 1));
-      console.warn(`Fetch error; retry ${attempt + 1}/5 after ${waitMs}ms: ${err.message}`);
+      const waitMs = Math.min(15000, 2000 * (attempt + 1));
+      console.warn(`Fetch error; retry ${attempt + 1}/7 after ${waitMs}ms: ${err.message}`);
       await sleep(waitMs);
     }
   }
@@ -48,6 +48,21 @@ globalThis.fetch = async function fetchWithRetry(input, init = {}) {
 
 const sourcePath = path.join(process.cwd(), 'scripts', 'collect-heritage-images.mjs');
 let source = await fs.readFile(sourcePath, 'utf8');
+
+// Curated query corrections after reviewing the first-pass results. These keep the
+// three roles focused on the heritage itself rather than nearby objects or generic hits.
+const queryOverrides = new Map([
+  ['National Museum of Western Art Tokyo Le Corbusier exterior', 'Tokyo National Museum of Western Art seen from the west'],
+  ['National Museum of Western Art Tokyo panorama', 'National Museum of Western Art.JPG Tokyo'],
+  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'Interior view National Museum of Western Art Tokyo DSC08231'],
+  ['Daisen Kofun Mozu Japan aerial', 'NintokuTomb Aerial photograph 2007 Daisen Kofun'],
+  ['Mozu Furuichi Kofun panorama Japan', 'Daisenryo Kofun zenkei Japan'],
+  ['Kofun haniwa Mozu Furuichi detail Japan', 'Haisho Daisenryo Kofun Mozu Kofun Group'],
+  ['Hashima Island Gunkanjima panorama Japan', 'Hashima Island Gunkanjima panorama Nagasaki'],
+  ['Miike Coal Mine Manda Pit machinery Japan World Heritage', 'Miike Coal Mine Manda Pit Japan World Heritage']
+]);
+for (const [from, to] of queryOverrides) source = source.replaceAll(from, to);
+
 source = source.replace(
   "const META_PATH = path.join(ROOT, 'data', 'heritage-images.json');",
   `const META_PATH = path.join(ROOT, 'data', 'heritage-images-${batchId}.json');`
