@@ -53,12 +53,12 @@ let source = await fs.readFile(sourcePath, 'utf8');
 // three roles focused on the heritage itself rather than nearby objects or generic hits.
 const queryOverrides = new Map([
   ['National Museum of Western Art Tokyo Le Corbusier exterior', 'Tokyo National Museum of Western Art seen from the west'],
-  ['National Museum of Western Art Tokyo panorama', 'National Museum of Western Art.JPG Tokyo'],
-  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'Interior view National Museum of Western Art Tokyo DSC08231'],
+  ['National Museum of Western Art Tokyo panorama', 'The National Museum of Western Art 53133957695'],
+  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'National Museum of Western Art Tokyo 8 19th century hall'],
   ['Daisen Kofun Mozu Japan aerial', 'NintokuTomb Aerial photograph 2007 Daisen Kofun'],
-  ['Mozu Furuichi Kofun panorama Japan', 'Daisenryo Kofun zenkei Japan'],
-  ['Kofun haniwa Mozu Furuichi detail Japan', 'Haisho Daisenryo Kofun Mozu Kofun Group'],
-  ['Hashima Island Gunkanjima panorama Japan', 'Hashima Island Gunkanjima panorama Nagasaki'],
+  ['Mozu Furuichi Kofun panorama Japan', 'Daisenryo Kofun zenkei-2'],
+  ['Kofun haniwa Mozu Furuichi detail Japan', 'Haisho of Daisenryo Kofun Mozu Kofun Group'],
+  ['Hashima Island Gunkanjima panorama Japan', 'Hashima Island 2023 Gunkanjima'],
   ['Miike Coal Mine Manda Pit machinery Japan World Heritage', 'Miike Coal Mine Manda Pit Japan World Heritage']
 ]);
 for (const [from, to] of queryOverrides) source = source.replaceAll(from, to);
