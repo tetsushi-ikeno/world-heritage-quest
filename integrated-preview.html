@@ -168,6 +168,14 @@ function patchMap(){
   if(stage!=='map')return;
   const doc=mapDoc();
   if(!doc)return;
+
+  // Tutorialから全国へ出た直後の開始地点は北海道。ただし移動制限はなく全国を自由に歩ける。
+  if(!doc.documentElement.dataset.integratedStarted){
+    doc.documentElement.dataset.integratedStarted='1';
+    const hokkaidoJump=doc.querySelector('[data-j="h"]');
+    if(hokkaidoJump)hokkaidoJump.click();
+  }
+
   if(!doc.getElementById('integratedPreviewMapStyle')){
     const s=doc.createElement('style');
     s.id='integratedPreviewMapStyle';
@@ -228,8 +236,7 @@ function patchMap(){
     }
     const a=player.getBoundingClientRect(),b=marker.getBoundingClientRect();
     const dist=Math.hypot((a.left+a.width/2)-(b.left+b.width/2),(a.top+a.height/2)-(b.top+b.height/2));
-    const vr=view.getBoundingClientRect();
-    const visible=dist<58 && b.right>vr.left && b.left<vr.right && b.bottom>vr.top && b.top<vr.bottom;
+    const visible=dist<58 && b.right>view.getBoundingClientRect().left && b.left<view.getBoundingClientRect().right;
     near.style.display=visible?'block':'none';
     near.querySelector('span').textContent=centerLevel===1?'「？」を発見！ 知床を調べる':`知床研究センター LV${centerLevel} に入る`;
   }
