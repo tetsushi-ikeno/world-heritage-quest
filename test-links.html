@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>世界遺産クエスト 検証リンク集</title>
+<style>
+:root{
+  --bg:#eef3f8;
+  --panel:#ffffff;
+  --ink:#17243a;
+  --muted:#66758b;
+  --line:#d6e0eb;
+  --accent:#284e7a;
+  --accent-weak:#eaf2fb;
+  --current:#245a3f;
+  --current-bg:#e7f5ed;
+  --testing:#7a4b12;
+  --testing-bg:#fff3dc;
+  --approved:#344c7d;
+  --approved-bg:#edf1fb;
+  --reference:#59616d;
+  --reference-bg:#f0f2f4;
+  --shadow:0 5px 18px rgba(34,54,78,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  line-height:1.55;
+}
+button,textarea{font:inherit}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 18px 54px}
+.hero{
+  background:linear-gradient(135deg,#18324f,#2f5e8b);
+  color:#fff;
+  border-radius:20px;
+  padding:22px 24px;
+  box-shadow:var(--shadow);
+}
+.heroTop{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.hero h1{font-size:28px;line-height:1.25;margin:0 0 8px}
+.hero p{margin:0;color:rgba(255,255,255,.86);font-size:14px}
+.phaseBadge{
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.42);
+  background:rgba(255,255,255,.12);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.guide{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}
+.guideItem{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:12px;
+}
+.guideItem b{display:block;font-size:13px;margin-bottom:2px;color:#fff}
+.toolbar{
+  margin:14px 0 20px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px 12px;
+  box-shadow:var(--shadow);
+}
+.toolbarText{font-size:12px;color:var(--muted)}
+.copyBtn{
+  min-height:46px;
+  border:0;
+  border-radius:11px;
+  padding:0 16px;
+  background:var(--accent);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+.copyBtn:active{transform:translateY(1px)}
+.section{margin-top:24px}
+.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 2px 10px}
+.section h2{font-size:19px;margin:0}
+.sectionDesc{font-size:12px;color:var(--muted);margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:15px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.cardTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.card h3{font-size:17px;line-height:1.35;margin:0}
+.status{
+  flex:0 0 auto;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+.status.current{color:var(--current);background:var(--current-bg)}
+.status.testing{color:var(--testing);background:var(--testing-bg)}
+.status.approved{color:var(--approved);background:var(--approved-bg)}
+.status.reference{color:var(--reference);background:var(--reference-bg)}
+.role{font-size:12px;color:var(--muted);margin:6px 0 10px}
+.points{
+  margin:0 0 12px;
+  padding:10px 12px 10px 28px;
+  background:#f8fafc;
+  border-radius:11px;
+  font-size:12px;
+}
+.points li+li{margin-top:3px}
+.memoLabel{font-size:11px;font-weight:800;color:#55647a;margin-bottom:5px}
+.memo{
+  width:100%;
+  min-height:72px;
+  resize:vertical;
+  border:1px solid #cbd7e4;
+  border-radius:10px;
+  padding:9px 10px;
+  background:#fff;
+  color:var(--ink);
+  font-size:12px;
+  line-height:1.5;
+}
+.memo:focus{outline:3px solid rgba(40,78,122,.14);border-color:#7291b2}
+.openBtn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:10px;
+  min-height:48px;
+  border-radius:11px;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:900;
+}
+.openBtn.secondary{background:#53667c}
+.openBtn:active{transform:translateY(1px)}
+.foot{
+  margin-top:26px;
+  padding:14px 16px;
+  border:1px dashed #b8c7d7;
+  border-radius:13px;
+  color:var(--muted);
+  font-size:11px;
+  background:rgba(255,255,255,.55);
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%) translateY(20px);
+  background:#17243a;
+  color:#fff;
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:12px;
+  font-weight:800;
+  opacity:0;
+  pointer-events:none;
+  transition:.18s ease;
+  z-index:20;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:820px){
+  .wrap{padding:14px 12px 40px}
+  .hero{padding:18px}
+  .heroTop{display:block}
+  .phaseBadge{display:inline-block;margin-top:10px}
+  .guide{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .toolbar{align-items:stretch;flex-direction:column}
+  .copyBtn{width:100%}
+}
+@media(min-width:821px) and (orientation:landscape){
+  .card{min-height:395px}
+  .openBtn{margin-top:auto}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="heroTop">
+      <div>
+        <h1>世界遺産クエスト 検証リンク集</h1>
+        <p>iPadではこのページだけをブックマーク。Lab・プレビュー・本編をここから開いて確認します。</p>
+      </div>
+      <div class="phaseBadge">Phase 9 / 2026-08-22</div>
+    </div>
+    <div class="guide">
+      <div class="guideItem"><b>1. ページを選ぶ</b>「検証中」を優先し、必要に応じて確定済み基準と比較します。</div>
+      <div class="guideItem"><b>2. iPadで確認</b>リンク先は同じタブで開きます。戻る操作でこの一覧へ戻れます。</div>
+      <div class="guideItem"><b>3. 気づきを残す</b>各カードのメモはこの端末に自動保存されます。</div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbarText">メモはSafariの端末内ストレージに保存されます。必要なものをまとめてコピーしてChatGPTへ貼り付けられます。</div>
+    <button id="copyMemos" class="copyBtn" type="button">記入済みメモをまとめてコピー</button>
+  </div>
+
+  <section class="section">
+    <div class="sectionHead">
+      <div><h2>いま確認するもの</h2><p class="sectionDesc">Phase 9の検証対象と、現時点の全体プレビュー。</p></div>
+    </div>
+    <div class="grid">
+      <article class="card" data-title="Phase 9 移動画面UI Lab">
+        <div class="cardTop"><h3>Phase 9 移動画面UI Lab</h3><span class="status testing">検証中</span></div>
+        <p class="role">iPad横向きでの移動画面レイアウト。右手操作を前提に、HUDと操作系の位置を確認。</p>
+        <ul class="points">
+          <li>右手親指でスティック・アクションへ無理なく届くか</li>
+          <li>左上の現在地・ミニマップが邪魔にならず見やすいか</li>
+          <li>中央マップの表示面積が十分か</li>
+          <li>遺産の書・メニューの位置が自然か</li>
+        </ul>
+        <label class="memoLabel" for="memo-movement">iPadメモ</label>
+        <textarea id="memo-movement" class="memo" data-memo="phase9-movement-ui" placeholder="例：スティックが少し上すぎる／ミニマップはこの位置でよい"></textarea>
+        <a class="openBtn" href="phase9-movement-ui-lab.html">このLabを開く</a>
+      </article>
+
+      <article class="card" data-title="全国6倍マップ UX Lab">
+        <div class="cardTop"><h3>全国6倍マップ UX Lab</h3><span class="status approved">マップ基準確定</span></div>
+        <p class="role">全国マップの6倍縮尺・主要地形・27遺産配置を確認するPhase 9基準Lab。</p>
+        <ul class="points">
+          <li>近畿の密集地でも遺産を見分けられるか</li>
+          <li>東北など遺産が少ない区間の移動が退屈すぎないか</li>
+          <li>山地・平野の位置関係が日本らしく見えるか</li>
+          <li>ミニマップで現在地を見失わないか</li>
+        </ul>
+        <label class="memoLabel" for="memo-map6x">iPadメモ</label>
+        <textarea id="memo-map6x" class="memo" data-memo="phase9-map-6x" placeholder="縮尺・移動テンポ・地形について気づいた点"></textarea>
+        <a class="openBtn" href="japan-6x-map-lab.html">このLabを開く</a>
+      </article>
+
+      <article class="card" data-title="統合プレビュー">
+        <div class="cardTop"><h3>統合プレビュー</h3><span class="status current">現在の全体確認</span></div>
+        <p class="role">Phase 8で確定したチュートリアル → 全国マップ → 発見 → 研究センターのGolden Path。</p>
+        <ul class="points">
+          <li>画面遷移が途切れず最後まで進めるか</li>
+          <li>チュートリアルからゲーム開始までのテンポ</li>
+          <li>知床発見後に研究センターへ入れるか</li>
+          <li>調査後の成長と全国マップへの復帰</li>
+        </ul>
+        <label class="memoLabel" for="memo-preview">iPadメモ</label>
+        <textarea id="memo-preview" class="memo" data-memo="integrated-preview" placeholder="全体を通して気になった点"></textarea>
+        <a class="openBtn" href="integrated-preview.html">プレビューを開く</a>
+      </article>
+
+      <article class="card" data-title="メイン版">
+        <div class="cardTop"><h3>メイン版</h3><span class="status current">Main</span></div>
+        <p class="role">GitHub Pagesの通常入口。Phase 9の検証内容は、採用・統合されるまでここには反映しません。</p>
+        <ul class="points">
+          <li>現行本編との違いを確認したいときに使用</li>
+          <li>Lab変更が本編へ混入していないかの比較</li>
+          <li>既存機能の退行確認</li>
+        </ul>
+        <label class="memoLabel" for="memo-main">iPadメモ</label>
+        <textarea id="memo-main" class="memo" data-memo="main" placeholder="メイン版で気づいた点"></textarea>
+        <a class="openBtn" href="index.html">メイン版を開く</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sectionHead">
+      <div><h2>確定済み・比較用Lab</h2><p class="sectionDesc">新しい案を判断するときの比較基準。通常は必要なときだけ開きます。</p></div>
+    </div>
+    <div class="grid">
+      <article class="card" data-title="近畿縮尺比較 Lab">
+        <div class="cardTop"><h3>近畿縮尺比較 Lab</h3><span class="status reference">比較用</span></div>
+        <p class="role">1〜8倍を比較して全国マップを6倍に決めた検証ページ。</p>
+        <ul class="points"><li>6倍採用理由を再確認するとき</li><li>今後オブジェクトサイズを変えた際の再比較</li></ul>
+        <label class="memoLabel" for="memo-kinki">iPadメモ</label>
+        <textarea id="memo-kinki" class="memo" data-memo="kinki-scale" placeholder="比較時のメモ"></textarea>
+        <a class="openBtn secondary" href="kinki-scale-lab.html">比較Labを開く</a>
+      </article>
+
+      <article class="card" data-title="研究センター成長 Lab">
+        <div class="cardTop"><h3>研究センター成長 Lab</h3><span class="status approved">確定基準</span></div>
+        <p class="role">研究センターの外観・成長段階・施設内移動のデザイン基準。</p>
+        <ul class="points"><li>施設の見た目と成長感</li><li>本・展示・調査員の配置と操作</li><li>全国マップ側との統一感</li></ul>
+        <label class="memoLabel" for="memo-center">iPadメモ</label>
+        <textarea id="memo-center" class="memo" data-memo="research-center-style" placeholder="研究センターの比較メモ"></textarea>
+        <a class="openBtn secondary" href="research-center-style-lab.html">基準Labを開く</a>
+      </article>
+
+      <article class="card" data-title="チュートリアル確定 Lab">
+        <div class="cardTop"><h3>チュートリアル確定 Lab</h3><span class="status approved">確定基準</span></div>
+        <p class="role">ピラミトン導入からアブ・シンベル神殿の説明までの確定フロー。</p>
+        <ul class="points"><li>文字量とページ分割</li><li>ピラミトンの見え方</li><li>説明の時間軸と理解しやすさ</li></ul>
+        <label class="memoLabel" for="memo-tutorial">iPadメモ</label>
+        <textarea id="memo-tutorial" class="memo" data-memo="tutorial-final" placeholder="チュートリアルの比較メモ"></textarea>
+        <a class="openBtn secondary" href="tutorial-lab-final.html">基準Labを開く</a>
+      </article>
+
+      <article class="card" data-title="全国追従カメラ Lab">
+        <div class="cardTop"><h3>全国追従カメラ Lab</h3><span class="status reference">旧比較基準</span></div>
+        <p class="role">全国1枚マップでの主人公追従方式を検証したLab。6倍全国マップ以前の比較用。</p>
+        <ul class="points"><li>主人公中央固定とデッドゾーン方式の比較</li><li>画面スクロールの感覚を振り返るとき</li></ul>
+        <label class="memoLabel" for="memo-camera">iPadメモ</label>
+        <textarea id="memo-camera" class="memo" data-memo="follow-camera" placeholder="カメラ方式の比較メモ"></textarea>
+        <a class="openBtn secondary" href="japan-follow-camera-lab.html">比較Labを開く</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sectionHead">
+      <div><h2>個別画面・機能確認</h2><p class="sectionDesc">統合プレビューで問題が見つかったときに、対象画面だけを切り分けて確認します。</p></div>
+    </div>
+    <div class="grid">
+      <article class="card" data-title="全国マップ Game">
+        <div class="cardTop"><h3>全国マップ Game</h3><span class="status reference">個別画面</span></div>
+        <p class="role">Phase 8本編用の全国マップ画面を単独で確認。</p>
+        <ul class="points"><li>移動・発見アクション</li><li>未発見遺産の表示</li><li>研究センター外観との連動</li></ul>
+        <label class="memoLabel" for="memo-mapgame">iPadメモ</label>
+        <textarea id="memo-mapgame" class="memo" data-memo="area-map-game" placeholder="全国マップ単独のメモ"></textarea>
+        <a class="openBtn secondary" href="area-map-game.html">個別画面を開く</a>
+      </article>
+
+      <article class="card" data-title="研究センター Game">
+        <div class="cardTop"><h3>研究センター Game</h3><span class="status reference">個別画面</span></div>
+        <p class="role">Phase 8本編用の研究センター画面を単独で確認。</p>
+        <ul class="points"><li>スティック移動</li><li>本・展示・調査員のアクション</li><li>3/3調査後の成長</li></ul>
+        <label class="memoLabel" for="memo-centergame">iPadメモ</label>
+        <textarea id="memo-centergame" class="memo" data-memo="research-center-game" placeholder="研究センター単独のメモ"></textarea>
+        <a class="openBtn secondary" href="research-center-game.html">個別画面を開く</a>
+      </article>
+
+      <article class="card" data-title="登録基準支部 Lab">
+        <div class="cardTop"><h3>登録基準支部 Lab</h3><span class="status reference">機能Lab</span></div>
+        <p class="role">登録基準を学ぶ支部の教材・チェック・CLEARまでの流れ。</p>
+        <ul class="points"><li>子どもが説明を追いやすいか</li><li>問題への移行が自然か</li><li>ネタバレしすぎない案内になっているか</li></ul>
+        <label class="memoLabel" for="memo-criteria">iPadメモ</label>
+        <textarea id="memo-criteria" class="memo" data-memo="criteria-branch" placeholder="登録基準支部のメモ"></textarea>
+        <a class="openBtn secondary" href="criteria-branch-lab.html">機能Labを開く</a>
+      </article>
+
+      <article class="card" data-title="ピラミトン Lab">
+        <div class="cardTop"><h3>ピラミトン Lab</h3><span class="status reference">キャラクターLab</span></div>
+        <p class="role">ピラミトンの表情・動作差分を確認するためのページ。</p>
+        <ul class="points"><li>元デザインのかわいさを保てているか</li><li>表情が小さい画面でも判別できるか</li><li>ゲーム画面で主張が強すぎないか</li></ul>
+        <label class="memoLabel" for="memo-piramiton">iPadメモ</label>
+        <textarea id="memo-piramiton" class="memo" data-memo="piramiton" placeholder="ピラミトンのメモ"></textarea>
+        <a class="openBtn secondary" href="piramiton-lab.html">キャラクターLabを開く</a>
+      </article>
+    </div>
+  </section>
+
+  <div class="foot">
+    運用ルール：新しいLab・プレビュー・本編確認ページを作成した場合は、この <code>test-links.html</code> にカードを追記します。LabをPagesへ公開することと、本編へ採用することは別扱いです。「検証中」「確定基準」「参考」を明示して混同しないようにします。
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{
+  const prefix='whq-verification-memo:';
+  const memos=[...document.querySelectorAll('[data-memo]')];
+  const toast=document.getElementById('toast');
+  let toastTimer;
+
+  function showToast(text){
+    toast.textContent=text;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
+  }
+
+  memos.forEach(el=>{
+    const key=prefix+el.dataset.memo;
+    try{el.value=localStorage.getItem(key)||'';}catch(_){ }
+    el.addEventListener('input',()=>{
+      try{localStorage.setItem(key,el.value);}catch(_){ }
+    });
+  });
+
+  document.getElementById('copyMemos').addEventListener('click',async()=>{
+    const lines=['世界遺産クエスト iPad検証メモ',''];
+    let count=0;
+    document.querySelectorAll('.card').forEach(card=>{
+      const memo=card.querySelector('[data-memo]');
+      if(!memo || !memo.value.trim()) return;
+      count++;
+      lines.push('【'+card.dataset.title+'】');
+      lines.push(memo.value.trim());
+      lines.push('');
+    });
+    if(!count){showToast('記入済みのメモがありません');return;}
+    const text=lines.join('\n');
+    try{
+      await navigator.clipboard.writeText(text);
+      showToast(count+'件のメモをコピーしました');
+    }catch(_){
+      const area=document.createElement('textarea');
+      area.value=text;
+      area.style.position='fixed';area.style.opacity='0';
+      document.body.appendChild(area);area.select();
+      document.execCommand('copy');area.remove();
+      showToast(count+'件のメモをコピーしました');
+    }
+  });
+})();
+</script>
+</body>
+</html>
