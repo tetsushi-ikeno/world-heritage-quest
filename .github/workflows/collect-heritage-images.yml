@@ -1,12 +1,6 @@
 name: Collect heritage images
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - scripts/collect-heritage-images.mjs
-      - scripts/collect-heritage-images-with-retry.mjs
-      - .github/workflows/collect-heritage-images.yml
   pull_request:
     types: [opened, synchronize]
   workflow_dispatch:
@@ -17,6 +11,22 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - id: batch1
+            sites: horyuji,himeji,yakushima,shirakami,kyoto
+          - id: batch2
+            sites: shirakawago,hiroshima,itsukushima,nara,nikko
+          - id: batch3
+            sites: ryukyu,kii,iwami,ogasawara,hiraizumi
+          - id: batch4
+            sites: fujisan,tomioka,meiji-industrial,le-corbusier,okinoshima
+          - id: batch5
+            sites: hidden-christian,mozu-furuichi,amami-okinawa,jomon,sado
+          - id: batch6
+            sites: asuka-fujiwara,shiretoko
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -28,10 +38,48 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Collect three photos for each Japanese World Heritage site
-        run: node scripts/collect-heritage-images-with-retry.mjs
+      - name: Collect licensed photos for ${{ matrix.id }}
+        env:
+          HERITAGE_BATCH_ID: ${{ matrix.id }}
+          HERITAGE_SITE_IDS: ${{ matrix.sites }}
+        run: node scripts/collect-heritage-images-batch.mjs
 
-      - name: Commit generated photos and credits to main
+      - name: Upload batch
+        uses: actions/upload-artifact@v4
+        with:
+          name: heritage-${{ matrix.id }}
+          path: |
+            docs/assets/heritage
+            data/heritage-images-${{ matrix.id }}.json
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    needs: collect
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Download all batches
+        uses: actions/download-artifact@v4
+        with:
+          pattern: heritage-batch*
+          path: .
+          merge-multiple: true
+
+      - name: Merge metadata and credits
+        run: node scripts/merge-heritage-image-metadata.mjs
+
+      - name: Commit 81 photos and credits to main
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -40,5 +88,6 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Add curated Wikimedia Commons heritage photos [skip ci]"
+          git commit -m "Add 81 curated Wikimedia Commons heritage photos [skip ci]"
+          git pull --rebase origin main
           git push origin HEAD:main
