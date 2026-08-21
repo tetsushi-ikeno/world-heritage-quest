@@ -62,7 +62,7 @@ function layout(){return layouts[level]||layouts[3]}
 function save(){sessionStorage.setItem(LEVEL_KEY,String(level));sessionStorage.setItem(DONE_KEY,JSON.stringify([...done]));window.parent.postMessage({type:'whqCenterLevel',level,done:[...done]},'*')}
 function setMsg(title,text){message.innerHTML=`<b>${title}</b><p>${text}</p>`}
 function tileChar(x,y){return layout()[y]?.[x]||'#'}
-function blocked(x,y){const c=tileChar(x,y);return c==='#'||'DBRSP'.includes(c)}
+function blocked(x,y){const c=tileChar(x,y);return c==='#'||c==='E'||'DBRSP'.includes(c)}
 function render(){
   const rows=layout(),h=rows.length,w=rows[0].length;room.innerHTML='';room.style.gridTemplateColumns=`repeat(${w},var(--cell))`;room.style.gridTemplateRows=`repeat(${h},var(--cell))`;document.getElementById('title').textContent=`知床研究センター LV${level}`;
   for(let y=0;y<h;y++)for(let x=0;x<w;x++){const c=rows[y][x],cell=document.createElement('div');cell.className='cell '+(c==='#'?'wall':c==='E'?'exit':'floor');cell.dataset.x=x;cell.dataset.y=y;if(meta[c]){const o=document.createElement('div');o.className=`obj ${meta[c].id}${done.has(meta[c].id)?' done':''}`;cell.appendChild(o)}else if(c==='S'){const o=document.createElement('div');o.className='obj shelf';cell.appendChild(o)}else if(c==='P'){const o=document.createElement('div');o.className='obj plaque';cell.appendChild(o)}if(x===player.x&&y===player.y){const p=document.createElement('div');p.className='player';cell.appendChild(p)}room.appendChild(cell)}
@@ -74,7 +74,7 @@ function findTarget(){target=null;const around=[[0,-1],[0,1],[-1,0],[1,0]];for(c
 }
 function move(dx,dy){const nx=player.x+dx,ny=player.y+dy;if(blocked(nx,ny))return;player={x:nx,y:ny};render()}
 function interact(){if(!target)return;if(target.type==='exit'){window.parent.postMessage({type:'whqExitCenter',level},'*');return}const first=!done.has(target.id);done.add(target.id);setMsg(target.title,target.text);save();render();if(first&&done.has('display')&&done.has('book')&&done.has('researcher')&&level===2){setTimeout(grow,350)}}
-function grow(){level=3;sessionStorage.setItem(LEVEL_KEY,'3');save();document.getElementById('growth').classList.add('show');setTimeout(()=>{document.getElementById('growth').classList.remove('show');player={x:6,y:7};render();setMsg('研究センター LV3','研究が進み、資料や設備が増えた！ 外へ出ると全国マップの施設も成長しています。')},900)}
+function grow(){level=3;sessionStorage.setItem(LEVEL_KEY,'3');save();document.getElementById('growth').classList.add('show');setTimeout(()=>{document.getElementById('growth').classList.remove('show');player={x:6,y:6};render();setMsg('研究センター LV3','研究が進み、資料や設備が増えた！ 外へ出ると全国マップの施設も成長しています。')},900)}
 action.querySelector('button').addEventListener('click',interact);
 window.addEventListener('keydown',e=>{const d={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];if(!d)return;e.preventDefault();move(...d)});
 function direction(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;if(Math.hypot(dx,dy)<12)return null;return Math.abs(dx)>Math.abs(dy)?[Math.sign(dx),0]:[0,Math.sign(dy)]}
@@ -82,7 +82,7 @@ function place(e){const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.widt
 function stop(){pid=null;dir=null;clearInterval(timer);timer=null;knob.style.transform='translate(-50%,-50%)'}
 joy.addEventListener('pointerdown',e=>{pid=e.pointerId;joy.setPointerCapture(pid);place(e);dir=direction(e);if(dir)move(...dir);clearInterval(timer);timer=setInterval(()=>{if(dir)move(...dir)},180)});joy.addEventListener('pointermove',e=>{if(e.pointerId!==pid)return;place(e);dir=direction(e)});joy.addEventListener('pointerup',stop);joy.addEventListener('pointercancel',stop);
 if(level>=3&&done.size<3){done=new Set(['display','book','researcher']);sessionStorage.setItem(DONE_KEY,JSON.stringify([...done]))}
-const rows=layout();player={x:Math.floor(rows[0].length/2),y:rows.length-2};render();save();
+const rows=layout();player={x:Math.floor(rows[0].length/2),y:rows.length-3};render();save();
 })();
 </script>
 </body>
