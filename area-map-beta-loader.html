@@ -4,13 +4,18 @@
 <body>
 <script>
 (async()=>{
-  const source=await fetch('area-map-game.html?source=r8',{cache:'no-store'}).then(r=>r.text());
+  const source=await fetch('area-map-game.html?source=r9',{cache:'no-store'}).then(r=>r.text());
   let patched=source
-    .replace('japan-6x-map-lab.html?game=1','japan-map-beta-loader.html?game=1&rev=r8')
+    .replace('japan-6x-map-lab.html?game=1','japan-map-beta-loader.html?game=1&rev=r9&nocache='+Date.now())
     .replace("{id:21,slug:'okinoshima',name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:26,y:50,type:'文化'}","{id:21,slug:'okinoshima',name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:24,y:49,type:'文化'}")
     .replace("{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:23,y:54,type:'文化'}","{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:24,y:54,type:'文化'}")
-    .replace('transform:translate(-50%,-70%)','transform:translate(-50%,-50%)')
-    .replace('const x=innerWidth/2+(q.x-p.x)*TILE,y=innerHeight/2+(q.y-p.y)*TILE','const x=innerWidth/2+(q.x-p.x-.5)*TILE,y=innerHeight/2+(q.y-p.y-.5)*TILE');
+    .replace('.centerMarker{position:absolute','#centerLayer{display:none!important}.centerMarker{position:absolute');
+
+  const oldPlayerPos="function playerPos(){const t=doc()?.getElementById('posChip')?.textContent||'';const m=t.match(/(-?\\d+)\\s*,\\s*(-?\\d+)/);return m?{x:+m[1],y:+m[2]}:null}";
+  const newPlayerPos="function playerPos(){const d=doc(),api=d?.defaultView?.WHQMapAPI;if(api?.getPosition){const p=api.getPosition();if(p&&Number.isFinite(+p.x)&&Number.isFinite(+p.y))return{x:+p.x,y:+p.y}}const t=d?.getElementById('posChip')?.textContent||'';const m=t.match(/(-?\\d+)\\s*,\\s*(-?\\d+)/);return m?{x:+m[1],y:+m[2]}:null}";
+  if(!patched.includes(oldPlayerPos))throw new Error('player position injection point not found');
+  patched=patched.replace(oldPlayerPos,newPlayerPos);
+
   const oldPrepare="function prepare(){patchMap();setTimeout(()=>{replaySavedPath();ready=true;document.getElementById('loading').classList.add('hide');sync()},90)}";
   const newPrepare=`function prepare(){
     patchMap();
@@ -18,21 +23,36 @@
     let tries=0;
     prepare._timer=setInterval(()=>{
       patchMap();
-      const d=doc(),api=d?.defaultView?.WHQMapAPI,p=playerPos();
-      if(!d||!api||!p){if(++tries<200)return;clearInterval(prepare._timer);prepare._timer=null;replaySavedPath();ready=true;document.getElementById('loading').classList.add('hide');sync();return}
+      const d=doc(),api=d?.defaultView?.WHQMapAPI;
+      if(!d||!api?.getPosition||!api?.setPosition){if(++tries<200)return;clearInterval(prepare._timer);prepare._timer=null;document.getElementById('loading').textContent='現在地の復元に失敗しました。再読み込みしてください。';return}
       clearInterval(prepare._timer);prepare._timer=null;
       const state=saveState(),target=state.map.position;
       restoring=true;
       let restored=false;
       if(target)restored=api.setPosition(target.x,target.y);
-      if(!restored)goBetaStart();
+      if(!target)goBetaStart();
+      else if(!restored){console.warn('saved position was not directly walkable; map API selected nearest walkable point',target)}
       restoring=false;
-      window.WHQBetaSave.update(s=>{s.map.position=playerPos();return s});
-      ready=true;document.getElementById('loading').classList.add('hide');sync();
+      const p=api.getPosition();
+      if(p)window.WHQBetaSave.update(s=>{s.map.position={x:p.x,y:p.y};s.map.path=[];return s});
+      ready=true;document.getElementById('loading').classList.add('hide');api.refresh?.();sync();
     },50)
   }`;
   if(!patched.includes(oldPrepare))throw new Error('restore injection point not found');
   patched=patched.replace(oldPrepare,newPrepare);
+
+  const oldMark="function markDiscovered(s){window.WHQBetaSave.update(st=>{if(!st.discovered.includes(s.id))st.discovered.push(s.id);return st})}";
+  const newMark="function markDiscovered(s){window.WHQBetaSave.update(st=>{if(!st.discovered.includes(s.id))st.discovered.push(s.id);return st});doc()?.defaultView?.WHQMapAPI?.refresh?.()}";
+  if(!patched.includes(oldMark))throw new Error('discovery refresh injection point not found');
+  patched=patched.replace(oldMark,newMark);
+
+  const listenerHook="frame.addEventListener('load',()=>{clearInterval(poll);prepare();poll=setInterval(sync,120)});window.addEventListener('message',e=>{if(e.data?.type==='whqRefreshMap')sync()});loadManifest();";
+  if(!patched.includes(listenerHook))throw new Error('persist listener injection point not found');
+  const listenerReplacement=`function persistMapPosition(){if(!ready||restoring)return;const p=playerPos();if(p)window.WHQBetaSave.update(s=>{s.map.position={x:p.x,y:p.y};return s})}
+window.addEventListener('pagehide',persistMapPosition);window.addEventListener('beforeunload',persistMapPosition);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persistMapPosition()});
+frame.addEventListener('load',()=>{clearInterval(poll);prepare();poll=setInterval(sync,120)});window.addEventListener('message',e=>{if(e.data?.type==='whqRefreshMap'){doc()?.defaultView?.WHQMapAPI?.refresh?.();sync()}});loadManifest();`;
+  patched=patched.replace(listenerHook,listenerReplacement);
+
   document.open();document.write(patched);document.close();
 })().catch(err=>{document.body.textContent='移動画面の読み込みに失敗しました: '+err.message});
 </script>
