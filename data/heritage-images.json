@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T00:30:50.920Z",
+  "generatedAt": "2026-08-22T00:34:07.585Z",
   "source": "Wikimedia Commons",
   "policy": {
     "selection": [
@@ -367,17 +367,18 @@
           "role": "scale",
           "roleJa": "② スケールや美しさに驚く景観",
           "file": "02.jpg",
-          "commonsTitle": "File:Genbaku Dome Mae Station 20120729-1.JPG",
-          "author": "Taisyo",
-          "license": "CC BY 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Genbaku_Dome_Mae_Station_20120729-1.JPG",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Genbaku_Dome_Mae_Station_20120729-1.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Genbaku_Dome_Mae_Station_20120729-1.JPG/1920px-Genbaku_Dome_Mae_Station_20120729-1.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 4000,
-          "originalHeight": 3000,
-          "description": "広島電鉄 原爆ドーム前駅",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "commonsTitle": "File:Atomic Bomb Dome and Motoyasugawa River from Aioibashi Bridge 4.jpg",
+          "author": "そらみみ",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Atomic_Bomb_Dome_and_Motoyasugawa_River_from_Aioibashi_Bridge_4.jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Atomic_Bomb_Dome_and_Motoyasugawa_River_from_Aioibashi_Bridge_4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Atomic_Bomb_Dome_and_Motoyasugawa_River_from_Aioibashi_Bridge_4.jpg/1920px-Atomic_Bomb_Dome_and_Motoyasugawa_River_from_Aioibashi_Bridge_4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "originalWidth": 3999,
+          "originalHeight": 2999,
+          "description": "相生橋より望む元安川と原爆ドーム",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "駅主体の写真を、原爆ドームと元安川を一望できる景観へ差し替え"
         },
         {
           "role": "detail",
@@ -603,17 +604,18 @@
           "role": "detail",
           "roleJa": "③ 近景・内部・自然など別の側面",
           "file": "03.jpg",
-          "commonsTitle": "File:Tamaudun01s3200.jpg",
+          "commonsTitle": "File:Naha Shikinaen21n4272.jpg",
           "author": "663highland",
           "license": "CC BY 2.5",
           "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Tamaudun01s3200.jpg",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/4/46/Tamaudun01s3200.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Tamaudun01s3200.jpg/1920px-Tamaudun01s3200.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 2900,
-          "originalHeight": 4350,
-          "description": "Tamaudun in Naha, Okinawa prefecture, Japan Tamaudun was registered as part of the UNESCO World Heritage Site \"Gusuku Sites and Related Properties of the Kingdom of Ryukyu\".",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Naha_Shikinaen21n4272.jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Naha_Shikinaen21n4272.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Naha_Shikinaen21n4272.jpg/1920px-Naha_Shikinaen21n4272.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "originalWidth": 4592,
+          "originalHeight": 3056,
+          "description": "Shikinaen in Naha, Okinawa prefecture, Japan It was registered as part of the UNESCO World Heritage Site \"Gusuku Sites and Related Properties of the Kingdom of Ryukyu\".",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "玉陵への偏りを避け、構成資産の識名園へ差し替え"
         }
       ]
     },
@@ -807,17 +809,18 @@
           "role": "scale",
           "roleJa": "② スケールや美しさに驚く景観",
           "file": "02.jpg",
-          "commonsTitle": "File:Hiraizumi Road 31 building on the southern side.jpg",
-          "author": "Ymblanter",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Hiraizumi_Road_31_building_on_the_southern_side.jpg",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Hiraizumi_Road_31_building_on_the_southern_side.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Hiraizumi_Road_31_building_on_the_southern_side.jpg/1920px-Hiraizumi_Road_31_building_on_the_southern_side.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 2736,
-          "originalHeight": 3648,
-          "description": "Building on the southern side of Road 31, Hiraizumi, Iwate, Japan",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "commonsTitle": "File:Motsuji garden.jpg",
+          "author": "Takahashi J",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Motsuji_garden.jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/2/29/Motsuji_garden.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Motsuji_garden.jpg/1920px-Motsuji_garden.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "originalWidth": 2816,
+          "originalHeight": 2112,
+          "description": "Motsuji Garden in en:Hiraizumi, Iwate",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "無関係な看板写真を、毛越寺の浄土庭園へ差し替え"
         },
         {
           "role": "detail",
@@ -988,17 +991,18 @@
           "role": "detail",
           "roleJa": "③ 近景・内部・自然など別の側面",
           "file": "03.jpg",
-          "commonsTitle": "File:Hagi castle Masudas.JPG",
-          "author": "TT mk2",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Hagi_castle_Masudas.JPG",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/0/01/Hagi_castle_Masudas.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Hagi_castle_Masudas.JPG/1920px-Hagi_castle_Masudas.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 2800,
-          "originalHeight": 2100,
-          "description": "旧益田家物見矢倉（山口県萩市）",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "commonsTitle": "File:Miike Coal Mine Manda Pit.jpg",
+          "author": "水だらけのプール",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Miike_Coal_Mine_Manda_Pit.jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Miike_Coal_Mine_Manda_Pit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Miike_Coal_Mine_Manda_Pit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "originalWidth": 1621,
+          "originalHeight": 1013,
+          "description": "三池炭鉱万田坑（熊本県荒尾市）",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "構成資産でない萩城写真を、三池炭鉱・万田坑へ差し替え"
         }
       ]
     },
@@ -1137,33 +1141,35 @@
           "role": "scale",
           "roleJa": "② スケールや美しさに驚く景観",
           "file": "02.jpg",
-          "commonsTitle": "File:Oura Church view - panoramio.jpg",
-          "author": "Masoud Akbari",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Oura_Church_view_-_panoramio.jpg",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Oura_Church_view_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Oura_Church_view_-_panoramio.jpg/1920px-Oura_Church_view_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 4896,
-          "originalHeight": 3672,
-          "description": "Oura Church view",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "commonsTitle": "File:HiradoJapan-RiceTerraces.jpg",
+          "author": "Bryanmackinnon",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:HiradoJapan-RiceTerraces.jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/0/09/HiradoJapan-RiceTerraces.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/HiradoJapan-RiceTerraces.jpg/1920px-HiradoJapan-RiceTerraces.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "originalWidth": 5712,
+          "originalHeight": 4284,
+          "description": "Rice terraces in Hirado in the area of the UNESCO World Heritage Site (Hidden Christian Sites in the Nagasaki Region - Kasuga Village and Sacred Places in Hirado)",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "大浦天主堂への偏りを避け、春日集落の棚田景観へ差し替え"
         },
         {
           "role": "detail",
           "roleJa": "③ 近景・内部・自然など別の側面",
           "file": "03.jpg",
-          "commonsTitle": "File:Inside of Oura Church - panoramio (2).jpg",
-          "author": "Masoud Akbari",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Inside_of_Oura_Church_-_panoramio_(2).jpg",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Inside_of_Oura_Church_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Inside_of_Oura_Church_-_panoramio_%282%29.jpg/1920px-Inside_of_Oura_Church_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 4896,
-          "originalHeight": 3672,
-          "description": "inside of Oura Church",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "commonsTitle": "File:Sakitsu Church 20120916-04.jpg",
+          "author": "Norio NAKAYAMA",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Sakitsu_Church_20120916-04.jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Sakitsu_Church_20120916-04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sakitsu_Church_20120916-04.jpg/1920px-Sakitsu_Church_20120916-04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "originalWidth": 5184,
+          "originalHeight": 3456,
+          "description": "崎津天主堂",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "別構成資産である崎津集落・崎津教会へ差し替え"
         }
       ]
     },
@@ -1483,19 +1489,74 @@
           "role": "detail",
           "roleJa": "③ 近景・内部・自然など別の側面",
           "file": "03.jpg",
-          "commonsTitle": "File:Shiretoko National Park.jpg",
-          "author": "Trengarasu",
-          "license": "Public domain",
-          "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Shiretoko_National_Park.jpg",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/6/67/Shiretoko_National_Park.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Shiretoko_National_Park.jpg/1920px-Shiretoko_National_Park.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 5962,
-          "originalHeight": 1766,
-          "description": "View of Shiretoko National Park. Mount Iō (right) and Mount Shiretoko (far left) seen from Sea of Okhotsk. Six seperate photos wer taken and stiched together with a software.",
-          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
+          "commonsTitle": "File:Wild bear at Shiretoko.JPG",
+          "author": "Captain76",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Wild_bear_at_Shiretoko.JPG",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Wild_bear_at_Shiretoko.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Wild_bear_at_Shiretoko.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "originalWidth": 1130,
+          "originalHeight": 756,
+          "description": "Wild bear at Shiretoko",
+          "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。",
+          "qualityCheck": "自然遺産の生態系を示す、知床の野生ヒグマへ差し替え"
         }
       ]
     }
-  ]
+  ],
+  "qualityCheck": {
+    "status": "final-reviewed",
+    "checkedAt": "2026-08-22T00:34:07.585Z",
+    "criteria": [
+      "遺産または正式な構成資産を直接写していること",
+      "3枚が代表景観・スケール・別側面として過度に重複しないこと",
+      "地図・看板・駅・記念証・消毒設備など学習用途に不適切な主題を除外すること",
+      "CC0 / Public Domain / CC BY / CC BY-SA の再利用可能画像であること"
+    ],
+    "replaced": [
+      {
+        "site": "hiroshima",
+        "image": 2,
+        "title": "File:Atomic Bomb Dome and Motoyasugawa River from Aioibashi Bridge 4.jpg",
+        "reason": "駅主体の写真を、原爆ドームと元安川を一望できる景観へ差し替え"
+      },
+      {
+        "site": "hiraizumi",
+        "image": 2,
+        "title": "File:Motsuji garden.jpg",
+        "reason": "無関係な看板写真を、毛越寺の浄土庭園へ差し替え"
+      },
+      {
+        "site": "meiji-industrial",
+        "image": 3,
+        "title": "File:Miike Coal Mine Manda Pit.jpg",
+        "reason": "構成資産でない萩城写真を、三池炭鉱・万田坑へ差し替え"
+      },
+      {
+        "site": "ryukyu",
+        "image": 3,
+        "title": "File:Naha Shikinaen21n4272.jpg",
+        "reason": "玉陵への偏りを避け、構成資産の識名園へ差し替え"
+      },
+      {
+        "site": "hidden-christian",
+        "image": 2,
+        "title": "File:HiradoJapan-RiceTerraces.jpg",
+        "reason": "大浦天主堂への偏りを避け、春日集落の棚田景観へ差し替え"
+      },
+      {
+        "site": "hidden-christian",
+        "image": 3,
+        "title": "File:Sakitsu Church 20120916-04.jpg",
+        "reason": "別構成資産である崎津集落・崎津教会へ差し替え"
+      },
+      {
+        "site": "shiretoko",
+        "image": 3,
+        "title": "File:Wild bear at Shiretoko.JPG",
+        "reason": "自然遺産の生態系を示す、知床の野生ヒグマへ差し替え"
+      }
+    ]
+  }
 }
