@@ -60,7 +60,7 @@
 
 ## 琉球王国のグスク及び関連遺産群
 - **1. ① 一目でその遺産と分かる代表景観** — Naha Shuri Castle02s5s3200.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Naha_Shuri_Castle02s5s3200.jpg) / `docs/assets/heritage/ryukyu/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — Tamaudun07bs4272.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tamaudun07bs4272.jpg) / `docs/assets/heritage/ryukyu/02.jpg`
+- **2. ② スケールや美しさに驚く景観** — Tamaudun02s3200.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tamaudun02s3200.jpg) / `docs/assets/heritage/ryukyu/02.jpg`
 - **3. ③ 近景・内部・自然など別の側面** — Tamaudun01s3200.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tamaudun01s3200.jpg) / `docs/assets/heritage/ryukyu/03.jpg`
 
 ## 紀伊山地の霊場と参詣道
@@ -80,7 +80,7 @@
 
 ## 平泉
 - **1. ① 一目でその遺産と分かる代表景観** — Konjikido shelter hall - Chusonji, Hiraizumi, Iwate - DSC04951.jpg / Daderot / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Konjikido_shelter_hall_-_Chusonji,_Hiraizumi,_Iwate_-_DSC04951.jpg) / `docs/assets/heritage/hiraizumi/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — マルフク看板 岩手県西磐井郡平泉町平泉字柳御所 - panoramio.jpg / marufuku_sign_collec… / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%83%AB%E3%83%95%E3%82%AF%E7%9C%8B%E6%9D%BF_%E5%B2%A9%E6%89%8B%E7%9C%8C%E8%A5%BF%E7%A3%90%E4%BA%95%E9%83%A1%E5%B9%B3%E6%B3%89%E7%94%BA%E5%B9%B3%E6%B3%89%E5%AD%97%E6%9F%B3%E5%BE%A1%E6%89%80_-_panoramio.jpg) / `docs/assets/heritage/hiraizumi/02.jpg`
+- **2. ② スケールや美しさに驚く景観** — Hiraizumi Road 31 building on the southern side.jpg / Ymblanter / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Hiraizumi_Road_31_building_on_the_southern_side.jpg) / `docs/assets/heritage/hiraizumi/02.jpg`
 - **3. ③ 近景・内部・自然など別の側面** — Old shelter of Konjikido.jpg / Ymblanter / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Old_shelter_of_Konjikido.jpg) / `docs/assets/heritage/hiraizumi/03.jpg`
 
 ## 富士山―信仰の対象と芸術の源泉
