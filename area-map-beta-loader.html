@@ -4,11 +4,35 @@
 <body>
 <script>
 (async()=>{
-  const source=await fetch('area-map-game.html?source=r7',{cache:'no-store'}).then(r=>r.text());
-  const patched=source
-    .replace('japan-6x-map-lab.html?game=1','japan-map-beta-loader.html?game=1&rev=r7')
+  const source=await fetch('area-map-game.html?source=r8',{cache:'no-store'}).then(r=>r.text());
+  let patched=source
+    .replace('japan-6x-map-lab.html?game=1','japan-map-beta-loader.html?game=1&rev=r8')
     .replace("{id:21,slug:'okinoshima',name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:26,y:50,type:'文化'}","{id:21,slug:'okinoshima',name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:24,y:49,type:'文化'}")
-    .replace("{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:23,y:54,type:'文化'}","{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:24,y:54,type:'文化'}");
+    .replace("{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:23,y:54,type:'文化'}","{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:24,y:54,type:'文化'}")
+    .replace('transform:translate(-50%,-70%)','transform:translate(-50%,-50%)')
+    .replace('const x=innerWidth/2+(q.x-p.x)*TILE,y=innerHeight/2+(q.y-p.y)*TILE','const x=innerWidth/2+(q.x-p.x-.5)*TILE,y=innerHeight/2+(q.y-p.y-.5)*TILE');
+  const oldPrepare="function prepare(){patchMap();setTimeout(()=>{replaySavedPath();ready=true;document.getElementById('loading').classList.add('hide');sync()},90)}";
+  const newPrepare=`function prepare(){
+    patchMap();
+    if(prepare._timer)clearInterval(prepare._timer);
+    let tries=0;
+    prepare._timer=setInterval(()=>{
+      patchMap();
+      const d=doc(),api=d?.defaultView?.WHQMapAPI,p=playerPos();
+      if(!d||!api||!p){if(++tries<200)return;clearInterval(prepare._timer);prepare._timer=null;replaySavedPath();ready=true;document.getElementById('loading').classList.add('hide');sync();return}
+      clearInterval(prepare._timer);prepare._timer=null;
+      const state=saveState(),target=state.map.position;
+      restoring=true;
+      let restored=false;
+      if(target)restored=api.setPosition(target.x,target.y);
+      if(!restored)goBetaStart();
+      restoring=false;
+      window.WHQBetaSave.update(s=>{s.map.position=playerPos();return s});
+      ready=true;document.getElementById('loading').classList.add('hide');sync();
+    },50)
+  }`;
+  if(!patched.includes(oldPrepare))throw new Error('restore injection point not found');
+  patched=patched.replace(oldPrepare,newPrepare);
   document.open();document.write(patched);document.close();
 })().catch(err=>{document.body.textContent='移動画面の読み込みに失敗しました: '+err.message});
 </script>
