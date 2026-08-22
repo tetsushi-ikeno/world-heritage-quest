@@ -49,6 +49,8 @@ globalThis.fetch = async function fetchWithRetry(input, init = {}) {
 const sourcePath = path.join(process.cwd(), 'scripts', 'collect-heritage-images.mjs');
 let source = await fs.readFile(sourcePath, 'utf8');
 
+// Search fallbacks. Exact title pins below take priority for roles where automated
+// Commons search previously selected an off-topic image.
 const queryOverrides = new Map([
   ['Yakushima forest Japan World Heritage', 'Yaku-Island Shiratani-Unsui-Gorge.jpg'],
   ['Yakushima mountain forest panorama Japan', 'Yakushima Miyanouradake.JPG'],
@@ -94,6 +96,37 @@ const queryOverrides = new Map([
 ]);
 for (const [from, to] of queryOverrides) source = source.replaceAll(from, to);
 
+const exactFileOverrides = {
+  'yakushima:0': 'File:Yaku-Island Shiratani-Unsui-Gorge.jpg',
+  'yakushima:2': 'File:Jomon Sugi.jpg',
+  'kii:0': 'File:Three-storied Pagoda of Seiganto-ji and Nachi Falls 201808.jpg',
+  'kii:1': 'File:Daimonzaka8618.JPG',
+  'kii:2': 'File:Okuno-in - Okonuin572.jpg',
+  'iwami:1': 'File:180504 Omori of Iwami Ginzan Silver Mine Oda Shimane pref Japan01bs4.jpg',
+  'iwami:2': 'File:Iwami Ginzan Silver Mine, Ryugenji Mabu Mine Shaft 001.JPG',
+  'ogasawara:1': 'File:Ogasawara minamijima.jpg',
+  'ogasawara:2': 'File:Pteropus pselaphon naturalist67279.jpg',
+  'tomioka:0': 'File:Tomioka Silk Mill East Warehouse01.jpg',
+  'tomioka:1': 'File:Tomioka Silk Mill East Cocoon Warehouse05.jpg',
+  'tomioka:2': 'File:Tomioka Silk Mill Machine.JPG',
+  'meiji-industrial:0': 'File:Hashima Island 01.jpg',
+  'meiji-industrial:1': 'File:Battle-Ship Island Nagasaki Japan.jpg',
+  'le-corbusier:0': 'File:Tokyo National Museum of Western Art seen from the west.jpg',
+  'le-corbusier:1': 'File:Courtyard - National Museum of Western Art, Tokyo - DSC08406.JPG',
+  'le-corbusier:2': 'File:Interior view - National Museum of Western Art, Tokyo - DSC08231.JPG',
+  'mozu-furuichi:0': 'File:Daisenryo Kofun zenkei-2.jpg',
+  'mozu-furuichi:1': 'File:百舌鳥古墳 (48814582216).jpg',
+  'amami-okinawa:0': 'File:Iriomote Island Mangrooves.JPG',
+  'amami-okinawa:1': 'File:Yambaru Forest 01.jpg',
+  'amami-okinawa:2': 'File:Pentalagus furnessi 387708672.jpg',
+  'jomon:2': 'File:Oyu-kanjyouretuseki.JPG',
+  'sado:0': 'File:Dohyu no Warito ac (2).jpg',
+  'sado:1': 'File:Dohyu no Warito ac (3).jpg',
+  'sado:2': 'File:Sado gold mine Doyu Tunnel.jpg',
+  'shiretoko:0': 'File:Shiretoko Five Lakes - ShiretokoFiveLakes7962.jpg',
+  'shiretoko:2': 'File:Wild bear at Shiretoko.JPG'
+};
+
 source = source.replace('const badTitle = /(', 'const badTitle = /(airport|kuko|curry rice|certificate|hand sanitizer|world heritage registration|bunker|relief map|google art project|infection control|purification fountain|misogi|joshin|');
 source = source.replace(
   "const META_PATH = path.join(ROOT, 'data', 'heritage-images.json');",
@@ -106,6 +139,33 @@ source = source.replace(
 source = source.replace(
   'for (const site of sites) {',
   `for (const site of sites.filter(s => ${JSON.stringify(siteIds)}.includes(s.id))) {`
+);
+
+const exactHelper = `
+async function commonsExact(title, used) {
+  const params = new URLSearchParams({
+    action: 'query', format: 'json', origin: '*', titles: title,
+    prop: 'imageinfo', iiprop: 'url|size|mime|extmetadata', iiurlwidth: '1600'
+  });
+  const res = await fetch(\`${'${COMMONS_API}'}?\${params}\`);
+  if (!res.ok) return null;
+  const data = await res.json();
+  const p = Object.values(data.query?.pages || {})[0];
+  const ii = p?.imageinfo?.[0];
+  if (!p || p.missing !== undefined || !ii || used.has(p.title)) return null;
+  const meta = ii.extmetadata || {};
+  const lic = stripHtml(meta.LicenseShortName?.value || meta.UsageTerms?.value || '');
+  if (!allowedLicense.test(lic) || rejectedLicense.test(lic)) return null;
+  if (!/^image\\/(jpeg|png|webp)$/i.test(ii.mime || '')) return null;
+  const w = Number(ii.width || 0), h = Number(ii.height || 0);
+  if (w < 900 || h < 600 || w * h < 900000) return null;
+  return { p, ii, meta, lic, score: 9999 };
+}
+`;
+source = source.replace('async function chooseImage(site, roleIndex, used) {', exactHelper + '\nasync function chooseImage(site, roleIndex, used) {');
+source = source.replace(
+  "  const role = roles[roleIndex].id;\n  const query = site.q[roleIndex];\n  let found = await commonsSearch(query, role, used);",
+  `  const role = roles[roleIndex].id;\n  const exactTitle = ${JSON.stringify(exactFileOverrides)}[site.id + ':' + roleIndex];\n  if (exactTitle) {\n    const exact = await commonsExact(exactTitle, used);\n    if (exact) return exact;\n    console.warn('Exact curated file unavailable, falling back to search:', exactTitle);\n  }\n  const query = site.q[roleIndex];\n  let found = await commonsSearch(query, role, used);`
 );
 source = source.replace(
   "  if (!found) found = await commonsSearch(`${site.ja} Japan`, role, used);\n  if (!found) throw new Error(`No suitable Commons image found for ${site.ja} / ${role}`);",
