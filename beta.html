@@ -10,9 +10,9 @@
 </head>
 <body>
 <div class="app"><iframe id="gameFrame" class="gameFrame" title="世界遺産クエスト"></iframe><iframe id="centerFrame" class="gameFrame" title="世界遺産研究センター"></iframe><section id="titleScreen" class="title"><div class="panel"><div class="mark"></div><div class="eyebrow">WORLD HERITAGE QUEST</div><h1>世界遺産クエスト</h1><span class="beta">BETA</span><p id="lead" class="lead">日本の世界遺産を、自分の足で見つけにいこう。</p><button id="startBtn" class="start" type="button">はじめる</button><div id="savedInfo" class="saved"></div></div></section></div>
-<div id="revisionBadge" class="revision">BETA r6 / PATCH loading…</div>
+<div id="revisionBadge" class="revision">BETA r7 / PATCH loading…</div>
 <div id="fatal" class="fatal"><div><b>ゲームを開けませんでした</b><p>ページを再読み込みしてください。ベータ版のセーブデータはブラウザに保存されています。</p></div></div>
-<script src="beta-save.js?v=20260822-6"></script>
+<script src="beta-save.js?v=20260822-7"></script>
 <script>
 (()=>{'use strict';
 const frame=document.getElementById('gameFrame'),centerFrame=document.getElementById('centerFrame'),title=document.getElementById('titleScreen'),startBtn=document.getElementById('startBtn'),lead=document.getElementById('lead'),savedInfo=document.getElementById('savedInfo');let stage='title',tutorialPoll=null,mapLoaded=false;
@@ -21,7 +21,7 @@ function titleMode(){const s=state();if(s.tutorialComplete){startBtn.textContent
 function hideFrames(){frame.classList.remove('show');centerFrame.classList.remove('show')}
 function showTitle(){stage='title';clearInterval(tutorialPoll);tutorialPoll=null;hideFrames();frame.removeAttribute('src');centerFrame.removeAttribute('src');mapLoaded=false;title.classList.remove('hide');titleMode()}
 function showTutorial(){stage='tutorial';clearInterval(tutorialPoll);tutorialPoll=null;title.classList.add('hide');centerFrame.classList.remove('show');frame.classList.add('show');frame.src='tutorial-lab-final.html?beta=1';mapLoaded=false}
-function showMap(){stage='map';clearInterval(tutorialPoll);tutorialPoll=null;title.classList.add('hide');centerFrame.classList.remove('show');centerFrame.removeAttribute('src');frame.classList.add('show');if(!mapLoaded){frame.src='area-map-game.html?beta=1';mapLoaded=true}else setTimeout(()=>frame.contentWindow?.postMessage({type:'whqRefreshMap'},'*'),30)}
+function showMap(){stage='map';clearInterval(tutorialPoll);tutorialPoll=null;title.classList.add('hide');centerFrame.classList.remove('show');centerFrame.removeAttribute('src');frame.classList.add('show');if(!mapLoaded){frame.src='area-map-beta-loader.html?beta=1&rev=r7&nocache='+Date.now();mapLoaded=true}else setTimeout(()=>frame.contentWindow?.postMessage({type:'whqRefreshMap'},'*'),30)}
 function showCenter(){stage='center';title.classList.add('hide');frame.classList.remove('show');centerFrame.classList.add('show');centerFrame.src='research-center-game.html?beta=1'}
 function tutorialDoc(){try{return frame.contentDocument?.getElementById('tutorialFrame')?.contentDocument||null}catch(_){return null}}
 function patchTutorial(){if(stage!=='tutorial')return;const d=tutorialDoc();if(!d)return;const input=d.getElementById('name'),ok=d.getElementById('nameOk');if(input&&!input.dataset.betaPrefill){input.dataset.betaPrefill='1';const s=state();if(s.playerName)input.value=s.playerName}if(ok&&!ok.dataset.betaSave){ok.dataset.betaSave='1';ok.addEventListener('click',()=>{const name=input?.value.trim()||'主人公';window.WHQBetaSave.update(s=>{s.playerName=name;return s})},{capture:true})}
