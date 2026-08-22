@@ -75,7 +75,7 @@ const queryOverrides = new Map([
   ['Miike Coal Mine Manda Pit machinery Japan World Heritage', 'Miike Coal Mine Manda Pit machinery'],
   ['National Museum of Western Art Tokyo Le Corbusier exterior', 'Tokyo National Museum of Western Art seen from the west'],
   ['National Museum of Western Art Tokyo panorama', 'Courtyard National Museum of Western Art Tokyo'],
-  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'Interior view National Museum of Western Art Tokyo architecture'],
+  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'Interior view - National Museum of Western Art, Tokyo - DSC08231.JPG'],
   ['Sotome Nagasaki hidden Christian village landscape Japan', 'Kasuga village Hirado hidden Christian landscape'],
   ['Sakitsu Church Amakusa detail Japan World Heritage', 'Sakitsu Church Amakusa village'],
   ['Daisen Kofun Mozu Japan aerial', 'Daisen Kofun aerial photograph Mozu'],
@@ -94,9 +94,7 @@ const queryOverrides = new Map([
 ]);
 for (const [from, to] of queryOverrides) source = source.replaceAll(from, to);
 
-// Exclude obvious off-topic search hits that slipped through the first automatic pass.
 source = source.replace('const badTitle = /(', 'const badTitle = /(airport|bunker|relief map|google art project|infection control|purification fountain|misogi|joshin|');
-
 source = source.replace(
   "const META_PATH = path.join(ROOT, 'data', 'heritage-images.json');",
   `const META_PATH = path.join(ROOT, 'data', 'heritage-images-${batchId}.json');`
@@ -109,12 +107,10 @@ source = source.replace(
   'for (const site of sites) {',
   `for (const site of sites.filter(s => ${JSON.stringify(siteIds)}.includes(s.id))) {`
 );
-
 source = source.replace(
   "  if (!found) found = await commonsSearch(`${site.ja} Japan`, role, used);\n  if (!found) throw new Error(`No suitable Commons image found for ${site.ja} / ${role}`);",
   "  if (!found) found = await commonsSearch(`${site.ja} Japan`, role, used);\n  if (!found) found = await commonsSearch(site.q[0], role, used);\n  if (!found) found = await commonsSearch(site.ja, role, used);\n  if (!found) throw new Error(`No suitable Commons image found for ${site.ja} / ${role}`);"
 );
-
 source = source.replace(
   "    const picked = await chooseImage(site, i, used);\n    used.add(picked.p.title);\n    console.log(`  ${i + 1}: ${picked.p.title} (${picked.lic})`);\n    images.push(await saveImage(site.id, i, picked));\n    await new Promise(r => setTimeout(r, 250));",
   "    let saved = null;\n    let lastErr = null;\n    for (let attempt = 0; attempt < 6 && !saved; attempt++) {\n      const picked = await chooseImage(site, i, used);\n      used.add(picked.p.title);\n      console.log(`  ${i + 1}: ${picked.p.title} (${picked.lic})${attempt ? ` [candidate ${attempt + 1}]` : ''}`);\n      try {\n        saved = await saveImage(site.id, i, picked);\n      } catch (err) {\n        lastErr = err;\n        console.warn(`  candidate failed: ${err.message}`);\n      }\n    }\n    if (!saved) throw lastErr || new Error(`Could not save image for ${site.ja} role ${i + 1}`);\n    images.push(saved);\n    await new Promise(r => setTimeout(r, 500));"
