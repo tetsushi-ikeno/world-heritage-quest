@@ -44,13 +44,25 @@ jobs:
           HERITAGE_SITE_IDS: ${{ matrix.sites }}
         run: node scripts/collect-heritage-images-batch.mjs
 
+      - name: Stage only this batch
+        env:
+          HERITAGE_BATCH_ID: ${{ matrix.id }}
+          HERITAGE_SITE_IDS: ${{ matrix.sites }}
+        run: |
+          rm -rf heritage-output
+          mkdir -p heritage-output/docs/assets/heritage heritage-output/data
+          IFS=',' read -ra IDS <<< "$HERITAGE_SITE_IDS"
+          for id in "${IDS[@]}"; do
+            mkdir -p "heritage-output/docs/assets/heritage/$id"
+            cp -R "docs/assets/heritage/$id/." "heritage-output/docs/assets/heritage/$id/"
+          done
+          cp "data/heritage-images-${HERITAGE_BATCH_ID}.json" heritage-output/data/
+
       - name: Upload batch
         uses: actions/upload-artifact@v4
         with:
           name: heritage-${{ matrix.id }}
-          path: |
-            docs/assets/heritage
-            data/heritage-images-${{ matrix.id }}.json
+          path: heritage-output
           if-no-files-found: error
           retention-days: 1
 
