@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><title>BETA map loader</title></head>
+<body>
+<script>
+(async()=>{
+  const source=await fetch('japan-6x-map-lab.html?source=r7',{cache:'no-store'}).then(r=>r.text());
+  const patched=source
+    .replace("{id:21,name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:26,y:50,type:'文化'}","{id:21,name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:24,y:49,type:'文化'}")
+    .replace("{id:22,name:'長崎と天草地方の潜伏キリシタン関連遺産',x:23,y:54,type:'文化'}","{id:22,name:'長崎と天草地方の潜伏キリシタン関連遺産',x:24,y:54,type:'文化'}");
+  document.open();document.write(patched);document.close();
+})().catch(err=>{document.body.textContent='全国マップの読み込みに失敗しました: '+err.message});
+</script>
+</body>
+</html>
