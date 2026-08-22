@@ -20,8 +20,8 @@
 
 ## 屋久島
 - **1. ① 一目でその遺産と分かる代表景観** — Yaku-Island Shiratani-Unsui-Gorge.jpg / MaedaAkihiko / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Yaku-Island_Shiratani-Unsui-Gorge.jpg) / `docs/assets/heritage/yakushima/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — Yakushima Kuko.jpg / Jetalone / [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Yakushima_Kuko.jpg) / `docs/assets/heritage/yakushima/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — Forest covered hills on Yakushima.jpg / Grendelkhan / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Forest_covered_hills_on_Yakushima.jpg) / `docs/assets/heritage/yakushima/03.jpg`
+- **2. ② スケールや美しさに驚く景観** — Mt.Miyanouradake 02.jpg / Σ64 / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mt.Miyanouradake_02.jpg) / `docs/assets/heritage/yakushima/02.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Couple-Tree on trail to Jomon Sugi.jpg / Chris 73 / [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Couple-Tree_on_trail_to_Jomon_Sugi.jpg) / `docs/assets/heritage/yakushima/03.jpg`
 
 ## 白神山地
 - **1. ① 一目でその遺産と分かる代表景観** — 400 years old beech (400年ブナ) - panoramio.jpg / Ocavis Leechroot / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:400_years_old_beech_(400%E5%B9%B4%E3%83%96%E3%83%8A)_-_panoramio.jpg) / `docs/assets/heritage/shirakami/01.jpg`
@@ -41,7 +41,7 @@
 ## 原爆ドーム
 - **1. ① 一目でその遺産と分かる代表景観** — Genbaku Dome04-r.JPG / Oilstreet / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Genbaku_Dome04-r.JPG) / `docs/assets/heritage/hiroshima/01.jpg`
 - **2. ② スケールや美しさに驚く景観** — Genbaku Dome Mae Station 20120729-1.JPG / Taisyo / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Genbaku_Dome_Mae_Station_20120729-1.JPG) / `docs/assets/heritage/hiroshima/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — 原爆ドーム - panoramio (16).jpg / kanesue / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_(16).jpg) / `docs/assets/heritage/hiroshima/03.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — 原爆ドーム - panoramio (11).jpg / kanesue / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_(11).jpg) / `docs/assets/heritage/hiroshima/03.jpg`
 
 ## 厳島神社
 - **1. ① 一目でその遺産と分かる代表景観** — Itsukushima-jinja torii (Miyajima) - DSC01967.JPG / Daderot / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii_(Miyajima)_-_DSC01967.JPG) / `docs/assets/heritage/itsukushima/01.jpg`
@@ -64,7 +64,7 @@
 - **3. ③ 近景・内部・自然など別の側面** — Tamaudun01s3200.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tamaudun01s3200.jpg) / `docs/assets/heritage/ryukyu/03.jpg`
 
 ## 紀伊山地の霊場と参詣道
-- **1. ① 一目でその遺産と分かる代表景観** — この道は、熊野古道ではありません。 (5703086757).jpg / Yusuke Kawasaki / [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E3%81%93%E3%81%AE%E9%81%93%E3%81%AF%E3%80%81%E7%86%8A%E9%87%8E%E5%8F%A4%E9%81%93%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%E3%80%82_(5703086757).jpg) / `docs/assets/heritage/kii/01.jpg`
+- **1. ① 一目でその遺産と分かる代表景観** — Three-storied Pagoda of Seiganto-ji and Nachi Falls 201808.jpg / Naokijp / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Three-storied_Pagoda_of_Seiganto-ji_and_Nachi_Falls_201808.jpg) / `docs/assets/heritage/kii/01.jpg`
 - **2. ② スケールや美しさに驚く景観** — Daimonzaka8618.JPG / 日:Jnn / [CC BY 2.1 jp](https://creativecommons.org/licenses/by/2.1/jp/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Daimonzaka8618.JPG) / `docs/assets/heritage/kii/02.jpg`
 - **3. ③ 近景・内部・自然など別の側面** — Okuno-in - Okonuin572.jpg / lumoplank / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Okuno-in_-_Okonuin572.jpg) / `docs/assets/heritage/kii/03.jpg`
 
@@ -75,12 +75,12 @@
 
 ## 小笠原諸島
 - **1. ① 一目でその遺産と分かる代表景観** — (Landscape of Chichijima Island in Japan) - DPLA - 08e70c2239d268dc7e5e2957d4fd3b72.jpg / Carlquist, Sherwin John, 1930-2021 / [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:(Landscape_of_Chichijima_Island_in_Japan)_-_DPLA_-_08e70c2239d268dc7e5e2957d4fd3b72.jpg) / `docs/assets/heritage/ogasawara/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — Wai-Beach.jpg / タクナワン / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wai-Beach.jpg) / `docs/assets/heritage/ogasawara/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — World Heritage certificate, Ogasawara Islands 20111216.jpg / Kirara3500 / [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:World_Heritage_certificate,_Ogasawara_Islands_20111216.jpg) / `docs/assets/heritage/ogasawara/03.jpg`
+- **2. ② スケールや美しさに驚く景観** — Minami-jima island - panoramio.jpg / Kaz Ish / [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Minami-jima_island_-_panoramio.jpg) / `docs/assets/heritage/ogasawara/02.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Pteropus pselaphon naturalist67279.jpg / 松井 淳（naturalist67279） / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pteropus_pselaphon_naturalist67279.jpg) / `docs/assets/heritage/ogasawara/03.jpg`
 
 ## 平泉
 - **1. ① 一目でその遺産と分かる代表景観** — Konjikido shelter hall - Chusonji, Hiraizumi, Iwate - DSC04951.jpg / Daderot / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Konjikido_shelter_hall_-_Chusonji,_Hiraizumi,_Iwate_-_DSC04951.jpg) / `docs/assets/heritage/hiraizumi/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — マルフク看板 岩手県西磐井郡平泉町平泉字柳御所 - panoramio.jpg / marufuku_sign_collec… / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%83%AB%E3%83%95%E3%82%AF%E7%9C%8B%E6%9D%BF_%E5%B2%A9%E6%89%8B%E7%9C%8C%E8%A5%BF%E7%A3%90%E4%BA%95%E9%83%A1%E5%B9%B3%E6%B3%89%E7%94%BA%E5%B9%B3%E6%B3%89%E5%AD%97%E6%9F%B3%E5%BE%A1%E6%89%80_-_panoramio.jpg) / `docs/assets/heritage/hiraizumi/02.jpg`
+- **2. ② スケールや美しさに驚く景観** — 一関遊水地の平泉田んぼアート.jpg / Koda6029 / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E4%B8%80%E9%96%A2%E9%81%8A%E6%B0%B4%E5%9C%B0%E3%81%AE%E5%B9%B3%E6%B3%89%E7%94%B0%E3%82%93%E3%81%BC%E3%82%A2%E3%83%BC%E3%83%88.jpg) / `docs/assets/heritage/hiraizumi/02.jpg`
 - **3. ③ 近景・内部・自然など別の側面** — Old shelter of Konjikido.jpg / Ymblanter / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Old_shelter_of_Konjikido.jpg) / `docs/assets/heritage/hiraizumi/03.jpg`
 
 ## 富士山―信仰の対象と芸術の源泉
@@ -91,7 +91,7 @@
 ## 富岡製糸場と絹産業遺産群
 - **1. ① 一目でその遺産と分かる代表景観** — Tomioka Silk Mill East Warehouse01.jpg / Hasec / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tomioka_Silk_Mill_East_Warehouse01.jpg) / `docs/assets/heritage/tomioka/01.jpg`
 - **2. ② スケールや美しさに驚く景観** — Tomioka Silk Mill East Cocoon Warehouse05.jpg / Hasec / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tomioka_Silk_Mill_East_Cocoon_Warehouse05.jpg) / `docs/assets/heritage/tomioka/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — Tomioka Silk Mill Machine.JPG / C1815 / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tomioka_Silk_Mill_Machine.JPG) / `docs/assets/heritage/tomioka/03.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Iron window door on brick wall of warehouse, Tomioka Silk Mill, Gunma, Japan (2015-05-06 by tmal @pixabay 972315).jpg / tmal (1121681) / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Iron_window_door_on_brick_wall_of_warehouse,_Tomioka_Silk_Mill,_Gunma,_Japan_(2015-05-06_by_tmal_@pixabay_972315).jpg) / `docs/assets/heritage/tomioka/03.jpg`
 
 ## 明治日本の産業革命遺産
 - **1. ① 一目でその遺産と分かる代表景観** — Hashima Island 01.jpg / Σ64 / [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Hashima_Island_01.jpg) / `docs/assets/heritage/meiji-industrial/01.jpg`
@@ -99,7 +99,7 @@
 - **3. ③ 近景・内部・自然など別の側面** — Hagi castle Masudas.JPG / TT mk2 / [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Hagi_castle_Masudas.JPG) / `docs/assets/heritage/meiji-industrial/03.jpg`
 
 ## ル・コルビュジエの建築作品（国立西洋美術館）
-- **1. ① 一目でその遺産と分かる代表景観** — Tokyo National Museum of Western Art seen from the west.jpg / Ymblanter / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tokyo_National_Museum_of_Western_Art_seen_from_the_west.jpg) / `docs/assets/heritage/le-corbusier/01.jpg`
+- **1. ① 一目でその遺産と分かる代表景観** — Musicerend gezelschap Rijksmuseum SK-A-4674.jpeg / Rembrandt / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Musicerend_gezelschap_Rijksmuseum_SK-A-4674.jpeg) / `docs/assets/heritage/le-corbusier/01.jpg`
 - **2. ② スケールや美しさに驚く景観** — Courtyard - National Museum of Western Art, Tokyo - DSC08406.JPG / Daderot / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Courtyard_-_National_Museum_of_Western_Art,_Tokyo_-_DSC08406.JPG) / `docs/assets/heritage/le-corbusier/02.jpg`
 - **3. ③ 近景・内部・自然など別の側面** — Interior view - National Museum of Western Art, Tokyo - DSC08231.JPG / Daderot / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Interior_view_-_National_Museum_of_Western_Art,_Tokyo_-_DSC08231.JPG) / `docs/assets/heritage/le-corbusier/03.jpg`
 
@@ -114,14 +114,14 @@
 - **3. ③ 近景・内部・自然など別の側面** — Inside of Oura Church - panoramio (2).jpg / Masoud Akbari / [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Inside_of_Oura_Church_-_panoramio_(2).jpg) / `docs/assets/heritage/hidden-christian/03.jpg`
 
 ## 百舌鳥・古市古墳群
-- **1. ① 一目でその遺産と分かる代表景観** — Kofun curry rice.jpg / Naniwaspirit / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Kofun_curry_rice.jpg) / `docs/assets/heritage/mozu-furuichi/01.jpg`
+- **1. ① 一目でその遺産と分かる代表景観** — Daisenryo Kofun zenkei-2.jpg / Saigen Jiro / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Daisenryo_Kofun_zenkei-2.jpg) / `docs/assets/heritage/mozu-furuichi/01.jpg`
 - **2. ② スケールや美しさに驚く景観** — 百舌鳥古墳 (48814582216).jpg / Wei-Te Wong from Taipei City, Taiwan, Republic of China / [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E7%99%BE%E8%88%8C%E9%B3%A5%E5%8F%A4%E5%A2%B3_(48814582216).jpg) / `docs/assets/heritage/mozu-furuichi/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — Alcohol spray on Mozu Mounded Tombs Visitor Center.jpg / Indiana jo / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Alcohol_spray_on_Mozu_Mounded_Tombs_Visitor_Center.jpg) / `docs/assets/heritage/mozu-furuichi/03.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Haisho of Daisen Kofun, Mozu Kofun Group, Sakai, Osaka.jpg / Sakai Yayoi / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Haisho_of_Daisen_Kofun,_Mozu_Kofun_Group,_Sakai,_Osaka.jpg) / `docs/assets/heritage/mozu-furuichi/03.jpg`
 
 ## 奄美大島、徳之島、沖縄島北部及び西表島
 - **1. ① 一目でその遺産と分かる代表景観** — Iriomote Island Mangrooves.JPG / BenedettaR / [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Iriomote_Island_Mangrooves.JPG) / `docs/assets/heritage/amami-okinawa/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — Hand sanitizer in "Discover the Yambaru Forest".jpg / Indiana jo / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Hand_sanitizer_in_%22Discover_the_Yambaru_Forest%22.jpg) / `docs/assets/heritage/amami-okinawa/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — Funauki iriomote island.jpg / Paipateroma / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Funauki_iriomote_island.jpg) / `docs/assets/heritage/amami-okinawa/03.jpg`
+- **2. ② スケールや美しさに驚く景観** — Mount Yonaha at east 201911 01.JPG / Kugel~commonswiki / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mount_Yonaha_at_east_201911_01.JPG) / `docs/assets/heritage/amami-okinawa/02.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Pentalagus furnessi 387708672.jpg / Wich’yanan (Jay) Limparungpatthanakij / [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pentalagus_furnessi_387708672.jpg) / `docs/assets/heritage/amami-okinawa/03.jpg`
 
 ## 北海道・北東北の縄文遺跡群
 - **1. ① 一目でその遺産と分かる代表景観** — 140913 Sannai-Maruyama site Aomori Japan01bs6bs6.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:140913_Sannai-Maruyama_site_Aomori_Japan01bs6bs6.jpg) / `docs/assets/heritage/jomon/01.jpg`
@@ -129,9 +129,9 @@
 - **3. ③ 近景・内部・自然など別の側面** — Oyu-kanjyouretuseki.JPG / Takuan~jawiki at Japanese Wikipedia / [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Oyu-kanjyouretuseki.JPG) / `docs/assets/heritage/jomon/03.jpg`
 
 ## 佐渡島の金山
-- **1. ① 一目でその遺産と分かる代表景観** — 祝 世界遺産登録 佐渡島の金山 01.jpg / Indiana jo / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E7%A5%9D_%E4%B8%96%E7%95%8C%E9%81%BA%E7%94%A3%E7%99%BB%E9%8C%B2_%E4%BD%90%E6%B8%A1%E5%B3%B6%E3%81%AE%E9%87%91%E5%B1%B1_01.jpg) / `docs/assets/heritage/sado/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — 祝 世界遺産登録 佐渡島の金山 03.jpg / Indiana jo / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E7%A5%9D_%E4%B8%96%E7%95%8C%E9%81%BA%E7%94%A3%E7%99%BB%E9%8C%B2_%E4%BD%90%E6%B8%A1%E5%B3%B6%E3%81%AE%E9%87%91%E5%B1%B1_03.jpg) / `docs/assets/heritage/sado/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — Sado Island’s Riches (153867).jpg / NASA Earth Observatory image by Wanmei Liang, using Landsat data from the U.S. Geological Survey. Story by Lindsey Doermann. / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sado_Island%E2%80%99s_Riches_(153867).jpg) / `docs/assets/heritage/sado/03.jpg`
+- **1. ① 一目でその遺産と分かる代表景観** — Dohyu no Warito ac (2).jpg / Asturio Cantabrio / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dohyu_no_Warito_ac_(2).jpg) / `docs/assets/heritage/sado/01.jpg`
+- **2. ② スケールや美しさに驚く景観** — Dohyu no Warito ac (3).jpg / Asturio Cantabrio / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dohyu_no_Warito_ac_(3).jpg) / `docs/assets/heritage/sado/02.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Sado gold mine Doyu Tunnel.jpg / amaknow / [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sado_gold_mine_Doyu_Tunnel.jpg) / `docs/assets/heritage/sado/03.jpg`
 
 ## 飛鳥・藤原の宮都
 - **1. ① 一目でその遺産と分かる代表景観** — IshibutaiBlueStairsScan3.jpg / Wikimedia Commons contributor / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:IshibutaiBlueStairsScan3.jpg) / `docs/assets/heritage/asuka-fujiwara/01.jpg`
@@ -139,7 +139,7 @@
 - **3. ③ 近景・内部・自然など別の側面** — Takamat1.jpg / Unknown authorUnknown author / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Takamat1.jpg) / `docs/assets/heritage/asuka-fujiwara/03.jpg`
 
 ## 知床
-- **1. ① 一目でその遺産と分かる代表景観** — 140829 Track Near Furepe Falls Shiretoko Hokkaido Japan02n.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:140829_Track_Near_Furepe_Falls_Shiretoko_Hokkaido_Japan02n.jpg) / `docs/assets/heritage/shiretoko/01.jpg`
-- **2. ② スケールや美しさに驚く景観** — Shiretoko National Park.jpg / Trengarasu / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shiretoko_National_Park.jpg) / `docs/assets/heritage/shiretoko/02.jpg`
-- **3. ③ 近景・内部・自然など別の側面** — 140829 Track Near Furepe Falls Shiretoko Hokkaido Japan03s3.jpg / 663highland / [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:140829_Track_Near_Furepe_Falls_Shiretoko_Hokkaido_Japan03s3.jpg) / `docs/assets/heritage/shiretoko/03.jpg`
+- **1. ① 一目でその遺産と分かる代表景観** — Shiretoko Five Lakes - ShiretokoFiveLakes7962.jpg / lumoplank / [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shiretoko_Five_Lakes_-_ShiretokoFiveLakes7962.jpg) / `docs/assets/heritage/shiretoko/01.jpg`
+- **2. ② スケールや美しさに驚く景観** — Oshinkoshin02.JPG / 221.20 (talk) / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Oshinkoshin02.JPG) / `docs/assets/heritage/shiretoko/02.jpg`
+- **3. ③ 近景・内部・自然など別の側面** — Shiretoko National Park.jpg / Trengarasu / [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain) / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shiretoko_National_Park.jpg) / `docs/assets/heritage/shiretoko/03.jpg`
 
