@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Phase 9 共通UI / 研究センター レイアウト LAB</title>
+<style>
+:root{
+  --ink:#1c2a40;--muted:#63748a;--panel:rgba(255,255,255,.95);--line:#bfcddd;
+  --navy:#172238;--navy2:#263d60;--gold:#e5b83f;--nature:#5f9270;--shadow:0 5px 18px rgba(18,37,62,.23);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#5f9fc6;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;user-select:none}
+button{font:inherit;touch-action:manipulation}
+.stage{position:relative;width:100%;height:100%;overflow:hidden}
+#gameFrame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#5f9fc6}
+.overlay{position:absolute;inset:0;z-index:30;pointer-events:none}
+.labSwitch{position:absolute;top:max(10px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:4px;background:rgba(23,34,56,.88);border:1px solid rgba(255,255,255,.25);border-radius:999px;box-shadow:var(--shadow);pointer-events:auto}
+.labSwitch button{min-height:38px;border:0;border-radius:999px;padding:0 15px;background:transparent;color:#e8edf4;font-size:11px;font-weight:900}
+.labSwitch button.active{background:#fff;color:#243752}
+.context{position:absolute;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));width:194px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:9px;box-shadow:var(--shadow)}
+.contextHead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}.contextHead b{display:block;font-size:15px;line-height:1.25}.contextHead small{display:block;margin-top:2px;font-size:9px;color:var(--muted);font-weight:800}.typePill{flex:0 0 auto;border-radius:999px;padding:4px 7px;background:var(--nature);color:#fff;font-size:8px;font-weight:1000}.mini{height:130px;border-radius:9px;overflow:hidden;background:#dceef6;border:1px solid #aebfcd}.mini canvas{display:block;width:100%;height:100%}.miniHint{font-size:8px;color:var(--muted);font-weight:800;text-align:center;margin-top:4px}.researchSummary{display:none}.researchSummary .progressLine{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:10px;font-weight:900;color:#4b5d74}.progressBar{height:10px;background:#e3e8ee;border-radius:999px;overflow:hidden;margin-top:7px}.progressBar i{display:block;width:0;height:100%;background:var(--gold);transition:.2s}.researchHelp{margin-top:7px;padding:7px;background:#f4f7fa;border-radius:8px;font-size:9px;line-height:1.45;color:#596b81;font-weight:800}
+.topActions{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));display:flex;gap:8px;pointer-events:auto}.topActions button{min-height:48px;border:1px solid #acbbcb;border-radius:12px;background:var(--panel);color:#273a54;padding:0 14px;font-size:12px;font-weight:900;box-shadow:var(--shadow)}.topActions .menu{min-width:52px;padding:0 10px;font-size:21px}.topActions .book{min-width:96px}
+.controlRail{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(17px,env(safe-area-inset-bottom));width:158px;display:grid;gap:9px;justify-items:center;pointer-events:auto}.actionBtn{width:116px;min-height:58px;border:2px solid var(--gold);border-radius:14px;background:var(--navy);color:#fff;font-size:15px;font-weight:1000;box-shadow:var(--shadow)}.actionBtn:disabled{opacity:.42;border-color:#aab4c0;background:#556276}.actionSub{margin-top:-5px;min-height:15px;font-size:8px;font-weight:900;color:#263950;background:rgba(255,255,255,.86);border-radius:999px;padding:2px 7px;text-align:center}
+.joy{position:relative;width:154px;height:154px;border-radius:50%;background:radial-gradient(circle,#e3ebf4 0 30%,#263a59 31% 34%,#18263e 35% 100%);border:2px solid #879bb8;box-shadow:var(--shadow);touch-action:none}.knob{position:absolute;left:50%;top:50%;width:62px;height:62px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(#edf3fa,#bac9dc);border:2px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.3)}.mark{position:absolute;color:#dce6f4;font-weight:1000}.u{top:7px;left:50%;transform:translateX(-50%)}.d{bottom:7px;left:50%;transform:translateX(-50%)}.l{left:8px;top:50%;transform:translateY(-50%)}.r{right:8px;top:50%;transform:translateY(-50%)}
+.message{position:absolute;left:max(14px,env(safe-area-inset-left));right:202px;bottom:max(14px,env(safe-area-inset-bottom));min-height:78px;max-width:720px;background:rgba(255,250,232,.97);border:1px solid #d9c98e;border-left:5px solid var(--gold);border-radius:0 13px 13px 0;padding:10px 13px;display:grid;align-content:center;box-shadow:var(--shadow)}.message b{font-size:10px;color:#59697b}.message p{font-size:13px;line-height:1.45;font-weight:850;margin:3px 0 0}.message .prompt{font-size:9px;color:#758295;margin-top:3px;font-weight:800}
+.sheet{position:absolute;right:max(16px,env(safe-area-inset-right));top:72px;width:300px;max-height:65%;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:0 10px 30px rgba(18,37,62,.31);display:none;pointer-events:auto}.sheet.show{display:block}.sheet h2{font-size:17px;margin:0 0 6px}.sheet p{font-size:11px;line-height:1.6;color:#55677e;margin:4px 0}.sheet button{width:100%;min-height:42px;margin-top:9px;border:0;border-radius:9px;background:var(--navy2);color:#fff;font-weight:900}.labBadge{position:absolute;left:14px;bottom:104px;background:rgba(23,34,56,.78);color:#fff;border-radius:999px;padding:4px 8px;font-size:8px;font-weight:900;letter-spacing:.02em}
+body[data-mode="research"] .mini,body[data-mode="research"] .miniHint{display:none}body[data-mode="research"] .researchSummary{display:block}body[data-mode="research"] .context{width:218px}
+@media(max-width:900px) and (orientation:landscape){.context{width:174px}.mini{height:112px}.topActions button{min-height:45px;padding:0 10px}.topActions .book{min-width:86px}.controlRail{width:142px;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom))}.joy{width:138px;height:138px}.knob{width:56px;height:56px}.actionBtn{width:106px;min-height:53px}.message{right:174px;min-height:70px;max-width:610px}.labBadge{display:none}body[data-mode="research"] .context{width:194px}}
+</style>
+</head>
+<body data-mode="map">
+<div class="stage">
+  <iframe id="gameFrame" src="japan-6x-map-lab.html" title="ゲーム画面"></iframe>
+  <div class="overlay">
+    <div class="labSwitch" aria-label="Lab画面切替"><button id="mapMode" class="active" type="button">全国マップ</button><button id="researchMode" type="button">研究センター</button></div>
+
+    <section class="context" aria-label="現在地と進捗">
+      <div class="contextHead"><div><b id="contextTitle">全国マップ</b><small id="contextSub">現在地：関東</small></div><span id="typePill" class="typePill" hidden>自然遺産</span></div>
+      <div class="mini"><canvas id="miniMirror" width="176" height="130"></canvas></div>
+      <div class="miniHint">北固定｜赤＝現在地｜密集地は数字表示</div>
+      <div class="researchSummary"><div class="progressLine"><span id="researchProgress">調査 0 / 3</span><span id="levelText">LV2</span></div><div class="progressBar"><i id="progressFill"></i></div><div class="researchHelp">本・展示・調査員を見つけて調査。操作系は全国マップと同じ位置です。</div></div>
+    </section>
+
+    <nav class="topActions" aria-label="共通メニュー"><button id="bookBtn" class="book" type="button">遺産の書</button><button id="menuBtn" class="menu" type="button" aria-label="メニュー">☰</button></nav>
+
+    <div class="controlRail">
+      <button id="actionBtn" class="actionBtn" type="button">しらべる</button>
+      <div id="actionSub" class="actionSub">近づくとアクション</div>
+      <div id="joy" class="joy" aria-label="移動スティック"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div>
+    </div>
+
+    <section id="message" class="message" aria-live="polite"><b id="messageTitle">全国マップ</b><p id="messageText">全国を歩いて、まだ見つけていない世界遺産を探そう。</p><span class="prompt">移動とアクションは右手側にまとめています。</span></section>
+    <div class="labBadge">PHASE 9 COMMON UI LAB｜iPad landscape / right-hand controls</div>
+
+    <aside id="bookSheet" class="sheet"><h2>遺産の書</h2><p>全国マップでも研究センターでも同じ場所から開く共通ボタンです。図鑑本体は別フェーズで作り込みます。</p><button type="button" data-close>閉じる</button></aside>
+    <aside id="menuSheet" class="sheet"><h2>メニュー</h2><p>設定やゲーム全体機能をここへ集約し、移動中の常時表示を増やしすぎない想定です。</p><button type="button" data-close>閉じる</button></aside>
+  </div>
+</div>
+<script>
+(()=>{'use strict';
+const frame=document.getElementById('gameFrame'),body=document.body,miniMirror=document.getElementById('miniMirror'),miniCtx=miniMirror.getContext('2d');
+const contextTitle=document.getElementById('contextTitle'),contextSub=document.getElementById('contextSub'),typePill=document.getElementById('typePill');
+const researchProgress=document.getElementById('researchProgress'),levelText=document.getElementById('levelText'),progressFill=document.getElementById('progressFill');
+const actionBtn=document.getElementById('actionBtn'),actionSub=document.getElementById('actionSub'),messageTitle=document.getElementById('messageTitle'),messageText=document.getElementById('messageText');
+const mapMode=document.getElementById('mapMode'),researchMode=document.getElementById('researchMode');
+let mode='map',mirrorTimer=null,observer=null,joyPid=null,repeat=null,currentDir=null;
+function doc(){try{return frame.contentDocument}catch(_){return null}}
+function setMessage(title,text){messageTitle.textContent=title;messageText.textContent=text}
+function closeSheets(){document.getElementById('bookSheet').classList.remove('show');document.getElementById('menuSheet').classList.remove('show')}
+document.getElementById('bookBtn').addEventListener('click',()=>{document.getElementById('menuSheet').classList.remove('show');document.getElementById('bookSheet').classList.toggle('show')});
+document.getElementById('menuBtn').addEventListener('click',()=>{document.getElementById('bookSheet').classList.remove('show');document.getElementById('menuSheet').classList.toggle('show')});document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeSheets));
+function inject(id,css){const d=doc();if(!d?.head||d.getElementById(id))return;const s=d.createElement('style');s.id=id;s.textContent=css;d.head.appendChild(s)}
+function patchMap(){inject('phase9CommonMap',`
+html,body{height:100%!important;overflow:hidden!important}.wrap{max-width:none!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important}.head,.controls,.hud,.minimapBox,.dpad,.selected{display:none!important}.layout{display:block!important;height:100%!important}.panel{border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}.mapPanel{height:100%!important;display:block!important}.camera{height:100%!important;min-height:0!important;border:0!important;border-radius:0!important}`);const d=doc();const c=d?.getElementById('camera');if(c)c.focus();actionBtn.disabled=false;actionBtn.textContent='しらべる';actionSub.textContent='気になる場所で使う';contextTitle.textContent='全国マップ';contextSub.textContent='現在地をミニマップで確認';typePill.hidden=true;setMessage('全国マップ','全国を歩いて、まだ見つけていない世界遺産を探そう。');startMirror()}
+function patchResearch(){inject('phase9CommonResearch',`
+html,body{height:100%!important;overflow:hidden!important}.game{height:100%!important;display:block!important}.hud,.side,.message,.action{display:none!important}.main{display:block!important;height:100%!important}.roomWrap{height:100%!important;display:grid!important;place-items:center!important;border:0!important}.room{transform:scale(1.06);transform-origin:center}.growth{position:absolute!important}`);stopMirror();typePill.hidden=false;contextTitle.textContent='知床研究センター';contextSub.textContent='調査して研究を進める';syncResearch();const d=doc();if(observer)observer.disconnect();if(d?.body){observer=new MutationObserver(syncResearch);observer.observe(d.body,{subtree:true,childList:true,characterData:true,attributes:true})}}
+function syncResearch(){const d=doc();if(!d)return;const title=d.getElementById('title')?.textContent||'知床研究センター LV2';contextTitle.textContent=title.replace(/ LV\d+/,'');const lv=(title.match(/LV\d+/)||['LV2'])[0];levelText.textContent=lv;const p=d.getElementById('progressText')?.textContent||'調査 0 / 3';researchProgress.textContent=p;const n=Number((p.match(/(\d+)\s*\/\s*3/)||[])[1]||0);progressFill.style.width=(n/3*100)+'%';const innerAction=d.getElementById('action');const show=!!innerAction?.classList.contains('show');const innerBtn=innerAction?.querySelector('button');actionBtn.disabled=!show;actionBtn.textContent=show&&innerBtn?.textContent?innerBtn.textContent:'アクション';actionSub.textContent=show?(innerAction.querySelector('span')?.textContent||'今できること'):'対象のとなりへ移動';const m=d.getElementById('message');if(m){const b=m.querySelector('b')?.textContent||'研究センター';const ptxt=m.querySelector('p')?.textContent||'';if(ptxt)setMessage(b,ptxt)}}
+function startMirror(){stopMirror();const draw=()=>{if(mode!=='map')return;const d=doc(),src=d?.getElementById('mini');if(src){try{miniCtx.clearRect(0,0,miniMirror.width,miniMirror.height);miniCtx.drawImage(src,0,0,miniMirror.width,miniMirror.height)}catch(_){}}const area=d?.getElementById('areaChip')?.textContent;if(area)contextSub.textContent='現在地：'+area;mirrorTimer=requestAnimationFrame(draw)};mirrorTimer=requestAnimationFrame(draw)}
+function stopMirror(){if(mirrorTimer)cancelAnimationFrame(mirrorTimer);mirrorTimer=null}
+function changeMode(next){if(next===mode)return;mode=next;body.dataset.mode=mode;mapMode.classList.toggle('active',mode==='map');researchMode.classList.toggle('active',mode==='research');closeSheets();if(observer){observer.disconnect();observer=null}stopMirror();frame.src=mode==='map'?'japan-6x-map-lab.html':'research-center-game.html'}
+mapMode.addEventListener('click',()=>changeMode('map'));researchMode.addEventListener('click',()=>changeMode('research'));
+frame.addEventListener('load',()=>setTimeout(()=>{mode==='map'?patchMap():patchResearch()},80));
+function sendKey(key){const d=doc();const opt={key,bubbles:true,cancelable:true};try{frame.contentWindow.dispatchEvent(new KeyboardEvent('keydown',opt))}catch(_){}try{d?.getElementById('camera')?.dispatchEvent(new KeyboardEvent('keydown',opt))}catch(_){}if(mode==='research')setTimeout(syncResearch,30)}
+function dirKey(dir){if(!dir)return null;const [x,y]=dir;if(Math.abs(x)>Math.abs(y))return x>0?'ArrowRight':'ArrowLeft';return y>0?'ArrowDown':'ArrowUp'}
+const joy=document.getElementById('joy'),knob=document.getElementById('knob');
+function joyDir(e){const r=joy.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;if(Math.hypot(x,y)<13)return null;return Math.abs(x)>Math.abs(y)?[Math.sign(x),0]:[0,Math.sign(y)]}
+function placeKnob(e){const r=joy.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2,m=42,dist=Math.hypot(x,y)||1,q=Math.min(1,m/dist);knob.style.transform=`translate(calc(-50% + ${x*q}px),calc(-50% + ${y*q}px))`}
+function moveNow(){const key=dirKey(currentDir);if(key)sendKey(key)}
+function stopJoy(){joyPid=null;currentDir=null;clearInterval(repeat);repeat=null;knob.style.transform='translate(-50%,-50%)'}
+joy.addEventListener('pointerdown',e=>{e.preventDefault();joyPid=e.pointerId;joy.setPointerCapture?.(e.pointerId);placeKnob(e);currentDir=joyDir(e);moveNow();repeat=setInterval(moveNow,135)});joy.addEventListener('pointermove',e=>{if(e.pointerId!==joyPid)return;placeKnob(e);currentDir=joyDir(e)});['pointerup','pointercancel','lostpointercapture'].forEach(n=>joy.addEventListener(n,stopJoy));
+actionBtn.addEventListener('click',()=>{if(mode==='map'){setMessage('全国マップ','この場所をしらべた。実ゲームでは遺産や研究センターに接近したときだけ有効になります。');return}const d=doc(),b=d?.getElementById('action')?.querySelector('button');if(b&&!actionBtn.disabled){b.click();setTimeout(syncResearch,50)}});
+window.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();sendKey(e.key)});
+})();
+</script>
+</body>
+</html>
