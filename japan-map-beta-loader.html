@@ -4,19 +4,37 @@
 <body>
 <script>
 (async()=>{
-  const source=await fetch('japan-6x-map-lab.html?source=r8',{cache:'no-store'}).then(r=>r.text());
+  const source=await fetch('japan-6x-map-lab.html?source=r9',{cache:'no-store'}).then(r=>r.text());
   let patched=source
     .replace("{id:21,name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:26,y:50,type:'文化'}","{id:21,name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:24,y:49,type:'文化'}")
     .replace("{id:22,name:'長崎と天草地方の潜伏キリシタン関連遺産',x:23,y:54,type:'文化'}","{id:22,name:'長崎と天草地方の潜伏キリシタン関連遺産',x:24,y:54,type:'文化'}");
+
+  const renderHook='function render(){if(!canvas.width)return;';
+  if(!patched.includes(renderHook))throw new Error('native facility render injection point not found');
+  const helpers=`function betaDiscovered(){try{const s=JSON.parse(localStorage.getItem('whqBetaSaveV1')||'null');return new Set(Array.isArray(s?.discovered)?s.discovered.map(Number):[])}catch(_){return new Set()}}\nfunction drawBetaFacility(s,x,y){ctx.save();ctx.translate(x,y);ctx.fillStyle='#46536a';ctx.beginPath();ctx.moveTo(-19,-8);ctx.lineTo(-12,-21);ctx.lineTo(12,-21);ctx.lineTo(19,-8);ctx.closePath();ctx.fill();ctx.fillStyle='#e5efe1';ctx.strokeStyle='#3f4a5d';ctx.lineWidth=2;ctx.fillRect(-16,-8,32,27);ctx.strokeRect(-16,-8,32,27);ctx.fillStyle='#8ea8b8';ctx.strokeStyle='#38465b';ctx.lineWidth=1;ctx.fillRect(-10,5,9,14);ctx.strokeRect(-10,5,9,14);ctx.fillStyle='#b9dce8';ctx.strokeStyle='#40516b';ctx.fillRect(5,-1,8,8);ctx.strokeRect(5,-1,8,8);const label=s.name.length>20?s.name.slice(0,20)+'…':s.name;ctx.font='900 10px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const w=Math.max(54,ctx.measureText(label).width+12);ctx.fillStyle='rgba(255,255,255,.97)';ctx.strokeStyle='rgba(85,105,128,.45)';ctx.lineWidth=1;const lx=-w/2,ly=25,lh=20,r=9;ctx.beginPath();ctx.moveTo(lx+r,ly);ctx.lineTo(lx+w-r,ly);ctx.quadraticCurveTo(lx+w,ly,lx+w,ly+r);ctx.lineTo(lx+w,ly+lh-r);ctx.quadraticCurveTo(lx+w,ly+lh,lx+w-r,ly+lh);ctx.lineTo(lx+r,ly+lh);ctx.quadraticCurveTo(lx,ly+lh,lx,ly+lh-r);ctx.lineTo(lx,ly+r);ctx.quadraticCurveTo(lx,ly,lx+r,ly);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#243952';ctx.fillText(label,0,ly+lh/2+.5);ctx.restore()}\n`;
+  patched=patched.replace(renderHook,helpers+renderHook);
+
+  const markerBlock="const isSel=selected?.id===s.id;ctx.fillStyle=isSel?'#f5cf63':'#fff7df';ctx.strokeStyle=s.type==='自然'?'#246a47':'#784735';ctx.lineWidth=isSel?3:2;ctx.beginPath();ctx.arc(x,y,11,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle=s.type==='自然'?'#246a47':'#5f302b';ctx.font='900 15px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',x,y+1);hitSites.push({s,x,y,r:17});if(showNames){ctx.font='900 10px sans-serif';const label=s.name.length>15?s.name.slice(0,15)+'…':s.name,w=Math.max(56,ctx.measureText(label).width+10);ctx.fillStyle='rgba(255,255,255,.95)';ctx.fillRect(x-w/2,y+16,w,18);ctx.fillStyle='#273b56';ctx.fillText(label,x,y+25)}";
+  if(!patched.includes(markerBlock))throw new Error('heritage marker replacement point not found');
+  const nativeMarker="const found=betaDiscovered().has(s.id),isSel=selected?.id===s.id;if(found){drawBetaFacility(s,x,y)}else{ctx.fillStyle=isSel?'#f5cf63':'#fff7df';ctx.strokeStyle=s.type==='自然'?'#246a47':'#784735';ctx.lineWidth=isSel?3:2;ctx.beginPath();ctx.arc(x,y,11,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle=s.type==='自然'?'#246a47':'#5f302b';ctx.font='900 15px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',x,y+1);if(showNames){ctx.font='900 10px sans-serif';const label=s.name.length>15?s.name.slice(0,15)+'…':s.name,w=Math.max(56,ctx.measureText(label).width+10);ctx.fillStyle='rgba(255,255,255,.95)';ctx.fillRect(x-w/2,y+16,w,18);ctx.fillStyle='#273b56';ctx.fillText(label,x,y+25)}}hitSites.push({s,x,y,r:17});";
+  patched=patched.replace(markerBlock,nativeMarker);
+
   const hook="window.addEventListener('resize',resize);requestAnimationFrame(resize);renderMini();";
   if(!patched.includes(hook))throw new Error('map API injection point not found');
   patched=patched.replace(hook,`window.WHQMapAPI={
     getPosition(){return{x:player.x,y:player.y}},
     setPosition(x,y){
-      const nx=Math.round(Number(x)),ny=Math.round(Number(y));
-      if(!Number.isFinite(nx)||!Number.isFinite(ny)||!walkable(nx,ny))return false;
+      let nx=Math.round(Number(x)),ny=Math.round(Number(y));
+      if(!Number.isFinite(nx)||!Number.isFinite(ny))return false;
+      if(!walkable(nx,ny)){
+        let found=null;
+        for(let r=1;r<=24&&!found;r++)for(let yy=ny-r;yy<=ny+r&&!found;yy++)for(let xx=nx-r;xx<=nx+r;xx++)if(walkable(xx,yy)){found={x:xx,y:yy};break}
+        if(!found)return false;nx=found.x;ny=found.y;
+      }
       player={x:nx,y:ny};selected=null;document.getElementById('selected').hidden=true;render();camera.focus();return true;
-    }
+    },
+    refresh(){render()},
+    revision:'r9'
   };${hook}`);
   document.open();document.write(patched);document.close();
 })().catch(err=>{document.body.textContent='全国マップの読み込みに失敗しました: '+err.message});
