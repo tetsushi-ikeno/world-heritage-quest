@@ -91,6 +91,9 @@ jobs:
       - name: Merge metadata and credits
         run: node scripts/merge-heritage-image-metadata.mjs
 
+      - name: Final quality curation
+        run: node scripts/finalize-heritage-image-curation.mjs
+
       - name: Commit 81 photos and credits to main
         run: |
           git config user.name "github-actions[bot]"
