@@ -7,13 +7,15 @@
 <style>
 :root{--bg:#f3f6f2;--card:#fff;--ink:#213028;--muted:#64736b;--line:#d9e1dc;--accent:#2f6f52;--natural:#2e7d58;--cultural:#9a6a2f;--shadow:0 8px 24px rgba(31,48,40,.08)}
 *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:var(--bg);color:var(--ink)}
+body.modal-open{overflow:hidden}
 header{position:sticky;top:0;z-index:10;background:rgba(243,246,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.head{max-width:1440px;margin:auto;padding:18px 22px 14px}.title-row{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}.title-row h1{font-size:clamp(22px,2.6vw,34px);margin:0 0 5px}.title-row p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.summary{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:13px}.pill strong{font-size:15px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.controls button,.controls select{appearance:none;border:1px solid #cbd6cf;background:#fff;color:var(--ink);border-radius:10px;padding:10px 13px;font-size:14px;font-weight:700}.controls button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.head{max-width:1440px;margin:auto;padding:18px 22px 14px}.title-row{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}.title-row h1{font-size:clamp(22px,2.6vw,34px);margin:0 0 5px}.title-row p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.summary{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:13px}.pill strong{font-size:15px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.controls button{appearance:none;border:1px solid #cbd6cf;background:#fff;color:var(--ink);border-radius:10px;padding:10px 13px;font-size:14px;font-weight:700}.controls button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 main{max-width:1440px;margin:auto;padding:20px 22px 60px}.note{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:18px;line-height:1.7;font-size:14px}.note b{color:var(--accent)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:18px}.site{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}.site-head{display:flex;align-items:center;gap:10px;padding:15px 16px 10px}.site-head h2{font-size:18px;margin:0;line-height:1.4}.tag{font-size:11px;font-weight:800;padding:4px 8px;border-radius:999px;color:#fff;white-space:nowrap}.tag.natural{background:var(--natural)}.tag.cultural{background:var(--cultural)}
-.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#e7ece9}.photo{background:#fff;min-width:0}.frame{aspect-ratio:4/3;background:#e9eeeb;position:relative;overflow:hidden}.frame img{width:100%;height:100%;object-fit:cover;display:block}.num{position:absolute;left:8px;top:8px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(25,38,31,.82);color:#fff;font-weight:900;font-size:14px}.meta{padding:9px 10px 11px}.role{font-size:12px;font-weight:800;line-height:1.45;min-height:35px}.license{font-size:11px;color:var(--muted);margin-top:4px}.source{display:inline-block;margin-top:6px;font-size:11px;color:#286546;text-decoration:none;font-weight:700}.source:hover{text-decoration:underline}.quality{margin:0 16px 15px;padding:10px 12px;background:#f4f8f5;border-radius:10px;color:#43564c;font-size:12px;line-height:1.6}.quality:empty{display:none}
-.loading,.error{text-align:center;padding:70px 20px;color:var(--muted)}.error{color:#8a3434}.backtop{position:fixed;right:20px;bottom:20px;border:0;border-radius:50%;width:48px;height:48px;background:#213028;color:#fff;font-size:20px;box-shadow:var(--shadow)}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.photos{grid-template-columns:1fr}.frame{aspect-ratio:16/9}.role{min-height:0}.title-row{display:block}.head,main{padding-left:14px;padding-right:14px}}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#e7ece9}.photo{background:#fff;min-width:0}.previewBtn{display:block;width:100%;border:0;padding:0;background:transparent;cursor:zoom-in;text-align:inherit}.frame{aspect-ratio:4/3;background:#e9eeeb;position:relative;overflow:hidden}.frame img{width:100%;height:100%;object-fit:cover;display:block}.frame:after{content:"拡大";position:absolute;right:8px;bottom:8px;background:rgba(25,38,31,.78);color:#fff;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}.num{position:absolute;left:8px;top:8px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(25,38,31,.82);color:#fff;font-weight:900;font-size:14px}.meta{padding:9px 10px 11px}.role{font-size:12px;font-weight:800;line-height:1.45;min-height:35px}.license{font-size:11px;color:var(--muted);margin-top:4px}.source{display:inline-block;margin-top:6px;font-size:11px;color:#286546;text-decoration:none;font-weight:700}.source:hover{text-decoration:underline}.quality{margin:0 16px 15px;padding:10px 12px;background:#f4f8f5;border-radius:10px;color:#43564c;font-size:12px;line-height:1.6}.quality:empty{display:none}
+.loading,.error{text-align:center;padding:70px 20px;color:var(--muted)}.error{color:#8a3434}.backtop{position:fixed;right:20px;bottom:20px;border:0;border-radius:50%;width:48px;height:48px;background:#213028;color:#fff;font-size:20px;box-shadow:var(--shadow);z-index:20}
+.modal{position:fixed;inset:0;z-index:1000;background:rgba(8,12,10,.94);display:none;align-items:center;justify-content:center;padding:max(18px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}.modal.open{display:flex}.viewer{width:min(1180px,96vw);height:min(82vh,760px);display:flex;flex-direction:column;gap:12px}.viewerTop{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#fff}.viewerTitle{font-size:clamp(18px,2.2vw,28px);font-weight:900}.viewerSub{font-size:13px;color:#cdd7d1;margin-top:3px}.closeBtn{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;width:44px;height:44px;font-size:24px;cursor:pointer;flex:0 0 auto}.stage{flex:1;min-height:0;background:#000;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(0,0,0,.35)}.stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}.viewerFoot{display:flex;justify-content:space-between;gap:12px;align-items:center;color:#d9e2dd;font-size:12px}.viewerFoot a{color:#c8f1db;text-decoration:none;font-weight:700}.viewerFoot a:hover{text-decoration:underline}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.photos{grid-template-columns:1fr}.frame{aspect-ratio:16/9}.role{min-height:0}.title-row{display:block}.head,main{padding-left:14px;padding-right:14px}.viewer{width:96vw;height:86vh}.viewerFoot{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -23,23 +25,41 @@ main{max-width:1440px;margin:auto;padding:20px 22px 60px}.note{background:#fff;b
   <div class="controls"><button data-filter="all" class="active">すべて</button><button data-filter="cultural">文化遺産</button><button data-filter="natural">自然遺産</button></div>
 </div></header>
 <main>
-  <div class="note"><b>確認ポイント：</b> ①だけ見て遺産が伝わるか、②で広がり・迫力・美しさが補われるか、③で建物内部・細部・生態系・別の構成資産など新しい発見があるか、の順で確認してください。写真をタップするとWikimedia Commonsの出典ページを開けます。</div>
+  <div class="note"><b>確認ポイント：</b> ①だけ見て遺産が伝わるか、②で広がり・迫力・美しさが補われるか、③で建物内部・細部・生態系・別の構成資産など新しい発見があるか、の順で確認してください。<b>写真をタップすると、GitHubに保存しているゲーム用画像を画面いっぱいに近いサイズで表示します。</b> 出典・ライセンスは各カード下のリンクから別途確認できます。</div>
   <div id="status" class="loading">画像情報を読み込んでいます…</div>
   <div id="grid" class="grid" hidden></div>
 </main>
 <button class="backtop" aria-label="ページ上部へ" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="ゲーム表示サイズ画像プレビュー">
+  <div class="viewer">
+    <div class="viewerTop"><div><div id="viewerTitle" class="viewerTitle"></div><div id="viewerSub" class="viewerSub"></div></div><button id="closeBtn" class="closeBtn" aria-label="閉じる">×</button></div>
+    <div class="stage"><img id="viewerImg" alt=""></div>
+    <div class="viewerFoot"><span id="viewerInfo"></span><a id="viewerSource" href="#" target="_blank" rel="noopener">出典・ライセンスを確認 ↗</a></div>
+  </div>
+</div>
 <script>
 const META_URL='https://raw.githubusercontent.com/tetsushi-ikeno/world-heritage-quest/main/data/heritage-images.json';
 const grid=document.getElementById('grid'),status=document.getElementById('status');
+const modal=document.getElementById('modal'),viewerImg=document.getElementById('viewerImg'),viewerTitle=document.getElementById('viewerTitle'),viewerSub=document.getElementById('viewerSub'),viewerInfo=document.getElementById('viewerInfo'),viewerSource=document.getElementById('viewerSource');
 let manifest=null,filter='all';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function imagePath(site,img){return `assets/heritage/${encodeURIComponent(site.id)}/${encodeURIComponent(img.file)}`}
+function openPreview(site,img,index){
+  const src=imagePath(site,img);
+  viewerImg.src=src; viewerImg.alt=`${site.nameJa} ${index+1}`;
+  viewerTitle.textContent=site.nameJa; viewerSub.textContent=img.roleJa;
+  viewerInfo.textContent=`GitHub保存画像・ゲーム表示確認　${img.originalWidth||''}×${img.originalHeight||''} px`;
+  viewerSource.href=img.sourcePage;
+  modal.classList.add('open'); document.body.classList.add('modal-open');
+}
+function closePreview(){modal.classList.remove('open');document.body.classList.remove('modal-open');viewerImg.removeAttribute('src')}
 function render(){
   const sites=manifest.sites.filter(s=>filter==='all'||s.type===filter);
   grid.innerHTML=sites.map(site=>{
     const qs=site.images.map(x=>x.qualityCheck).filter(Boolean).join(' / ');
-    return `<section class="site" data-type="${esc(site.type)}"><div class="site-head"><span class="tag ${esc(site.type)}">${site.type==='natural'?'自然':'文化'}</span><h2>${esc(site.nameJa)}</h2></div><div class="photos">${site.images.map((img,i)=>`<article class="photo"><a href="${esc(img.sourcePage)}" target="_blank" rel="noopener"><div class="frame"><img src="${imagePath(site,img)}" alt="${esc(site.nameJa)} ${i+1}" loading="lazy"><span class="num">${i+1}</span></div></a><div class="meta"><div class="role">${esc(img.roleJa)}</div><div class="license">${esc(img.license)} · ${esc(img.author)}</div><a class="source" href="${esc(img.sourcePage)}" target="_blank" rel="noopener">出典・ライセンス ↗</a></div></article>`).join('')}</div><div class="quality">${qs?`最終調整: ${esc(qs)}`:''}</div></section>`
+    return `<section class="site" data-type="${esc(site.type)}"><div class="site-head"><span class="tag ${esc(site.type)}">${site.type==='natural'?'自然':'文化'}</span><h2>${esc(site.nameJa)}</h2></div><div class="photos">${site.images.map((img,i)=>`<article class="photo"><button class="previewBtn" type="button" data-site="${esc(site.id)}" data-index="${i}" aria-label="${esc(site.nameJa)} ${i+1}をゲーム表示サイズで確認"><div class="frame"><img src="${imagePath(site,img)}" alt="${esc(site.nameJa)} ${i+1}" loading="lazy"><span class="num">${i+1}</span></div></button><div class="meta"><div class="role">${esc(img.roleJa)}</div><div class="license">${esc(img.license)} · ${esc(img.author)}</div><a class="source" href="${esc(img.sourcePage)}" target="_blank" rel="noopener">出典・ライセンス ↗</a></div></article>`).join('')}</div><div class="quality">${qs?`最終調整: ${esc(qs)}`:''}</div></section>`
   }).join('');
+  grid.querySelectorAll('.previewBtn').forEach(btn=>btn.addEventListener('click',()=>{const site=manifest.sites.find(s=>s.id===btn.dataset.site);const i=Number(btn.dataset.index);openPreview(site,site.images[i],i)}));
 }
 fetch(META_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{
   manifest=data; document.getElementById('siteCount').textContent=data.sites.length; document.getElementById('imageCount').textContent=data.sites.reduce((n,s)=>n+s.images.length,0);
@@ -47,5 +67,6 @@ fetch(META_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.s
   status.hidden=true;grid.hidden=false;render();
 }).catch(err=>{status.className='error';status.textContent='画像情報の読み込みに失敗しました。ページを再読み込みしてください。 ('+err.message+')'});
 document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filter=btn.dataset.filter;render()}));
+document.getElementById('closeBtn').addEventListener('click',closePreview);modal.addEventListener('click',e=>{if(e.target===modal)closePreview()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closePreview()});
 </script>
 </body></html>
