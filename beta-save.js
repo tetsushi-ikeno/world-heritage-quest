@@ -17,9 +17,13 @@ setRevisionStatus('loading…');
 
 if(document.getElementById('titleScreen')&&!document.querySelector('script[data-whq-beta-hotfix]')){
   const script=document.createElement('script');
-  script.src='beta-hotfix.js?v=20260822-7';
+  script.src='beta-hotfix-loader.js?v=20260822-7';
   script.dataset.whqBetaHotfix='1';
-  script.onload=()=>setRevisionStatus(BETA_REV);
+  script.onload=()=>{
+    Promise.resolve(window.WHQBetaHotfixReady)
+      .then(()=>setRevisionStatus(BETA_REV))
+      .catch(()=>setRevisionStatus('ERROR'));
+  };
   script.onerror=()=>setRevisionStatus('ERROR');
   document.head.appendChild(script);
 }else if(document.getElementById('titleScreen')){
