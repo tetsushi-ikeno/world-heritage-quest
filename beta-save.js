@@ -14,7 +14,7 @@ window.WHQBetaSave={KEY,fresh,load,save,update,reset,centerState,setCenterState}
 // Other pages also use beta-save.js, so guard on the title screen element.
 if(document.getElementById('titleScreen')&&!document.querySelector('script[data-whq-beta-hotfix]')){
   const script=document.createElement('script');
-  script.src='beta-hotfix.js?v=20260822-2';
+  script.src='beta-hotfix.js?v=20260822-3';
   script.dataset.whqBetaHotfix='1';
   document.head.appendChild(script);
 }
