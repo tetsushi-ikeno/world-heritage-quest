@@ -9,4 +9,13 @@ function reset(){localStorage.removeItem(KEY);for(let i=sessionStorage.length-1;
 function centerState(slug){const s=load(),c=s.centers?.[slug]||{};return{book:!!c.book,researcher:!!c.researcher,display:!!c.display,quiz:!!c.quiz}}
 function setCenterState(slug,patch){return update(s=>{const prev=s.centers[slug]||{};s.centers[slug]={book:!!(patch.book??prev.book),researcher:!!(patch.researcher??prev.researcher),display:!!(patch.display??prev.display),quiz:!!(patch.quiz??prev.quiz)};return s})}
 window.WHQBetaSave={KEY,fresh,load,save,update,reset,centerState,setCenterState};
+
+// Load beta-only compatibility patches only from the outer beta entrypoint.
+// Other pages also use beta-save.js, so guard on the title screen element.
+if(document.getElementById('titleScreen')&&!document.querySelector('script[data-whq-beta-hotfix]')){
+  const script=document.createElement('script');
+  script.src='beta-hotfix.js?v=20260822-1';
+  script.dataset.whqBetaHotfix='1';
+  document.head.appendChild(script);
+}
 })();
