@@ -107,6 +107,32 @@ function playerPosition(mapDoc){
 
 function siteFine(site){return{x:(site.x+.5)*SCALE,y:(site.y+.5)*SCALE}}
 
+function installQuestionMarkProbe(mapDoc){
+  const win=mapDoc.defaultView;
+  const canvas=mapDoc.getElementById('map');
+  const proto=win?.CanvasRenderingContext2D?.prototype;
+  if(!win||!canvas||!proto)return false;
+  if(win.__whqQuestionProbeInstalled)return true;
+
+  const originalClearRect=proto.clearRect;
+  const originalFillText=proto.fillText;
+  win.__whqQuestionMarks=[];
+
+  proto.clearRect=function(x,y,w,h){
+    if(this.canvas===canvas)win.__whqQuestionMarks=[];
+    return originalClearRect.call(this,x,y,w,h);
+  };
+  proto.fillText=function(text,x,y,...rest){
+    if(this.canvas===canvas&&text==='?'){
+      win.__whqQuestionMarks.push({x:Number(x),y:Number(y)});
+    }
+    return originalFillText.call(this,text,x,y,...rest);
+  };
+  win.__whqQuestionProbeInstalled=true;
+  setTimeout(()=>win.dispatchEvent(new win.Event('resize')),0);
+  return true;
+}
+
 function installMapFacilityStyle(areaDoc,mapDoc){
   if(!areaDoc.getElementById('betaHideOuterFacilities')){
     const style=areaDoc.createElement('style');
@@ -118,9 +144,9 @@ function installMapFacilityStyle(areaDoc,mapDoc){
   const style=mapDoc.createElement('style');
   style.id='betaMapFacilityStyle';
   style.textContent=`
-    #betaFacilityLayer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    #betaFacilityLayer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:9}
     .betaFacility{position:absolute;width:54px;height:50px;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.28))}
-    .betaFacilityMask{position:absolute;left:50%;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);background:#82b85d;border-radius:50%}
+    .betaFacilityMask{position:absolute;left:50%;top:50%;width:32px;height:32px;transform:translate(-50%,-50%);background:#82b85d;border-radius:50%}
     .betaFacilityRoof{position:absolute;left:7px;top:2px;width:40px;height:13px;background:#46536a;clip-path:polygon(8% 100%,25% 0,75% 0,92% 100%)}
     .betaFacilityBody{position:absolute;left:10px;top:12px;width:34px;height:29px;background:#e5efe1;border:2px solid #3f4a5d;border-radius:2px}
     .betaFacilityDoor{position:absolute;left:5px;bottom:0;width:10px;height:14px;background:#8ea8b8;border:1px solid #38465b}
@@ -145,36 +171,95 @@ function facilityHtml(site){
   return `<span class="betaFacilityMask"></span><span class="betaFacilityRoof"></span><span class="betaFacilityBody"><span class="betaFacilityDoor"></span><span class="betaFacilityWindow"></span></span><span class="betaFacilityLabel">${esc}</span>`;
 }
 
+function predictedSites(camera,mapDoc){
+  const player=playerPosition(mapDoc);
+  if(!player)return[];
+  const cw=camera.clientWidth,ch=camera.clientHeight;
+  return HERITAGE.map(site=>{
+    const q=siteFine(site);
+    return{site,x:cw/2+(q.x-player.x-.5)*TILE,y:ch/2+(q.y-player.y-.5)*TILE};
+  });
+}
+
+function nearestDistance(x,y,points){
+  let best=Infinity;
+  for(const p of points)best=Math.min(best,Math.hypot(p.x-x,p.y-y));
+  return best;
+}
+
+function resolveMarkerTranslation(predicted,marks,found){
+  if(!predicted.length||!marks.length)return null;
+  let best=null;
+  for(const mark of marks){
+    for(const pred of predicted){
+      const dx=mark.x-pred.x,dy=mark.y-pred.y;
+      let score=0,foundScore=0,error=0;
+      for(const actual of marks){
+        const d=nearestDistance(actual.x-dx,actual.y-dy,predicted);
+        if(d<2.5)score++;
+        error+=Math.min(d,30);
+      }
+      for(const fp of predicted){
+        if(!found.has(fp.site.id))continue;
+        if(nearestDistance(fp.x+dx,fp.y+dy,marks)<2.5)foundScore++;
+      }
+      const magnitude=Math.hypot(dx,dy);
+      const candidate={dx,dy,score,foundScore,error,magnitude};
+      if(!best||
+        candidate.score>best.score||
+        candidate.score===best.score&&candidate.foundScore>best.foundScore||
+        candidate.score===best.score&&candidate.foundScore===best.foundScore&&candidate.error<best.error-.01||
+        candidate.score===best.score&&candidate.foundScore===best.foundScore&&Math.abs(candidate.error-best.error)<.01&&candidate.magnitude<best.magnitude){
+        best=candidate;
+      }
+    }
+  }
+  return best;
+}
+
 function renderDiscoveredFacilities(){
   const ctx=innerMapContext();
   if(!ctx)return;
   const{areaDoc,mapDoc,camera}=ctx;
   installMapFacilityStyle(areaDoc,mapDoc);
+  const probeReady=installQuestionMarkProbe(mapDoc);
   const layer=ensureFacilityLayer(camera,mapDoc);
-  const player=playerPosition(mapDoc);
-  if(!player)return;
-  const found=discoveredSet();
-  const cw=camera.clientWidth,ch=camera.clientHeight;
-  const wanted=new Set();
+  if(!probeReady)return;
 
-  for(const site of HERITAGE){
-    if(!found.has(site.id))continue;
-    const q=siteFine(site);
-    const x=cw/2+(q.x-player.x-.5)*TILE;
-    const y=ch/2+(q.y-player.y-.5)*TILE;
-    if(x<-110||y<-90||x>cw+110||y>ch+110)continue;
-    const key='betaFacility-'+site.id;
+  const win=mapDoc.defaultView;
+  const marks=Array.isArray(win.__whqQuestionMarks)?win.__whqQuestionMarks:[];
+  const found=discoveredSet();
+  const predicted=predictedSites(camera,mapDoc);
+  const translation=resolveMarkerTranslation(predicted,marks,found);
+  const wanted=new Set();
+  if(!translation){
+    layer.innerHTML='';
+    return;
+  }
+
+  for(const pred of predicted){
+    if(!found.has(pred.site.id))continue;
+    const targetX=pred.x+translation.dx,targetY=pred.y+translation.dy;
+    let mark=null,best=Infinity;
+    for(const m of marks){
+      const d=Math.hypot(m.x-targetX,m.y-targetY);
+      if(d<best){best=d;mark=m}
+    }
+    if(!mark||best>3.5)continue;
+    const key='betaFacility-'+pred.site.id;
     wanted.add(key);
     let el=mapDoc.getElementById(key);
     if(!el){
       el=mapDoc.createElement('div');
       el.id=key;
       el.className='betaFacility';
-      el.innerHTML=facilityHtml(site);
+      el.innerHTML=facilityHtml(pred.site);
       layer.appendChild(el);
     }
-    el.style.left=x+'px';
-    el.style.top=y+'px';
+    // Snap to the exact coordinates passed to canvas.fillText('?').
+    // This guarantees the facility replaces the marker rather than approximating it.
+    el.style.left=mark.x+'px';
+    el.style.top=mark.y+'px';
   }
 
   [...layer.children].forEach(el=>{if(!wanted.has(el.id))el.remove()});
