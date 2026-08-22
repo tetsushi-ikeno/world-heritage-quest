@@ -50,16 +50,52 @@ const sourcePath = path.join(process.cwd(), 'scripts', 'collect-heritage-images.
 let source = await fs.readFile(sourcePath, 'utf8');
 
 const queryOverrides = new Map([
-  ['National Museum of Western Art Tokyo Le Corbusier exterior', 'Tokyo National Museum of Western Art seen from the west'],
-  ['National Museum of Western Art Tokyo panorama', 'National Museum of Western Art Tokyo'],
-  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'National Museum of Western Art Tokyo interior'],
-  ['Daisen Kofun Mozu Japan aerial', 'Daisenryo Kofun zenkei Japan'],
-  ['Mozu Furuichi Kofun panorama Japan', 'Daisenryo Kofun Mozu Japan'],
-  ['Kofun haniwa Mozu Furuichi detail Japan', 'Mozu Kofun Group Japan'],
+  ['Yakushima forest Japan World Heritage', 'Yakushima Shiratani Unsuikyo moss forest'],
+  ['Yakushima mountain forest panorama Japan', 'Yakushima mountains Miyanoura-dake panorama'],
+  ['Yakushima Jomon Sugi cedar moss forest Japan', 'Jomon Sugi Yakushima cedar'],
+  ['Shirakami Sanchi panorama mountains Japan', 'Shirakami Sanchi Anmon falls mountains'],
+  ['Shirakami Sanchi beech tree forest detail Japan', 'Shirakami Sanchi beech forest tree'],
+  ['Kumano Nachi Taisha Nachi waterfall Japan', 'Nachi waterfall Kumano Nachi Taisha pagoda'],
+  ['Kumano Kodo pilgrimage route forest Japan', 'Kumano Kodo Daimonzaka forest stone path'],
+  ['Koyasan Okunoin stone lanterns detail Japan', 'Koyasan Okunoin lanterns cemetery'],
+  ['Iwami Ginzan mine entrance Japan', 'Omori townscape Iwami Ginzan Japan'],
+  ['Omori Iwami Ginzan townscape Japan', 'Iwami Ginzan Omori cultural landscape Japan'],
+  ['Iwami Ginzan Ryugenji Mabu tunnel detail Japan', 'Ryugenji Mabu Iwami Ginzan tunnel'],
+  ['Ogasawara Islands Chichijima Japan landscape', 'Chichijima Ogasawara island landscape sea'],
+  ['Ogasawara Islands panorama sea cliffs Japan', 'Minamijima Ogasawara landscape sea cliffs'],
+  ['Ogasawara Islands endemic wildlife forest Japan', 'Ogasawara Bonin flying fox endemic wildlife'],
+  ['Chusonji Hiraizumi Japan World Heritage', 'Chusonji Hiraizumi temple Konjikido'],
+  ['Motsuji garden Hiraizumi panorama Japan', 'Motsuji garden Hiraizumi landscape'],
+  ['Chusonji Konjikido Hiraizumi detail Japan', 'Chusonji Konjikido old shelter Hiraizumi'],
+  ['Tomioka Silk Mill Japan World Heritage', 'Tomioka Silk Mill East Cocoon Warehouse'],
+  ['Tomioka Silk Mill panorama red brick Japan', 'Tomioka Silk Mill red brick panorama'],
+  ['Tomioka Silk Mill interior machinery detail Japan', 'Tomioka Silk Mill reeling plant interior'],
+  ['Hashima Gunkanjima Japan World Heritage', 'Hashima Island Gunkanjima Nagasaki sea'],
   ['Hashima Island Gunkanjima panorama Japan', 'Hashima Island Gunkanjima panorama Nagasaki'],
-  ['Miike Coal Mine Manda Pit machinery Japan World Heritage', 'Miike Coal Mine Manda Pit Japan World Heritage']
+  ['Miike Coal Mine Manda Pit machinery Japan World Heritage', 'Miike Coal Mine Manda Pit machinery'],
+  ['National Museum of Western Art Tokyo Le Corbusier exterior', 'Tokyo National Museum of Western Art seen from the west'],
+  ['National Museum of Western Art Tokyo panorama', 'Courtyard National Museum of Western Art Tokyo'],
+  ['National Museum of Western Art Tokyo interior detail Le Corbusier', 'Interior view National Museum of Western Art Tokyo architecture'],
+  ['Sotome Nagasaki hidden Christian village landscape Japan', 'Kasuga village Hirado hidden Christian landscape'],
+  ['Sakitsu Church Amakusa detail Japan World Heritage', 'Sakitsu Church Amakusa village'],
+  ['Daisen Kofun Mozu Japan aerial', 'Daisen Kofun aerial photograph Mozu'],
+  ['Mozu Furuichi Kofun panorama Japan', 'Daisenryo Kofun zenkei Japan'],
+  ['Kofun haniwa Mozu Furuichi detail Japan', 'Konda Gobyoyama Kofun Furuichi Japan'],
+  ['Iriomote Island forest Japan World Heritage', 'Iriomote mangrove forest Japan'],
+  ['Amami Oshima forest panorama Japan', 'Yambaru forest Okinawa World Heritage'],
+  ['Yanbaru forest endemic wildlife Japan World Heritage', 'Amami rabbit endemic wildlife Japan'],
+  ['Jomon stone circle Oyu Japan detail World Heritage', 'Oyu stone circles Jomon Japan'],
+  ['Sado Gold Mine Doyu no Warito Japan', 'Doyu no Warito Sado Gold Mine'],
+  ['Sado Kinzan gold mine panorama Japan', 'Sado Gold Mine Doyu no Warito panorama'],
+  ['Sado Gold Mine tunnel machinery detail Japan', 'Sado Gold Mine tunnel interior'],
+  ['Shiretoko Five Lakes Japan World Heritage', 'Shiretoko Five Lakes Hokkaido landscape'],
+  ['Shiretoko Peninsula panorama mountains sea Japan', 'Shiretoko Peninsula mountains sea panorama'],
+  ['Shiretoko brown bear wildlife forest Japan', 'Shiretoko brown bear Hokkaido wildlife']
 ]);
 for (const [from, to] of queryOverrides) source = source.replaceAll(from, to);
+
+// Exclude obvious off-topic search hits that slipped through the first automatic pass.
+source = source.replace('const badTitle = /(', 'const badTitle = /(airport|bunker|relief map|google art project|infection control|purification fountain|misogi|joshin|');
 
 source = source.replace(
   "const META_PATH = path.join(ROOT, 'data', 'heritage-images.json');",
