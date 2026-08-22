@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>世界遺産画像レビュー | World Heritage Quest</title>
+<style>
+:root{--bg:#f3f6f2;--card:#fff;--ink:#213028;--muted:#64736b;--line:#d9e1dc;--accent:#2f6f52;--natural:#2e7d58;--cultural:#9a6a2f;--shadow:0 8px 24px rgba(31,48,40,.08)}
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:0;z-index:10;background:rgba(243,246,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.head{max-width:1440px;margin:auto;padding:18px 22px 14px}.title-row{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}.title-row h1{font-size:clamp(22px,2.6vw,34px);margin:0 0 5px}.title-row p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.summary{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:13px}.pill strong{font-size:15px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.controls button,.controls select{appearance:none;border:1px solid #cbd6cf;background:#fff;color:var(--ink);border-radius:10px;padding:10px 13px;font-size:14px;font-weight:700}.controls button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{max-width:1440px;margin:auto;padding:20px 22px 60px}.note{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:18px;line-height:1.7;font-size:14px}.note b{color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:18px}.site{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}.site-head{display:flex;align-items:center;gap:10px;padding:15px 16px 10px}.site-head h2{font-size:18px;margin:0;line-height:1.4}.tag{font-size:11px;font-weight:800;padding:4px 8px;border-radius:999px;color:#fff;white-space:nowrap}.tag.natural{background:var(--natural)}.tag.cultural{background:var(--cultural)}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#e7ece9}.photo{background:#fff;min-width:0}.frame{aspect-ratio:4/3;background:#e9eeeb;position:relative;overflow:hidden}.frame img{width:100%;height:100%;object-fit:cover;display:block}.num{position:absolute;left:8px;top:8px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(25,38,31,.82);color:#fff;font-weight:900;font-size:14px}.meta{padding:9px 10px 11px}.role{font-size:12px;font-weight:800;line-height:1.45;min-height:35px}.license{font-size:11px;color:var(--muted);margin-top:4px}.source{display:inline-block;margin-top:6px;font-size:11px;color:#286546;text-decoration:none;font-weight:700}.source:hover{text-decoration:underline}.quality{margin:0 16px 15px;padding:10px 12px;background:#f4f8f5;border-radius:10px;color:#43564c;font-size:12px;line-height:1.6}.quality:empty{display:none}
+.loading,.error{text-align:center;padding:70px 20px;color:var(--muted)}.error{color:#8a3434}.backtop{position:fixed;right:20px;bottom:20px;border:0;border-radius:50%;width:48px;height:48px;background:#213028;color:#fff;font-size:20px;box-shadow:var(--shadow)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.photos{grid-template-columns:1fr}.frame{aspect-ratio:16/9}.role{min-height:0}.title-row{display:block}.head,main{padding-left:14px;padding-right:14px}}
+</style>
+</head>
+<body>
+<header><div class="head">
+  <div class="title-row"><div><h1>世界遺産画像レビュー</h1><p>27遺産 × 3枚。①代表景観　②スケール・美しさ　③別の側面、の役割で並べています。</p></div></div>
+  <div class="summary"><span class="pill"><strong id="siteCount">-</strong> 遺産</span><span class="pill"><strong id="imageCount">-</strong> 画像</span><span class="pill" id="checkedAt">最終確認日時: -</span></div>
+  <div class="controls"><button data-filter="all" class="active">すべて</button><button data-filter="cultural">文化遺産</button><button data-filter="natural">自然遺産</button></div>
+</div></header>
+<main>
+  <div class="note"><b>確認ポイント：</b> ①だけ見て遺産が伝わるか、②で広がり・迫力・美しさが補われるか、③で建物内部・細部・生態系・別の構成資産など新しい発見があるか、の順で確認してください。写真をタップするとWikimedia Commonsの出典ページを開けます。</div>
+  <div id="status" class="loading">画像情報を読み込んでいます…</div>
+  <div id="grid" class="grid" hidden></div>
+</main>
+<button class="backtop" aria-label="ページ上部へ" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const META_URL='https://raw.githubusercontent.com/tetsushi-ikeno/world-heritage-quest/main/data/heritage-images.json';
+const grid=document.getElementById('grid'),status=document.getElementById('status');
+let manifest=null,filter='all';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function imagePath(site,img){return `assets/heritage/${encodeURIComponent(site.id)}/${encodeURIComponent(img.file)}`}
+function render(){
+  const sites=manifest.sites.filter(s=>filter==='all'||s.type===filter);
+  grid.innerHTML=sites.map(site=>{
+    const qs=site.images.map(x=>x.qualityCheck).filter(Boolean).join(' / ');
+    return `<section class="site" data-type="${esc(site.type)}"><div class="site-head"><span class="tag ${esc(site.type)}">${site.type==='natural'?'自然':'文化'}</span><h2>${esc(site.nameJa)}</h2></div><div class="photos">${site.images.map((img,i)=>`<article class="photo"><a href="${esc(img.sourcePage)}" target="_blank" rel="noopener"><div class="frame"><img src="${imagePath(site,img)}" alt="${esc(site.nameJa)} ${i+1}" loading="lazy"><span class="num">${i+1}</span></div></a><div class="meta"><div class="role">${esc(img.roleJa)}</div><div class="license">${esc(img.license)} · ${esc(img.author)}</div><a class="source" href="${esc(img.sourcePage)}" target="_blank" rel="noopener">出典・ライセンス ↗</a></div></article>`).join('')}</div><div class="quality">${qs?`最終調整: ${esc(qs)}`:''}</div></section>`
+  }).join('');
+}
+fetch(META_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{
+  manifest=data; document.getElementById('siteCount').textContent=data.sites.length; document.getElementById('imageCount').textContent=data.sites.reduce((n,s)=>n+s.images.length,0);
+  const t=data.qualityCheck?.checkedAt||data.generatedAt; document.getElementById('checkedAt').textContent=`最終確認日時: ${t?new Date(t).toLocaleString('ja-JP'):'-'}`;
+  status.hidden=true;grid.hidden=false;render();
+}).catch(err=>{status.className='error';status.textContent='画像情報の読み込みに失敗しました。ページを再読み込みしてください。 ('+err.message+')'});
+document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filter=btn.dataset.filter;render()}));
+</script>
+</body></html>
