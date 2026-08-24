@@ -39,6 +39,22 @@ const runtime=['area-map-game.html','research-center-game.html','beta.html','bet
 for(const file of runtime){const html=read(file);const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());for(const js of scripts){try{new Function(js)}catch(e){fail(`${file} のJavaScript構文エラー: ${e.message}`)}}ok(`${file} JavaScript構文`)}
 try{new Function(read('beta-save.js'))}catch(e){fail(`beta-save.js のJavaScript構文エラー: ${e.message}`)}
 ok('beta-save.js 構文');
+
+// Beta2 area loaderをNode上で実行し、文字列差し替え後のHTMLまで検証する。
+const loaderHtml=read('area-map-beta-loader.html');
+const loaderJs=[...loaderHtml.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).find(s=>s.trim());
+const baseMap=read('area-map-game.html');
+let generated='';
+const oldFetch=globalThis.fetch,oldDocument=globalThis.document;
+globalThis.fetch=async()=>({text:async()=>baseMap});
+globalThis.document={body:{textContent:''},open(){generated=''},write(v){generated+=String(v)},close(){}};
+try{await eval(loaderJs)}finally{globalThis.fetch=oldFetch;globalThis.document=oldDocument}
+if(!generated)fail('Beta2 area loaderがHTMLを生成しませんでした');
+for(const marker of ['id="branchLayer"','id="branchDiscover"','id="branchQuizModal"','class="heritageIris"','支部 0 / 19'])if(!generated.includes(marker))fail(`Beta2生成HTMLに必要要素がありません: ${marker}`);
+const generatedScripts=[...generated.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
+for(const js of generatedScripts){try{new Function(js)}catch(e){fail(`Beta2生成全国マップのJavaScript構文エラー: ${e.message}`)}}
+ok('Beta2 area loader差し替え＋生成HTML構文');
+
 for(const file of ['japan-6x-map-lab.html','tutorial-lab-final.html'])if(!fs.existsSync(path.join(root,file)))fail(`承認済み基準ファイルなし: ${file}`);
 ok('承認済み6倍マップ / チュートリアル基準ファイルを維持');
 console.log('\nBETA STATIC CHECK: PASS');
