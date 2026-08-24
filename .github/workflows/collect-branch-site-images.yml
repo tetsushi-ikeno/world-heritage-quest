@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/collect-branch-site-images.yml'
       - 'scripts/collect-branch-site-images.mjs'
+  pull_request:
+    types: [opened]
   workflow_dispatch:
 
 permissions:
