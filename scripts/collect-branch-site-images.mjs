@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+// Beta2 branch discovery images: one curated Commons image per branch site.
 const ROOT = process.cwd();
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
 const USER_AGENT = 'world-heritage-quest/1.0 (educational project; GitHub tetsushi-ikeno/world-heritage-quest)';
