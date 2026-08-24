@@ -5,14 +5,23 @@ on:
     branches: [main]
     paths:
       - 'beta.html'
+      - 'beta2.html'
       - 'beta-save.js'
       - 'area-map-game.html'
+      - 'area-map-beta-loader.html'
       - 'research-center-game.html'
+      - 'research-center-beta2.html'
+      - 'heritage-discovery-effect-lab.html'
       - 'data/beta-heritage-content.json'
+      - 'data/branch-sites.json'
+      - 'data/branch-quiz-data.json'
       - 'data/heritage-images.json'
       - 'docs/assets/heritage/**'
+      - 'docs/assets/branch-sites/**'
       - 'scripts/validate-beta.mjs'
       - '.github/workflows/beta-check.yml'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
