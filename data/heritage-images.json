@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T03:30:19.284Z",
+  "generatedAt": "2026-08-24T12:00:25.764Z",
   "source": "Wikimedia Commons",
   "policy": {
     "selection": [
@@ -1111,7 +1111,7 @@
           "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Haiden_of_Munakata_Grand_Shrine_%28Nakatsu_Shrine%29.JPG/1920px-Haiden_of_Munakata_Grand_Shrine_%28Nakatsu_Shrine%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
           "originalWidth": 3264,
           "originalHeight": 2448,
-          "description": "​宗像大社(中津宮)の拝殿",
+          "description": "宗像大社(中津宮)の拝殿",
           "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
         }
       ]
@@ -1507,7 +1507,7 @@
   ],
   "qualityCheck": {
     "status": "final-reviewed",
-    "checkedAt": "2026-08-22T03:30:19.284Z",
+    "checkedAt": "2026-08-24T12:00:25.764Z",
     "criteria": [
       "遺産または正式な構成資産を直接写していること",
       "3枚が代表景観・スケール・別側面として過度に重複しないこと",
