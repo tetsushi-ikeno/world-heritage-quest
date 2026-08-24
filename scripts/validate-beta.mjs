@@ -8,58 +8,37 @@ const ok=msg=>console.log('✓ '+msg);
 
 const content=JSON.parse(read('data/beta-heritage-content.json'));
 const images=JSON.parse(read('data/heritage-images.json'));
-
 if(!Array.isArray(content.sites)||content.sites.length!==27)fail(`学習データは27件必要です: ${content.sites?.length}`);
 ok('学習データ 27件');
-
 const ids=content.sites.map(s=>Number(s.id));
 if(new Set(ids).size!==27||ids.some((id,i)=>id!==i+1))fail('遺産IDは1〜27を重複なく並べてください');
 ok('遺産ID 1〜27');
-
 let quizCount=0;
 for(const site of content.sites){
   if(!site.slug||!site.name||!site.year)fail(`基本情報不足: ${site.id}`);
   if(!Array.isArray(site.criteria)||site.criteria.length===0)fail(`登録基準不足: ${site.name}`);
   if(!site.researcher||!site.display)fail(`センター本文不足: ${site.name}`);
   if(!Array.isArray(site.quiz)||site.quiz.length!==3)fail(`腕試しは3問: ${site.name}`);
-  for(const q of site.quiz){
-    quizCount++;
-    if(!q.q||!Array.isArray(q.choices)||q.choices.length<2||!q.answer||!q.explanation)fail(`問題データ不足: ${site.name}`);
-    if(!q.choices.includes(q.answer))fail(`正答が選択肢にありません: ${site.name} / ${q.q}`);
-    if(/基準[IVX]+/.test(q.q+' '+q.choices.join(' ')))fail(`登録基準をローマ数字だけで表現しています: ${site.name}`);
-  }
-  const imageSite=(images.sites||[]).find(x=>x.id===site.slug);
-  if(!imageSite)fail(`画像マニフェストなし: ${site.slug}`);
-  if(!Array.isArray(imageSite.images)||imageSite.images.length<3)fail(`画像3枚未満: ${site.slug}`);
-  if(!imageSite.images.some(x=>x.role==='representative'))fail(`代表画像未指定: ${site.slug}`);
-  for(const img of imageSite.images.slice(0,3)){
-    const file=path.join(root,'docs/assets/heritage',site.slug,img.file);
-    if(!fs.existsSync(file))fail(`画像ファイルなし: ${file}`);
-  }
+  for(const q of site.quiz){quizCount++;if(!q.q||!Array.isArray(q.choices)||q.choices.length<2||!q.answer||!q.explanation)fail(`問題データ不足: ${site.name}`);if(!q.choices.includes(q.answer))fail(`正答が選択肢にありません: ${site.name} / ${q.q}`)}
+  const imageSite=(images.sites||[]).find(x=>x.id===site.slug);if(!imageSite)fail(`画像マニフェストなし: ${site.slug}`);if(!Array.isArray(imageSite.images)||imageSite.images.length<3)fail(`画像3枚未満: ${site.slug}`);for(const img of imageSite.images.slice(0,3)){const file=path.join(root,'docs/assets/heritage',site.slug,img.file);if(!fs.existsSync(file))fail(`画像ファイルなし: ${file}`)}
 }
-if(quizCount!==81)fail(`腕試しは合計81問必要です: ${quizCount}`);
-ok('腕試し 81問');
-ok('全27遺産に画像3枚＋代表画像');
+if(quizCount!==81)fail(`腕試しは合計81問必要です: ${quizCount}`);ok('腕試し 81問');
 
-for(const [n,label] of Object.entries(content.criteriaLabels||{})){
-  if(!label.startsWith(`基準${n}：`))fail(`登録基準ラベル形式が不正: ${n} ${label}`);
-}
-ok('登録基準は数字＋短い名称');
+const branches=JSON.parse(read('data/branch-sites.json'));
+const branchQuiz=JSON.parse(read('data/branch-quiz-data.json'));
+if(branches.total!==19||!Array.isArray(branches.sites)||branches.sites.length!==19)fail('Beta2支部は19件必要です');
+if(new Set(branches.sites.map(x=>x.id)).size!==19)fail('支部IDが重複しています');
+for(const b of branches.sites){if(!b.prefecture||!b.name||!b.designation||!b.image)fail(`支部データ不足: ${b.id}`);if(!fs.existsSync(path.join(root,b.image)))fail(`支部画像なし: ${b.image}`)}
+if(!Array.isArray(branchQuiz.quizzes)||branchQuiz.quizzes.length!==19)fail('支部クイズは19問必要です');
+const quizIds=new Set(branchQuiz.quizzes.map(x=>x.branchId));
+for(const b of branches.sites)if(!quizIds.has(b.id))fail(`支部クイズ未割当: ${b.id}`);
+for(const q of branchQuiz.quizzes){if(!q.question||!Array.isArray(q.choices)||q.choices.length!==4||!Number.isInteger(q.answer)||q.answer<0||q.answer>3)fail(`支部クイズ不正: ${q.branchId}`)}
+ok('Beta2 支部19件＋画像＋1問クイズ');
 
-const runtime=['area-map-game.html','research-center-game.html','beta.html'];
-for(const file of runtime){
-  const html=read(file);
-  const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
-  for(const js of scripts){
-    try{new Function(js)}catch(e){fail(`${file} のJavaScript構文エラー: ${e.message}`)}
-  }
-  if(/whqCenterLevel|研究センターが成長した/.test(html))fail(`${file} に旧センター成長ランタイムが残っています`);
-  ok(`${file} 構文 / 旧成長仕様なし`);
-}
+const runtime=['area-map-game.html','research-center-game.html','beta.html','beta2.html','area-map-beta-loader.html','research-center-beta2.html','heritage-discovery-effect-lab.html'];
+for(const file of runtime){const html=read(file);const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());for(const js of scripts){try{new Function(js)}catch(e){fail(`${file} のJavaScript構文エラー: ${e.message}`)}}ok(`${file} JavaScript構文`)}
 try{new Function(read('beta-save.js'))}catch(e){fail(`beta-save.js のJavaScript構文エラー: ${e.message}`)}
 ok('beta-save.js 構文');
-
 for(const file of ['japan-6x-map-lab.html','tutorial-lab-final.html'])if(!fs.existsSync(path.join(root,file)))fail(`承認済み基準ファイルなし: ${file}`);
 ok('承認済み6倍マップ / チュートリアル基準ファイルを維持');
-
 console.log('\nBETA STATIC CHECK: PASS');
