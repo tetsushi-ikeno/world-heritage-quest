@@ -1,8 +1,8 @@
 name: Apply Beta2 feedback fixes branch
 
 on:
-  push:
-    branches: [beta2-feedback-fix]
+  pull_request:
+    branches: [main]
     paths:
       - 'scripts/apply-beta2-feedback-fixes.mjs'
       - '.github/workflows/apply-beta2-feedback-fixes-branch.yml'
@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   apply:
+    if: github.event.pull_request.head.ref == 'beta2-feedback-fix'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
