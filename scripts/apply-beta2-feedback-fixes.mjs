@@ -1,0 +1,65 @@
+import fs from 'node:fs';
+
+const read=p=>fs.readFileSync(p,'utf8');
+const write=(p,s)=>fs.writeFileSync(p,s);
+function rep(s,from,to,label){if(!s.includes(from))throw new Error(label+' not found');return s.replace(from,to)}
+
+// 1) Research center: reconnect the two side routes before the book/quiz corridor.
+{
+  const p='research-center-beta2.html';
+  let s=read(p);
+  s=rep(s,"const rows=['###############','#######Q#######','#######.#######','#######B#######','######...######','###..#####..###','###R.##D##..###','###.........###','#######.#######','#######E#######'];","const rows=['###############','#######Q#######','#######.#######','#######B#######','###.........###','###..#####..###','###R.##D##..###','###.........###','#######.#######','#######E#######'];",'research center rows');
+  write(p,s);
+}
+
+// 2) Map loader: stable branch positions, brighter marker policy, clear affirmative/cancel placement.
+{
+  const p='area-map-beta-loader.html';
+  let s=read(p);
+  s=rep(s,
+    ".branchProgress{margin-top:6px;border-top:1px solid #cbd5df;padding-top:5px;text-align:center;font-size:10px;font-weight:1000;color:#4d5f76}.branchLayer{position:absolute;inset:0;z-index:16;pointer-events:none}.branchDot{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #ffffff55,0 0 12px #fff;transform:translate(-50%,-50%);animation:branchBlink .9s ease-in-out infinite alternate}.branchBuilding{position:absolute;width:26px;height:23px;transform:translate(-50%,-70%);filter:drop-shadow(0 2px 2px #0004)}.branchBuilding:before{content:'';position:absolute;left:3px;top:8px;width:20px;height:14px;background:#c9d0d6;border:2px solid #596574}.branchBuilding:after{content:'';position:absolute;left:2px;top:2px;width:22px;height:9px;background:#6d7783;clip-path:polygon(10% 100%,28% 0,72% 0,90% 100%)}@keyframes branchBlink{from{opacity:.28;transform:translate(-50%,-50%) scale(.86)}to{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}",
+    ".branchProgress{margin-top:6px;border-top:1px solid #cbd5df;padding-top:5px;text-align:center;font-size:10px;font-weight:1000;color:#4d5f76}.branchLayer{display:none!important}",
+    'branch overlay CSS');
+  s=rep(s,
+    ".heritageActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:9px max(18px,env(safe-area-inset-right));background:#000;opacity:0}",
+    ".heritageActions{display:grid;grid-template-columns:minmax(140px,240px) minmax(140px,240px);justify-content:space-between;column-gap:clamp(48px,12vw,180px);padding:9px clamp(20px,7vw,100px);background:#000;opacity:0}",
+    'heritage action spacing');
+  s=rep(s,
+    '<div class="heritageActions"><button id="enterCenter" class="enterBtn" type="button">センターへ入る</button><button id="laterBtn" class="laterBtn" type="button">あとで</button></div>',
+    '<div class="heritageActions"><button id="laterBtn" class="laterBtn" type="button">あとで</button><button id="enterCenter" class="enterBtn" type="button">センターへ入る</button></div>',
+    'heritage button order');
+  s=rep(s,'<button id="branchQuizGo" class="branchQuizGo">1問チャレンジ</button>','<button id="branchQuizGo" class="branchQuizGo">支部に入る</button>','branch enter label');
+  s=rep(s,
+    "function branchFine(b){const q=BRANCH_COORDS[b.id]||[0,0];return{x:(q[0]+.5)*SCALE,y:(q[1]+.5)*SCALE}}",
+    "function branchFine(b){const q=BRANCH_COORDS[b.id]||[0,0],api=doc()?.defaultView?.WHQMapAPI;if(api?.nearestWalkableForBase){const p=api.nearestWalkableForBase(q[0],q[1]);if(p)return p}return{x:(q[0]+.5)*SCALE,y:(q[1]+.5)*SCALE}}",
+    'branch walkable snap');
+  const oldRender="function renderBranches(p){const layer=document.getElementById('branchLayer');if(!layer||!p)return;layer.innerHTML='';const found=branchFoundSet();let best=Infinity;nearBranch=null;for(const b of branchSites){const q=branchFine(b),dist=Math.hypot(q.x-p.x,q.y-p.y),x=innerWidth/2+(q.x-p.x)*TILE,y=innerHeight/2+(q.y-p.y)*TILE;if(x>-40&&y>-40&&x<innerWidth+40&&y<innerHeight+40){const el=document.createElement('div');el.className=found.has(b.id)?'branchBuilding':'branchDot';el.style.left=x+'px';el.style.top=y+'px';layer.appendChild(el)}if(dist<best){best=dist;nearBranch=b;nearBranch._dist=dist}}const progress=document.getElementById('branchProgress');if(progress)progress.textContent='支部 '+found.size+' / 19';if(!nearBranch||best>CONTACT)nearBranch=null}";
+  const newRender="function renderBranches(p){if(!p)return;const found=branchFoundSet();let best=Infinity;nearBranch=null;for(const b of branchSites){const q=branchFine(b),dist=Math.hypot(q.x-p.x,q.y-p.y);if(dist<best){best=dist;nearBranch=b;nearBranch._dist=dist}}const progress=document.getElementById('branchProgress');if(progress)progress.textContent='支部 '+found.size+' / 19';if(!nearBranch||best>CONTACT)nearBranch=null;doc()?.defaultView?.WHQMapAPI?.refresh?.()}";
+  s=rep(s,oldRender,newRender,'branch render logic');
+  write(p,s);
+}
+
+// 3) Native map canvas: draw branch markers with the map, snap them to walkable cells, unify minimap markers.
+{
+  const p='japan-map-beta-loader.html';
+  let s=read(p);
+  const oldHelpers="const helpers=`function betaDiscovered(){try{const s=JSON.parse(localStorage.getItem('whqBetaSaveV1')||'null');return new Set(Array.isArray(s?.discovered)?s.discovered.map(Number):[])}catch(_){return new Set()}}\\nfunction drawBetaFacility(s,x,y){";
+  const newHelpers="const helpers=`const BETA_BRANCHES=[['miyagi-taga',58,38],['yamagata-yamadera',55,37],['fukushima-miharu',55,41],['ibaraki-kodokan',57,45],['saitama-sakitama',53,45],['chiba-kasori',57,47],['kanagawa-kamakura',54,47],['ishikawa-kenrokuen',47,42],['fukui-ichijodani',46,44],['nagano-kamikochi',50,43],['aichi-nagoya',48,47],['tottori-dunes',39,46],['okayama-shizutani',39,49],['tokushima-castle',40,52],['kagawa-ritsurin',40,50],['ehime-matsuyama',36,52],['kochi-ryugado',38,54],['oita-usuki',29,54],['miyazaki-saitobaru',29,57]];\\nfunction betaState(){try{return JSON.parse(localStorage.getItem('whqBetaSaveV1')||'null')||{}}catch(_){return{}}}\\nfunction betaDiscovered(){const s=betaState();return new Set(Array.isArray(s?.discovered)?s.discovered.map(Number):[])}\\nfunction betaBranches(){const s=betaState();return new Set(Array.isArray(s?.branches)?s.branches:[])}\\nfunction drawBetaBranch(found,x,y){ctx.save();ctx.translate(x,y);if(!found){ctx.beginPath();ctx.arc(0,0,6,0,Math.PI*2);ctx.fillStyle='#ffffff';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#49586a';ctx.stroke();ctx.beginPath();ctx.arc(0,0,9,0,Math.PI*2);ctx.lineWidth=2;ctx.strokeStyle='rgba(255,255,255,.82)';ctx.stroke()}else{ctx.fillStyle='#6d7783';ctx.beginPath();ctx.moveTo(-12,-4);ctx.lineTo(-7,-12);ctx.lineTo(7,-12);ctx.lineTo(12,-4);ctx.closePath();ctx.fill();ctx.fillStyle='#c9d0d6';ctx.strokeStyle='#596574';ctx.lineWidth=1.5;ctx.fillRect(-10,-4,20,14);ctx.strokeRect(-10,-4,20,14);ctx.fillStyle='#738798';ctx.fillRect(-6,3,5,7)}ctx.restore()}\\nfunction drawBetaFacility(s,x,y){";
+  s=rep(s,oldHelpers,newHelpers,'native branch helpers');
+
+  const playerHook="ctx.restore();\n ctx.save();const px=cw/2,py=ch/2;";
+  const branchDraw="ctx.restore();\n const branchFound=betaBranches();ctx.save();for(const b of BETA_BRANCHES){const wp=nearestWalkable(b[1],b[2]),x=(wp.x-viewLeft)*TILE,y=(wp.y-viewTop)*TILE;if(x<-30||y<-30||x>cw+30||y>ch+30)continue;drawBetaBranch(branchFound.has(b[0]),x,y)}ctx.restore();\n ctx.save();const px=cw/2,py=ch/2;";
+  s=rep(s,playerHook,branchDraw,'native branch draw');
+
+  const miniOld="mctx.beginPath();mctx.arc(x,y,n>1?9:3.5,0,Math.PI*2);mctx.fillStyle=n>1?'#1f6d51':'#70463b';mctx.fill();if(n>1){mctx.fillStyle='#fff';mctx.font='900 9px sans-serif';mctx.textAlign='center';mctx.textBaseline='middle';mctx.fillText(String(n),x,y+.5)}";
+  const miniNew="mctx.beginPath();mctx.arc(x,y,8,0,Math.PI*2);mctx.fillStyle='#1f6d51';mctx.fill();mctx.fillStyle='#fff';mctx.font='900 9px sans-serif';mctx.textAlign='center';mctx.textBaseline='middle';mctx.fillText(String(n),x,y+.5)";
+  s=rep(s,miniOld,miniNew,'minimap marker unify');
+
+  s=rep(s,
+    "refresh(){render()},\n    revision:'r9'",
+    "refresh(){render()},\n    nearestWalkableForBase(x,y){const p=nearestWalkable(Number(x),Number(y));return p?{x:p.x,y:p.y}:null},\n    revision:'beta2-feedback-1'",
+    'map API walkable helper');
+  write(p,s);
+}
+
+console.log('Beta2 feedback fixes applied.');
