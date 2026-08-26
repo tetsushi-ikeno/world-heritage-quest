@@ -14,3 +14,4 @@ const rep=(s,a,b,l)=>{if(!s.includes(a))throw new Error(l+' anchor not found');r
  fs.writeFileSync(p,s);
 }
 console.log('Beta2 final center theme and HUD progress applied');
+// trigger: 2026-08-26 beta2 finalization
