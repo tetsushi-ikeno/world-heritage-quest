@@ -7,7 +7,7 @@
   const source=await fetch('area-map-game.html?source=beta2',{cache:'no-store'}).then(r=>r.text());
   const must=(text,from,to,label)=>{if(!text.includes(from))throw new Error(label+' injection point not found');return text.replace(from,to)};
   let patched=source
-    .replace('japan-6x-map-lab.html?game=1','japan-map-beta-loader.html?game=1&rev=beta2&nocache='+Date.now())
+    .replace('japan-6x-map-lab.html?game=1','japan-map-beta-loader.html?game=1&rev=r20260827-03&nocache='+Date.now())
     .replace("{id:21,slug:'okinoshima',name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:26,y:50,type:'文化'}","{id:21,slug:'okinoshima',name:'「神宿る島」宗像・沖ノ島と関連遺産群',x:24,y:49,type:'文化'}")
     .replace("{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:23,y:54,type:'文化'}","{id:22,slug:'hidden-christian',name:'長崎と天草地方の潜伏キリシタン関連遺産',x:24,y:54,type:'文化'}")
     .replace('.centerMarker{position:absolute','#centerLayer{display:none!important}.centerMarker{position:absolute');
