@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T06:19:33.359Z",
+  "generatedAt": "2026-08-27T08:56:29.096Z",
   "source": "Wikimedia Commons",
   "policy": {
     "selection": [
@@ -1111,7 +1111,7 @@
           "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Haiden_of_Munakata_Grand_Shrine_%28Nakatsu_Shrine%29.JPG/1920px-Haiden_of_Munakata_Grand_Shrine_%28Nakatsu_Shrine%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
           "originalWidth": 3264,
           "originalHeight": 2448,
-          "description": "​宗像大社(中津宮)の拝殿",
+          "description": "宗像大社(中津宮)の拝殿",
           "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
         }
       ]
@@ -1473,16 +1473,16 @@
           "role": "scale",
           "roleJa": "② スケールや美しさに驚く景観",
           "file": "02.jpg",
-          "commonsTitle": "File:Shari bus Ki022C 0351view.JPG",
+          "commonsTitle": "File:Oshinkoshin02.JPG",
           "author": "221.20 (talk)",
           "license": "Public domain",
           "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Shari_bus_Ki022C_0351view.JPG",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Shari_bus_Ki022C_0351view.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Shari_bus_Ki022C_0351view.JPG/1920px-Shari_bus_Ki022C_0351view.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Oshinkoshin02.JPG",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/b/be/Oshinkoshin02.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Oshinkoshin02.JPG/1920px-Oshinkoshin02.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
           "originalWidth": 2048,
           "originalHeight": 1536,
-          "description": "\"Shiretoko Airport Liner\" Memanbetsu Airport to Shiretoko National Park",
+          "description": "Charassenai River and riparian forest — in Shari, Shiretoko National Park, Hokkaido prefecture, Japan.\nThe source of downstream Oshinkoshin Falls.",
           "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
         },
         {
@@ -1507,7 +1507,7 @@
   ],
   "qualityCheck": {
     "status": "final-reviewed",
-    "checkedAt": "2026-08-27T06:19:33.359Z",
+    "checkedAt": "2026-08-27T08:56:29.096Z",
     "criteria": [
       "遺産または正式な構成資産を直接写していること",
       "3枚が代表景観・スケール・別側面として過度に重複しないこと",
