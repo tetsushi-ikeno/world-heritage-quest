@@ -33,7 +33,7 @@ if(!Array.isArray(branchQuiz.quizzes)||branchQuiz.quizzes.length!==19)fail('支�
 const quizIds=new Set(branchQuiz.quizzes.map(x=>x.branchId));
 for(const b of branches.sites)if(!quizIds.has(b.id))fail(`支部クイズ未割当: ${b.id}`);
 for(const q of branchQuiz.quizzes){if(!q.question||!Array.isArray(q.choices)||q.choices.length!==4||!Number.isInteger(q.answer)||q.answer<0||q.answer>3)fail(`支部クイズ不正: ${q.branchId}`)}
-ok('Beta2 支部19件＋画像＋1問クイズ');
+ok('Beta2 ピラミトンスポット19件＋画像＋1問クイズ');
 
 const runtime=['area-map-game.html','research-center-game.html','beta.html','beta2.html','area-map-beta-loader.html','research-center-beta2.html','heritage-discovery-effect-lab.html'];
 for(const file of runtime){const html=read(file);const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());for(const js of scripts){try{new Function(js)}catch(e){fail(`${file} のJavaScript構文エラー: ${e.message}`)}}ok(`${file} JavaScript構文`)}
@@ -50,7 +50,7 @@ globalThis.fetch=async()=>({text:async()=>baseMap});
 globalThis.document={body:{textContent:''},open(){generated=''},write(v){generated+=String(v)},close(){}};
 try{await eval(loaderJs)}finally{globalThis.fetch=oldFetch;globalThis.document=oldDocument}
 if(!generated)fail('Beta2 area loaderがHTMLを生成しませんでした');
-for(const marker of ['id="branchLayer"','id="branchDiscover"','id="branchQuizModal"','class="heritageIris"','支部 0 / 19'])if(!generated.includes(marker))fail(`Beta2生成HTMLに必要要素がありません: ${marker}`);
+for(const marker of ['id="branchLayer"','id="branchDiscover"','id="branchQuizModal"','class="heritageIris"','ピラミトンスポット 0 / 19'])if(!generated.includes(marker))fail(`Beta2生成HTMLに必要要素がありません: ${marker}`);
 const generatedScripts=[...generated.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
 for(const js of generatedScripts){try{new Function(js)}catch(e){fail(`Beta2生成全国マップのJavaScript構文エラー: ${e.message}`)}}
 ok('Beta2 area loader差し替え＋生成HTML構文');
