@@ -2,7 +2,7 @@
 
 ゲーム内で使用する世界遺産写真の出典・作者・ライセンス一覧です。画像はWikimedia Commonsから取得し、各ファイルページで再利用条件を確認しています。
 
-最終品質確認: 2026-08-26T13:46:55.184Z
+最終品質確認: 2026-08-27T02:25:58.128Z
 
 ## 法隆寺地域の仏教建造物
 
@@ -162,7 +162,7 @@
 ### 3. ③ 近景・内部・自然など別の側面
 
 - ファイル: `docs/assets/heritage/hiroshima/03.jpg`
-- Commons: [File:原爆ドーム - panoramio (11).jpg](https://commons.wikimedia.org/wiki/File:%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_(11).jpg)
+- Commons: [File:原爆ドーム - panoramio (16).jpg](https://commons.wikimedia.org/wiki/File:%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_(16).jpg)
 - 作者: kanesue
 - ライセンス: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)
 

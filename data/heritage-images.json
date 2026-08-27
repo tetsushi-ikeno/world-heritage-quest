@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T13:46:55.182Z",
+  "generatedAt": "2026-08-27T02:25:58.126Z",
   "source": "Wikimedia Commons",
   "policy": {
     "selection": [
@@ -384,13 +384,13 @@
           "role": "detail",
           "roleJa": "③ 近景・内部・自然など別の側面",
           "file": "03.jpg",
-          "commonsTitle": "File:原爆ドーム - panoramio (11).jpg",
+          "commonsTitle": "File:原爆ドーム - panoramio (16).jpg",
           "author": "kanesue",
           "license": "CC BY 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_(11).jpg",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/4/4c/%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_%2811%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_%2811%29.jpg/1920px-%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_%2811%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_(16).jpg",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_%2816%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_%2816%29.jpg/1920px-%E5%8E%9F%E7%88%86%E3%83%89%E3%83%BC%E3%83%A0_-_panoramio_%2816%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
           "originalWidth": 3648,
           "originalHeight": 2736,
           "description": "原爆ドーム",
@@ -1507,7 +1507,7 @@
   ],
   "qualityCheck": {
     "status": "final-reviewed",
-    "checkedAt": "2026-08-26T13:46:55.182Z",
+    "checkedAt": "2026-08-27T02:25:58.126Z",
     "criteria": [
       "遺産または正式な構成資産を直接写していること",
       "3枚が代表景観・スケール・別側面として過度に重複しないこと",
