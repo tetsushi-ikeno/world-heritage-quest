@@ -54,6 +54,21 @@ for(const marker of ['id="branchLayer"','id="branchDiscover"','id="branchQuizMod
 const generatedScripts=[...generated.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
 for(const js of generatedScripts){try{new Function(js)}catch(e){fail(`Beta2生成全国マップのJavaScript構文エラー: ${e.message}`)}}
 ok('Beta2 area loader差し替え＋生成HTML構文');
+// Beta2 japan map loaderも実行し、WHQMapAPIまで生成されることを検証する。
+const japanLoaderHtml=read('japan-map-beta-loader.html');
+const japanLoaderJs=[...japanLoaderHtml.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).find(s=>s.trim());
+const japanBase=read('japan-6x-map-lab.html');
+let generatedJapan='';
+globalThis.fetch=async()=>({text:async()=>japanBase});
+globalThis.document={body:{textContent:''},open(){generatedJapan=''},write(v){generatedJapan+=String(v)},close(){}};
+try{await eval(japanLoaderJs)}finally{globalThis.fetch=oldFetch;globalThis.document=oldDocument}
+if(!generatedJapan)fail('Beta2 japan map loaderがHTMLを生成しませんでした');
+if(!generatedJapan.includes('window.WHQMapAPI='))fail('Beta2生成全国マップにWHQMapAPIがありません');
+if(!generatedJapan.includes("revision:'beta2-map-visual-r03'"))fail('Beta2生成全国マップのrevisionが不一致です');
+const generatedJapanScripts=[...generatedJapan.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
+for(const js of generatedJapanScripts){try{new Function(js)}catch(e){fail(`Beta2生成日本地図のJavaScript構文エラー: ${e.message}`)}}
+ok('Beta2 japan map loader差し替え＋WHQMapAPI生成');
+
 
 for(const file of ['japan-6x-map-lab.html','tutorial-lab-final.html'])if(!fs.existsSync(path.join(root,file)))fail(`承認済み基準ファイルなし: ${file}`);
 ok('承認済み6倍マップ / チュートリアル基準ファイルを維持');
