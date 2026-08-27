@@ -2,7 +2,7 @@
 
 ゲーム内で使用する世界遺産写真の出典・作者・ライセンス一覧です。画像はWikimedia Commonsから取得し、各ファイルページで再利用条件を確認しています。
 
-最終品質確認: 2026-08-27T06:03:44.707Z
+最終品質確認: 2026-08-27T06:19:33.360Z
 
 ## 法隆寺地域の仏教建造物
 
@@ -124,7 +124,7 @@
 ### 1. ① 一目でその遺産と分かる代表景観
 
 - ファイル: `docs/assets/heritage/shirakawago/01.jpg`
-- Commons: [File:Gassho Houses at Shirakawa 白川鄉合掌屋 - panoramio.jpg](https://commons.wikimedia.org/wiki/File:Gassho_Houses_at_Shirakawa_%E7%99%BD%E5%B7%9D%E9%84%89%E5%90%88%E6%8E%8C%E5%B1%8B_-_panoramio.jpg)
+- Commons: [File:Shirakawa Gassho-style Houses 白川合掌屋 - panoramio.jpg](https://commons.wikimedia.org/wiki/File:Shirakawa_Gassho-style_Houses_%E7%99%BD%E5%B7%9D%E5%90%88%E6%8E%8C%E5%B1%8B_-_panoramio.jpg)
 - 作者: lienyuan lee
 - ライセンス: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)
 
@@ -620,7 +620,7 @@
 ### 2. ② スケールや美しさに驚く景観
 
 - ファイル: `docs/assets/heritage/shiretoko/02.jpg`
-- Commons: [File:Oshinkoshin02.JPG](https://commons.wikimedia.org/wiki/File:Oshinkoshin02.JPG)
+- Commons: [File:Shari bus Ki022C 0351view.JPG](https://commons.wikimedia.org/wiki/File:Shari_bus_Ki022C_0351view.JPG)
 - 作者: 221.20 (talk)
 - ライセンス: [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain)
 
