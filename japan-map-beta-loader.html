@@ -38,7 +38,7 @@
   patched=patched.replace(miniOld,"mctx.beginPath();mctx.arc(x,y,8,0,Math.PI*2);mctx.fillStyle='#1f6d51';mctx.fill();mctx.fillStyle='#fff';mctx.font='900 9px sans-serif';mctx.textAlign='center';mctx.textBaseline='middle';mctx.fillText(String(n),x,y+.5)");
   patched=patched.replace("const pp=miniProject((player.x+.5)/SCALE,(player.y+.5)/SCALE);mctx.beginPath();mctx.arc(pp.x,pp.y,5,0,Math.PI*2);mctx.fillStyle='#fff';mctx.fill();mctx.lineWidth=2.5;mctx.strokeStyle='#1f3d70';mctx.stroke();mctx.beginPath();mctx.arc(pp.x,pp.y,1.8,0,Math.PI*2);mctx.fillStyle='#1f3d70';mctx.fill()","const pp=miniProject((player.x+.5)/SCALE,(player.y+.5)/SCALE),pulse=betaWalkPhase?4.8:3.1;mctx.beginPath();mctx.arc(pp.x,pp.y,7.2,0,Math.PI*2);mctx.fillStyle='#fff';mctx.fill();mctx.lineWidth=1.5;mctx.strokeStyle='rgba(31,93,173,.45)';mctx.stroke();mctx.beginPath();mctx.arc(pp.x,pp.y,pulse,0,Math.PI*2);mctx.fillStyle='#1976d2';mctx.fill()");
 
-  const hook="window.addEventListener('resize',resize);requestAnimationFrame(resize);renderMini();setInterval(()=>{betaWalkPhase=betaWalkPhase?0:1;if(document.visibilityState==='visible')render()},340);";
+  const hook="window.addEventListener('resize',resize);requestAnimationFrame(resize);renderMini();";
   if(!patched.includes(hook))throw new Error('map API injection point not found');
   patched=patched.replace(hook,`window.WHQMapAPI={
     getPosition(){return{x:player.x,y:player.y}},
@@ -55,8 +55,8 @@
     refresh(){render()},
     nearestWalkableForBase(x,y){const p=nearestWalkable(Number(x),Number(y));return p?{x:p.x,y:p.y}:null},
     nearestLandForBase(x,y){const p=betaNearestLandBase(Number(x),Number(y));return p?{x:p.x,y:p.y}:null},
-    revision:'beta2-map-visual-r02'
-  };${hook}`);
+    revision:'beta2-map-visual-r03'
+  };${hook}setInterval(()=>{betaWalkPhase=betaWalkPhase?0:1;if(document.visibilityState==='visible')render()},340);`);
   document.open();document.write(patched);document.close();
 })().catch(err=>{document.body.textContent='全国マップの読み込みに失敗しました: '+err.message});
 </script>
