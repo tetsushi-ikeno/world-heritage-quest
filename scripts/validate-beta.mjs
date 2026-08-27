@@ -35,10 +35,9 @@ for(const b of branches.sites)if(!quizIds.has(b.id))fail(`支部クイズ未割�
 for(const q of branchQuiz.quizzes){if(!q.question||!Array.isArray(q.choices)||q.choices.length!==4||!Number.isInteger(q.answer)||q.answer<0||q.answer>3)fail(`支部クイズ不正: ${q.branchId}`)}
 ok('Beta2 ピラミトンスポット19件＋画像＋1問クイズ');
 
-const runtime=['area-map-game.html','research-center-game.html','beta.html','beta2.html','area-map-beta-loader.html','research-center-beta2.html','heritage-discovery-effect-lab.html'];
+const runtime=['area-map-game.html','research-center-game.html','beta.html','beta2.html','area-map-beta-loader.html','area-map-beta2-wrapper.html','research-center-beta2.html','research-center-beta2-wrapper.html','japan-map-r05-wrapper.html','heritage-discovery-effect-lab.html'];
 for(const file of runtime){const html=read(file);const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());for(const js of scripts){try{new Function(js)}catch(e){fail(`${file} のJavaScript構文エラー: ${e.message}`)}}ok(`${file} JavaScript構文`)}
-try{new Function(read('beta-save.js'))}catch(e){fail(`beta-save.js のJavaScript構文エラー: ${e.message}`)}
-ok('beta-save.js 構文');
+for(const file of ['beta-save.js','beta2-r05-map-hotfix.js','piramiton-svg.js']){try{new Function(read(file))}catch(e){fail(`${file} のJavaScript構文エラー: ${e.message}`)}ok(`${file} 構文`)}
 
 // Beta2 area loaderをNode上で実行し、文字列差し替え後のHTMLまで検証する。
 const loaderHtml=read('area-map-beta-loader.html');
@@ -54,6 +53,7 @@ for(const marker of ['id="branchLayer"','id="branchDiscover"','id="branchQuizMod
 const generatedScripts=[...generated.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
 for(const js of generatedScripts){try{new Function(js)}catch(e){fail(`Beta2生成全国マップのJavaScript構文エラー: ${e.message}`)}}
 ok('Beta2 area loader差し替え＋生成HTML構文');
+
 // Beta2 japan map loaderも実行し、WHQMapAPIまで生成されることを検証する。
 const japanLoaderHtml=read('japan-map-beta-loader.html');
 const japanLoaderJs=[...japanLoaderHtml.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).find(s=>s.trim());
@@ -68,7 +68,6 @@ if(!generatedJapan.includes("revision:'beta2-map-visual-r03'"))fail('Beta2生成
 const generatedJapanScripts=[...generatedJapan.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(s=>s.trim());
 for(const js of generatedJapanScripts){try{new Function(js)}catch(e){fail(`Beta2生成日本地図のJavaScript構文エラー: ${e.message}`)}}
 ok('Beta2 japan map loader差し替え＋WHQMapAPI生成');
-
 
 for(const file of ['japan-6x-map-lab.html','tutorial-lab-final.html'])if(!fs.existsSync(path.join(root,file)))fail(`承認済み基準ファイルなし: ${file}`);
 ok('承認済み6倍マップ / チュートリアル基準ファイルを維持');
