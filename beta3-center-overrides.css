@@ -178,3 +178,6 @@ body.site-yakushima .obj.display:after{
   caret-color:transparent!important;
 }
 .joy::selection,.joy *::selection{background:transparent!important}
+
+/* r20260829-05 unified overlay */
+.main{position:relative!important;display:block!important;min-height:0!important;overflow:hidden!important}.roomWrap{position:absolute!important;inset:0!important;width:100%!important;height:100%!important}.side{position:absolute!important;right:14px!important;bottom:14px!important;width:184px!important;height:auto!important;z-index:30!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:8px!important;padding:0!important;border:0!important;background:transparent!important;pointer-events:none!important}.side>div,.side .joy{pointer-events:auto!important}.side>div:first-child{width:100%!important}.action{min-height:54px!important;width:100%!important}.target{background:#fffdf2e8!important;border-radius:999px!important;padding:4px 8px!important;margin-top:5px!important}.joy{margin:0!important;align-self:auto!important}.hint{display:none!important}@media(max-width:600px){.side{right:10px!important;bottom:10px!important;width:126px!important}.joy{width:108px!important;height:108px!important}.knob{width:46px!important;height:46px!important}.action{min-height:44px!important;font-size:13px!important}.target{font-size:9px!important}}
