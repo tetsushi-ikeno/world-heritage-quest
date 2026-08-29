@@ -2,7 +2,7 @@
 
 ゲーム内で使用する世界遺産写真の出典・作者・ライセンス一覧です。画像はWikimedia Commonsから取得し、各ファイルページで再利用条件を確認しています。
 
-最終品質確認: 2026-08-29T08:30:30.250Z
+最終品質確認: 2026-08-29T09:00:19.598Z
 
 ## 法隆寺地域の仏教建造物
 
@@ -247,7 +247,7 @@
 ### 2. ② スケールや美しさに驚く景観
 
 - ファイル: `docs/assets/heritage/ryukyu/02.jpg`
-- Commons: [File:Tamaudun07bs4272.jpg](https://commons.wikimedia.org/wiki/File:Tamaudun07bs4272.jpg)
+- Commons: [File:Tamaudun05bs3200.jpg](https://commons.wikimedia.org/wiki/File:Tamaudun05bs3200.jpg)
 - 作者: 663highland
 - ライセンス: [CC BY 2.5](https://creativecommons.org/licenses/by/2.5)
 
@@ -620,7 +620,7 @@
 ### 2. ② スケールや美しさに驚く景観
 
 - ファイル: `docs/assets/heritage/shiretoko/02.jpg`
-- Commons: [File:Shari bus Ki200F 0316view.JPG](https://commons.wikimedia.org/wiki/File:Shari_bus_Ki200F_0316view.JPG)
+- Commons: [File:Oshinkoshin02.JPG](https://commons.wikimedia.org/wiki/File:Oshinkoshin02.JPG)
 - 作者: 221.20 (talk)
 - ライセンス: [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain)
 
