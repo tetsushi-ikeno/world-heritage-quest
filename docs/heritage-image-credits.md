@@ -2,7 +2,7 @@
 
 ゲーム内で使用する世界遺産写真の出典・作者・ライセンス一覧です。画像はWikimedia Commonsから取得し、各ファイルページで再利用条件を確認しています。
 
-最終品質確認: 2026-08-29T01:44:05.410Z
+最終品質確認: 2026-08-29T08:30:30.250Z
 
 ## 法隆寺地域の仏教建造物
 
@@ -124,7 +124,7 @@
 ### 1. ① 一目でその遺産と分かる代表景観
 
 - ファイル: `docs/assets/heritage/shirakawago/01.jpg`
-- Commons: [File:Gassho Houses at Shirakawa 白川鄉合掌屋 - panoramio.jpg](https://commons.wikimedia.org/wiki/File:Gassho_Houses_at_Shirakawa_%E7%99%BD%E5%B7%9D%E9%84%89%E5%90%88%E6%8E%8C%E5%B1%8B_-_panoramio.jpg)
+- Commons: [File:Shirakawa Gassho-style Houses 白川合掌屋 - panoramio.jpg](https://commons.wikimedia.org/wiki/File:Shirakawa_Gassho-style_Houses_%E7%99%BD%E5%B7%9D%E5%90%88%E6%8E%8C%E5%B1%8B_-_panoramio.jpg)
 - 作者: lienyuan lee
 - ライセンス: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)
 
@@ -597,9 +597,9 @@
 ### 2. ② スケールや美しさに驚く景観
 
 - ファイル: `docs/assets/heritage/asuka-fujiwara/02.jpg`
-- Commons: [File:Ishibutai-kofun Asuka Nara pref05n4592.jpg](https://commons.wikimedia.org/wiki/File:Ishibutai-kofun_Asuka_Nara_pref05n4592.jpg)
-- 作者: 663highland
-- ライセンス: [CC BY 2.5](https://creativecommons.org/licenses/by/2.5)
+- Commons: [File:Public viewing of investigation World Heritage by Asuka - Fujiwara 03.jpg](https://commons.wikimedia.org/wiki/File:Public_viewing_of_investigation_World_Heritage_by_Asuka_-_Fujiwara_03.jpg)
+- 作者: 番記者
+- ライセンス: [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en)
 
 ### 3. ③ 近景・内部・自然など別の側面
 
@@ -620,7 +620,7 @@
 ### 2. ② スケールや美しさに驚く景観
 
 - ファイル: `docs/assets/heritage/shiretoko/02.jpg`
-- Commons: [File:Oshinkoshin02.JPG](https://commons.wikimedia.org/wiki/File:Oshinkoshin02.JPG)
+- Commons: [File:Shari bus Ki200F 0316view.JPG](https://commons.wikimedia.org/wiki/File:Shari_bus_Ki200F_0316view.JPG)
 - 作者: 221.20 (talk)
 - ライセンス: [Public domain](https://commons.wikimedia.org/wiki/Commons:Public_domain)
 
