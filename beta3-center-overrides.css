@@ -1,0 +1,117 @@
+/* Beta3 r01 — additive overrides only.
+   Baseline visuals come from Beta2 r05. Do not replace confirmed Beta2 assets here. */
+
+.obj.researcher{
+  /* Beta2 r04/r05 researcher is intentionally inherited unchanged. */
+}
+
+.badge{
+  appearance:none;
+  -webkit-appearance:none;
+  padding:0;
+  cursor:pointer;
+  touch-action:manipulation;
+  pointer-events:auto!important;
+  min-width:28px;
+  min-height:28px;
+  width:28px!important;
+  height:28px!important;
+  right:-10px!important;
+  top:-12px!important;
+  font-size:15px!important;
+  line-height:1;
+  box-shadow:0 2px 5px #0004;
+}
+.badge.show:active{transform:scale(.9)}
+.badge.done{cursor:default}
+
+/* The exhibit occupies a true 2x2-cell visual footprint.
+   It keeps the Beta2 miniature/pedestal language, then swaps only the miniature motif per site. */
+.obj.display{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:calc(var(--cell)*2)!important;
+  height:calc(var(--cell)*2)!important;
+  transform:translate(-25%,-25%)!important;
+  overflow:visible!important;
+  z-index:4!important;
+  pointer-events:auto!important;
+  filter:drop-shadow(0 7px 4px #24180f66)!important;
+}
+.obj.display:before{
+  content:''!important;
+  position:absolute!important;
+  left:6%!important;
+  right:6%!important;
+  bottom:4%!important;
+  height:20%!important;
+  background:
+    linear-gradient(#d5b57b 0 0) 50% 13%/90% 18% no-repeat,
+    linear-gradient(#9b744b,#6d4b31)!important;
+  border:3px solid #493322!important;
+  border-radius:4px!important;
+  box-shadow:inset 0 4px #e3c58b,0 3px 0 #3f2b20!important;
+}
+.obj.display:after{
+  content:''!important;
+  position:absolute!important;
+  left:9%!important;
+  top:5%!important;
+  width:82%!important;
+  height:71%!important;
+  clip-path:none!important;
+}
+
+/* Himeji: layered white keep, dark roofs, stone base. */
+body.site-himeji .obj.display:after{
+  background:
+    linear-gradient(155deg,transparent 0 44%,#4b4b4b 45% 53%,transparent 54%) 50% 2%/76% 28% no-repeat,
+    linear-gradient(205deg,transparent 0 44%,#4b4b4b 45% 53%,transparent 54%) 50% 2%/76% 28% no-repeat,
+    linear-gradient(#faf8ef 0 0) 50% 31%/38% 22% no-repeat,
+    linear-gradient(#4a4a4a 0 0) 50% 27%/54% 8% no-repeat,
+    linear-gradient(#f4f1e7 0 0) 50% 50%/54% 25% no-repeat,
+    linear-gradient(#454545 0 0) 50% 45%/70% 9% no-repeat,
+    linear-gradient(#ebe5d7 0 0) 50% 69%/68% 25% no-repeat,
+    repeating-linear-gradient(90deg,#27313d 0 4%,transparent 4% 15%) 50% 62%/55% 10% no-repeat,
+    linear-gradient(#817767 0 0) 50% 91%/86% 13% no-repeat!important;
+  filter:drop-shadow(0 3px 0 #584536);
+}
+
+/* Shirakawa-go: steep thatched roof with warm timber body and snowy ground. */
+body.site-shirakawago .obj.display:after{
+  background:
+    linear-gradient(63deg,transparent 0 47%,#6b5036 48% 56%,transparent 57%) 50% 2%/84% 68% no-repeat,
+    linear-gradient(117deg,transparent 0 47%,#6b5036 48% 56%,transparent 57%) 50% 2%/84% 68% no-repeat,
+    linear-gradient(63deg,transparent 0 49%,#b99a67 50% 58%,transparent 59%) 50% 6%/70% 57% no-repeat,
+    linear-gradient(117deg,transparent 0 49%,#b99a67 50% 58%,transparent 59%) 50% 6%/70% 57% no-repeat,
+    linear-gradient(#c79a63 0 0) 50% 69%/52% 30% no-repeat,
+    repeating-linear-gradient(90deg,#493425 0 7%,transparent 7% 22%) 50% 73%/43% 18% no-repeat,
+    linear-gradient(#eef4f5 0 0) 50% 94%/94% 13% no-repeat!important;
+  filter:drop-shadow(0 3px 0 #55422f);
+}
+
+/* Yakushima: giant cedar trunk, layered crown, mossy forest floor. */
+body.site-yakushima .obj.display:after{
+  background:
+    radial-gradient(ellipse at 50% 24%,#2e6138 0 22%,transparent 23%),
+    radial-gradient(ellipse at 32% 36%,#3f7444 0 25%,transparent 26%),
+    radial-gradient(ellipse at 69% 38%,#376b3d 0 26%,transparent 27%),
+    radial-gradient(ellipse at 48% 45%,#4d8150 0 28%,transparent 29%),
+    linear-gradient(90deg,#6b4935 0 24%,#8a6245 25% 65%,#5f402f 66% 100%) 50% 78%/23% 58% no-repeat,
+    radial-gradient(ellipse at 50% 95%,#4f7c48 0 48%,transparent 49%),
+    linear-gradient(#6b995a 0 0) 50% 96%/96% 12% no-repeat!important;
+  filter:drop-shadow(0 3px 0 #3b3527);
+}
+
+/* Keep the alert tappable even when it sits outside the anchor tile. */
+.obj.display .badge{right:0!important;top:0!important;z-index:20!important}
+
+.photoGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.photoGrid img{background:#e8edf2}
+
+@media(max-width:980px) and (orientation:landscape){
+  .badge{min-width:30px;min-height:30px;width:30px!important;height:30px!important}
+  .obj.display{width:calc(var(--cell)*2)!important;height:calc(var(--cell)*2)!important}
+  .photoGrid img{height:100px}
+}
