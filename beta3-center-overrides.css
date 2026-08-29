@@ -166,3 +166,15 @@ body.site-yakushima .obj.display:after{
 @media(max-width:980px) and (orientation:landscape){
   .side{padding-top:8px!important;padding-bottom:8px!important;gap:8px!important}
 }
+
+
+/* Mobile Safari touch guard */
+.joy,.joy *,.knob,.mark{
+  -webkit-user-select:none!important;
+  user-select:none!important;
+  -webkit-touch-callout:none!important;
+  touch-action:none!important;
+  -webkit-user-drag:none!important;
+  caret-color:transparent!important;
+}
+.joy::selection,.joy *::selection{background:transparent!important}
