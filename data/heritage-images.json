@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T09:35:01.856Z",
+  "generatedAt": "2026-08-29T09:43:16.268Z",
   "source": "Wikimedia Commons",
   "policy": {
     "selection": [
@@ -1473,16 +1473,16 @@
           "role": "scale",
           "roleJa": "② スケールや美しさに驚く景観",
           "file": "02.jpg",
-          "commonsTitle": "File:Oshinkoshin02.JPG",
+          "commonsTitle": "File:Shari bus Ki200F 0316view.JPG",
           "author": "221.20 (talk)",
           "license": "Public domain",
           "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Oshinkoshin02.JPG",
-          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/b/be/Oshinkoshin02.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Oshinkoshin02.JPG/1920px-Oshinkoshin02.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-          "originalWidth": 2048,
-          "originalHeight": 1536,
-          "description": "Charassenai River and riparian forest — in Shari, Shiretoko National Park, Hokkaido prefecture, Japan.\nThe source of downstream Oshinkoshin Falls.",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Shari_bus_Ki200F_0316view.JPG",
+          "sourceImage": "https://upload.wikimedia.org/wikipedia/commons/5/50/Shari_bus_Ki200F_0316view.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "displayImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Shari_bus_Ki200F_0316view.JPG/1920px-Shari_bus_Ki200F_0316view.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "originalWidth": 3600,
+          "originalHeight": 2700,
+          "description": "\"Shiretoko Airport Liner\" Shiretoko National Park to Memanbetsu Airport",
           "modification": "Wikimedia Commons が生成した長辺約1600pxの表示用サムネイルを保存。創作的な加工なし。"
         },
         {
@@ -1507,7 +1507,7 @@
   ],
   "qualityCheck": {
     "status": "final-reviewed",
-    "checkedAt": "2026-08-29T09:35:01.856Z",
+    "checkedAt": "2026-08-29T09:43:16.268Z",
     "criteria": [
       "遺産または正式な構成資産を直接写していること",
       "3枚が代表景観・スケール・別側面として過度に重複しないこと",
