@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>文化遺産 展示センター配置 Lab</title>
+<style>
+:root{
+  --ink:#2d241e;--brown:#5a3f2e;--brown2:#7b5840;--paper:#f8f4ec;--line:#d9c9b9;
+  --floor:#c89b63;--floorLine:#ad7d4d;--wall:#eadfc9;--wood:#76533b;--gold:#d6aa5d;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif;background:#eee8df;color:var(--ink)}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;min-height:56px;padding:9px 14px;background:#fff;border-bottom:1px solid #d8cec3}
+header b{font-size:17px;margin-right:auto}.rev{font-size:11px;font-weight:900;color:#fff;background:#3c2b21;border:1px solid #d9b36f;border-radius:999px;padding:5px 8px}
+main{max-width:1180px;margin:0 auto;padding:14px}
+.intro{font-size:13px;line-height:1.65;color:#685d54;margin:0 0 10px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 12px;padding:10px;background:#fff;border:1px solid #ddd3c9;border-radius:12px}
+.controls strong{font-size:12px;margin-right:2px}
+.controls button{border:1px solid #bcae9f;background:#fff;color:#3f342d;border-radius:9px;padding:8px 11px;font-weight:900}
+.controls button.active{background:#4b3427;color:#fff;border-color:#d7ab61}
+.note{font-size:11px;color:#74685e;margin-left:auto}
+.labCard{background:#fff;border:1px solid #d8cec3;border-radius:16px;overflow:hidden;box-shadow:0 6px 18px #4c352415}
+.labHead{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#4b3427;color:#fff}
+.labHead b{font-size:14px}.labHead span{font-size:11px;opacity:.85}
+.centerWrap{padding:12px;background:#d7b783;overflow:auto}
+.center{position:relative;width:min(100%,1000px);min-width:760px;aspect-ratio:18/11;margin:auto;background:
+linear-gradient(to bottom,var(--wall) 0 28%,transparent 28%),
+repeating-linear-gradient(90deg,var(--floor) 0 calc(100%/18 - 1px),var(--floorLine) calc(100%/18 - 1px) calc(100%/18));
+box-shadow:inset 0 0 0 5px #5a3e2d,0 14px 28px #2d1c1135}
+.center:before{content:"";position:absolute;left:0;right:0;top:28%;height:9px;background:#7a563c;box-shadow:0 3px 0 #5d3f2d}
+.shelf{position:absolute;top:5%;width:15%;height:15%;background:#805a3f;border:3px solid #533925;box-shadow:inset 0 0 0 3px #9b7356}
+.shelf:before,.shelf:after{content:"";position:absolute;left:8%;right:8%;height:4px;background:#4f3828}
+.shelf:before{top:34%}.shelf:after{top:68%}.shelf.left{left:2.5%}.shelf.right{right:2.5%}
+.window{position:absolute;top:6%;width:4%;height:10%;background:#83b9d5;border:4px solid #76523a;box-shadow:inset 0 0 0 2px #e8d6b8}.window.w1{left:25%}.window.w2{right:25%}
+.frame{position:absolute;top:5.5%;left:50%;transform:translateX(-50%);width:13%;height:9%;background:#f6ead6;border:4px solid #745139;box-shadow:inset 0 0 0 2px #d6bd92}
+.plant{position:absolute;top:17%;width:4.5%;aspect-ratio:1;background:radial-gradient(circle at 50% 35%,#7b923c 0 35%,transparent 36%),radial-gradient(circle at 35% 50%,#708535 0 34%,transparent 35%),radial-gradient(circle at 65% 52%,#879b43 0 34%,transparent 35%)}.plant:after{content:"";position:absolute;left:32%;right:32%;bottom:-22%;height:28%;background:#8b5a36;border-radius:0 0 5px 5px}.plant.p1{left:30%}.plant.p2{right:30%}
+.exhibit{position:absolute;width:22.2%;height:36.36%;top:31%;display:grid;place-items:center}
+.exhibit.e1{left:8.5%}.exhibit.e2{left:38.9%}.exhibit.e3{right:8.5%}
+.art{position:absolute;left:4%;right:4%;top:0;height:82%;display:grid;place-items:center}
+.art svg{width:100%;height:100%;overflow:visible}
+.pedestal{position:absolute;left:7%;right:7%;bottom:0;height:20%;background:#654733;border:3px solid #4b3325;border-radius:5px;box-shadow:0 5px 8px #2e1d1238}
+.pedestal:before{content:"";position:absolute;left:12%;right:12%;top:24%;height:40%;background:#a67d4d;border:2px solid #4f3828;box-shadow:inset 0 3px 0 #d8b66e}
+.player{position:absolute;left:48.3%;top:73%;width:3.5%;height:10%;background:#3157a3;border:3px solid #243b69;box-shadow:0 -9px 0 -5px #f1c49e;filter:drop-shadow(1px 0 #fff) drop-shadow(-1px 0 #fff) drop-shadow(0 1px #fff) drop-shadow(0 -1px #fff)}
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:#fbf8f2;border-top:1px solid #dfd3c6}
+.status div{font-size:11px;line-height:1.5}.status b{display:block;font-size:12px}
+.spec{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.spec div{background:#fff;border:1px solid #ded4ca;border-radius:10px;padding:9px 10px;font-size:11px;line-height:1.5}.spec b{display:block;font-size:12px;margin-bottom:2px}
+@media(max-width:760px){.note{width:100%;margin:0}.spec{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><b>文化遺産 展示センター配置 Lab</b><span class="rev">LAB / r20260830-04</span></header>
+<main>
+<p class="intro">文化遺産展示の基準トーンを、実際の研究センター相当の18×11マス空間で確認するための検証用Labです。展示は4×4マス相当。白縁は細め・滑らか、影は柔らかめを基準にしています。</p>
+<div class="controls">
+<strong>白縁</strong>
+<button data-outline="thin" class="active">細め</button>
+<button data-outline="medium">やや太め</button>
+<strong>影</strong>
+<button data-shadow="soft" class="active">やわらか</button>
+<button data-shadow="strong">やや強め</button>
+<button data-shadow="none">なし</button>
+<span class="note">基準値：白縁 約3px相当 / 角はround / 影は下方向に約5px</span>
+</div>
+
+<section class="labCard">
+<div class="labHead"><b>センター内配置イメージ</b><span>研究センター 18×11マス / 展示 4×4マス相当</span></div>
+<div class="centerWrap"><div class="center">
+<div class="shelf left"></div><div class="shelf right"></div><div class="window w1"></div><div class="window w2"></div><div class="frame"></div><div class="plant p1"></div><div class="plant p2"></div>
+
+<div class="exhibit e1"><div class="art">
+<svg viewBox="0 0 420 280" aria-label="厳島神社">
+<defs><filter id="fx1" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB">
+<feMorphology in="SourceAlpha" operator="dilate" radius="3" result="dilated"/>
+<feFlood flood-color="#fff" result="white"/><feComposite in="white" in2="dilated" operator="in" result="outline"/>
+<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/><feOffset in="blur" dy="5" result="off"/>
+<feFlood flood-color="#2c1b12" flood-opacity=".30" result="shadowColor"/><feComposite in="shadowColor" in2="off" operator="in" result="shadow"/>
+<feMerge><feMergeNode in="shadow"/><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter></defs>
+<g class="fx" filter="url(#fx1)">
+<rect y="214" width="420" height="50" rx="5" fill="#61c2c0"/>
+<path d="M65 58 Q210 76 355 58 L347 75 Q210 90 73 75Z" fill="#315d50"/>
+<path d="M74 73 Q210 88 346 73 L335 96 Q210 105 85 96Z" fill="#e65324"/>
+<rect x="94" y="101" width="232" height="15" rx="2" fill="#e65324"/><rect x="109" y="116" width="202" height="9" fill="#b93a20"/>
+<rect x="121" y="94" width="26" height="132" rx="2" fill="#e85a27"/><rect x="273" y="94" width="26" height="132" rx="2" fill="#e85a27"/>
+<rect x="115" y="90" width="38" height="8" rx="2" fill="#2c2d2b"/><rect x="267" y="90" width="38" height="8" rx="2" fill="#2c2d2b"/>
+<rect x="39" y="199" width="342" height="15" rx="4" fill="#e65324"/>
+</g></svg>
+</div><div class="pedestal"></div></div>
+
+<div class="exhibit e2"><div class="art">
+<svg viewBox="0 0 420 280" aria-label="姫路城">
+<defs><filter id="fx2" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB">
+<feMorphology in="SourceAlpha" operator="dilate" radius="3" result="dilated"/>
+<feFlood flood-color="#fff" result="white"/><feComposite in="white" in2="dilated" operator="in" result="outline"/>
+<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/><feOffset in="blur" dy="5" result="off"/>
+<feFlood flood-color="#2c1b12" flood-opacity=".30" result="shadowColor"/><feComposite in="shadowColor" in2="off" operator="in" result="shadow"/>
+<feMerge><feMergeNode in="shadow"/><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter></defs>
+<g class="fx" filter="url(#fx2)">
+<path d="M88 245 L122 184 H298 L330 245Z" fill="#b8894e"/>
+<g fill="#f8f6ef" stroke="#666a6c" stroke-width="2.2" stroke-linejoin="round">
+<path d="M115 190v-42h190v42z"/><path d="M139 151v-38h142v38z"/><path d="M164 116V82h94v34z"/><path d="M187 83V51h49v32z"/>
+</g>
+<g fill="#73787a">
+<path d="M104 147 Q120 146 134 134 L149 124 Q184 132 210 132 Q237 132 271 124 L286 134 Q300 146 316 147 L299 162 H121Z"/>
+<path d="M126 112 Q140 111 151 101 L163 92 Q188 99 210 99 Q233 99 257 92 L269 101 Q280 111 294 112 L279 126 H141Z"/>
+<path d="M150 81 Q161 80 171 71 L181 64 Q196 69 210 69 Q225 69 240 64 L250 71 Q260 80 271 81 L258 92 H163Z"/>
+<path d="M177 51 Q188 50 195 42 L202 37 Q210 41 219 37 L227 42 Q234 50 245 51 L234 62 H188Z"/>
+</g>
+<g fill="#f8f6ef" stroke="#666a6c" stroke-width="2">
+<path d="M171 148 L210 121 L249 148Z"/><path d="M180 113 L210 91 L240 113Z"/><path d="M192 82 L210 68 L228 82Z"/>
+<path d="M128 190 L151 170 L174 190Z"/><path d="M246 190 L269 170 L292 190Z"/>
+</g>
+<g fill="#606466"><rect x="145" y="166" width="8" height="12"/><rect x="171" y="166" width="8" height="12"/><rect x="240" y="166" width="8" height="12"/><rect x="267" y="166" width="8" height="12"/><rect x="177" y="129" width="8" height="11"/><rect x="235" y="129" width="8" height="11"/><rect x="199" y="96" width="7" height="9"/><rect x="216" y="96" width="7" height="9"/></g>
+<g fill="#d98598"><circle cx="86" cy="226" r="20"/><circle cx="111" cy="233" r="23"/><circle cx="312" cy="232" r="24"/><circle cx="336" cy="225" r="19"/></g>
+</g></svg>
+</div><div class="pedestal"></div></div>
+
+<div class="exhibit e3"><div class="art">
+<svg viewBox="0 0 420 280" aria-label="法隆寺">
+<defs><filter id="fx3" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB">
+<feMorphology in="SourceAlpha" operator="dilate" radius="3" result="dilated"/>
+<feFlood flood-color="#fff" result="white"/><feComposite in="white" in2="dilated" operator="in" result="outline"/>
+<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/><feOffset in="blur" dy="5" result="off"/>
+<feFlood flood-color="#2c1b12" flood-opacity=".30" result="shadowColor"/><feComposite in="shadowColor" in2="off" operator="in" result="shadow"/>
+<feMerge><feMergeNode in="shadow"/><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter></defs>
+<g class="fx" filter="url(#fx3)">
+<g transform="translate(42,20)"><rect x="72" y="174" width="12" height="52" fill="#8a4d31"/>
+<path d="M16 170h122l-18 16H34zM28 139h98l-15 14H43zM39 110h77l-13 13H52zM49 83h58L97 95H59zM58 58h42L92 69H66z" fill="#3b4543"/>
+<rect x="40" y="151" width="74" height="22" fill="#bd673e"/><rect x="49" y="123" width="56" height="18" fill="#bd673e"/><rect x="58" y="96" width="40" height="16" fill="#bd673e"/><rect x="65" y="70" width="27" height="15" fill="#bd673e"/><rect x="77" y="36" width="3" height="24" fill="#4a4c49"/><circle cx="78.5" cy="34" r="4" fill="#d7a245"/></g>
+<g transform="translate(206,88)"><rect x="28" y="92" width="130" height="45" fill="#b95f3c"/><rect x="43" y="104" width="10" height="33" fill="#704132"/><rect x="75" y="104" width="10" height="33" fill="#704132"/><rect x="107" y="104" width="10" height="33" fill="#704132"/><rect x="139" y="104" width="10" height="33" fill="#704132"/><path d="M8 90h168l-26 20H34z" fill="#3c4544"/><path d="M40 57h107l-18 18H58z" fill="#46504e"/><rect x="60" y="72" width="68" height="20" fill="#b95f3c"/></g>
+</g></svg>
+</div><div class="pedestal"></div></div>
+
+<div class="player"></div>
+</div></div>
+<div class="status">
+<div><b>センター</b>18×11マス</div><div><b>展示物</b>4×4マス相当</div><div><b>主人公</b>1マス相当</div>
+</div>
+</section>
+
+<div class="spec">
+<div><b>トーン</b>フラット。写真風・3D風にはしない。</div>
+<div><b>白縁</b>細め。SVG形状から膨張させた滑らかな輪郭。</div>
+<div><b>影</b>下方向の柔らかい落ち影。展示と床を分離するためだけに使用。</div>
+<div><b>情報量</b>4×4表示で特徴が読める形を優先。細密さより識別性。</div>
+</div>
+</main>
+<script>
+const buttons=[...document.querySelectorAll('.controls button')];
+function setOutline(mode){
+  document.querySelectorAll('feMorphology').forEach(x=>x.setAttribute('radius',mode==='thin'?'3':'5'));
+  buttons.filter(b=>b.dataset.outline).forEach(b=>b.classList.toggle('active',b.dataset.outline===mode));
+}
+function setShadow(mode){
+  document.querySelectorAll('feGaussianBlur').forEach(x=>x.setAttribute('stdDeviation',mode==='strong'?'4':mode==='none'?'0':'3'));
+  document.querySelectorAll('feOffset').forEach(x=>x.setAttribute('dy',mode==='strong'?'7':mode==='none'?'0':'5'));
+  document.querySelectorAll('feFlood[flood-opacity]').forEach(x=>x.setAttribute('flood-opacity',mode==='none'?'0':mode==='strong'?'.38':'.30'));
+  buttons.filter(b=>b.dataset.shadow).forEach(b=>b.classList.toggle('active',b.dataset.shadow===mode));
+}
+buttons.forEach(b=>b.onclick=()=>{if(b.dataset.outline)setOutline(b.dataset.outline);if(b.dataset.shadow)setShadow(b.dataset.shadow)});
+</script>
+</body></html>
