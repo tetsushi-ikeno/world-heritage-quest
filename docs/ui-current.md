@@ -19,6 +19,10 @@
 - **実装:** `research-center-beta3.html`
 - **追加UI:** `beta3-center-overrides.css`
 - **固定対象:** 主人公表示 / 操作スティック / アクションUI / センター内基本レイアウト
+- **主人公の正本:** 茶色い帽子・ベージュ系の服のドット風主人公。`beta2-center-theme-r04.css` の `.player` / `.player:before` / `.player:after` を正本とする。
+- **操作スティックの正本:** `research-center-beta3.html` の `.joy` / `.knob` / `.mark` と `beta3-center-overrides.css` の現行サイズ指定。
+- **実効CSSチェーン:** `beta2-center-theme.css` → `beta2-center-theme-r04.css` → `beta2-center-theme-r05.css` → `beta3-center-overrides.css`
+- **禁止:** 青い単純矩形など、正本と異なる代替主人公を手作業で再構成しない。
 
 ピラミトン本部など、センターと操作UIを共通化する画面ではこのUIを参照する。
 
