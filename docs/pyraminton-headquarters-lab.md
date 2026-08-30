@@ -17,4 +17,10 @@
 - 各エリア内は概ね北に位置する遺産ほど上に配置する。
 - 主人公・操作スティックは研究センター Beta3 の最新UI言語に合わせる。
 
-Current revision: `HQ LAB / r20260830-04`
+Current revision: `HQ LAB / r20260830-05`
+
+
+## UI正本レジストリ
+- 正本判定は `docs/ui-current.md` / `data/ui-current.json` のみを使用する。
+- 本部の操作UI BASEは **Beta3 センター確認Lab r20260829-07**。
+- ファイル名や日付から「最新」を推測して差し替えない。
