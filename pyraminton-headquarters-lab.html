@@ -23,7 +23,7 @@ button{font:inherit}.game{height:100%;display:grid;grid-template-rows:52px 1fr}.
 .cross.e{left:0;right:180px;top:230px;height:100px}
 .sign{position:absolute;width:150px;min-height:74px;background:#ecd9a9;color:#50361f;border:5px solid #76502e;border-radius:4px;box-shadow:0 5px 6px #38231655;padding:9px 8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:1000;line-height:1.25;z-index:10}
 .sign:after{content:"";position:absolute;left:50%;bottom:-28px;width:8px;height:28px;background:#76502e;transform:translateX(-50%)}
-.sign.graphic{width:170px;height:150px;min-height:0;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;display:block;pointer-events:none;overflow:visible}
+.sign.graphic{width:152px;height:152px;min-height:0;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;display:block;pointer-events:none;overflow:visible}
 .sign.graphic:after{display:none}
 .sign.graphic img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;pointer-events:none}
 .aisle{position:absolute;left:190px;top:82px;bottom:46px;width:104px;background:#d9b278;border-radius:0;pointer-events:none;z-index:4}
@@ -50,7 +50,7 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 @media(max-width:600px){.side{right:10px;bottom:10px;width:126px}.joy{width:108px;height:108px}.knob{width:46px;height:46px}.minimap{right:8px;top:8px}}
 @media(max-width:600px) and (orientation:portrait){.side{right:8px;bottom:8px;width:116px}.joy{width:96px;height:96px}.knob{width:40px;height:40px}.note{max-width:200px;white-space:normal;border-radius:10px}}
 </style></head><body>
-<div class="game"><header class="hud"><b>ピラミトン本部</b><span>北海道エリア・遺産グラフィック反映確認</span><span class="revision">HQ LAB / r20260831-01</span></header>
+<div class="game"><header class="hud"><b>ピラミトン本部</b><span>北海道エリア・4×4実寸表示確認</span><span class="revision">HQ LAB / r20260831-02</span></header>
 <main class="main" id="vp"><div class="world" id="world">
 <div class="room" id="north"><h2>北海道エリア</h2><div class="aisle"></div></div>
 <div class="room" id="west"><h2>西日本エリア</h2><div class="aisle"></div><div class="cross w"></div></div>
@@ -61,7 +61,7 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 <div class="player" id="player"></div></div>
 <div class="minimap"><div class="miniWorld"><div class="m m1"></div><div class="m m2"></div><div class="m m3"></div><div class="m m4"></div><div class="m mh"></div><div class="miniP" id="miniP"></div></div></div>
 <aside class="side"><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div></aside>
-<div class="note">北海道エリアのみ確定グラフィックを反映。ほか3エリアは従来の立て札のまま。</div>
+<div class="note">北海道エリアのみ確定グラフィックを4×4相当（152px）で表示。ほか3エリアは従来の立て札のまま。</div>
 </main></div>
 <script>
 const groups=[{"id":"north","title":"北海道エリア","items":["知床","北海道・北東北の縄文遺跡群"]},{"id":"west","title":"西日本エリア","items":["白川郷・五箇山","石見銀山","古都京都","姫路城","古都奈良","法隆寺地域","百舌鳥・古市古墳群","飛鳥・藤原の宮都","原爆ドーム","厳島神社","紀伊山地"]},{"id":"east","title":"東日本エリア","items":["白神山地","平泉","佐渡島の金山","日光の社寺","富岡製糸場","ル・コルビュジエ","富士山","小笠原諸島"]},{"id":"south","title":"九州・沖縄エリア","items":["宗像・沖ノ島","明治日本の産業革命遺産","長崎と天草地方の潜伏キリシタン関連遺産","屋久島","奄美・徳之島・沖縄島北部・西表島","琉球王国のグスク"]}];
@@ -82,7 +82,7 @@ groups.forEach(g=>{
    const row=Math.floor(i/2),right=i%2===1;
    if(g.id==='north'){
      s.className='sign graphic';
-     s.style.left=(right?314:20)+'px';
+     s.style.left=(right?323:29)+'px';
      s.style.top=rowY.north[row]+'px';
      const img=document.createElement('img');
      img.src=graphicAssets[name];img.alt=name;img.draggable=false;
@@ -103,15 +103,15 @@ const R=14;
 // 室内床と、見た目と同じ4本の通路だけを歩行可能にする。
 // 西日本・東日本は入口から中央縦通路まで横通路を確保している。
 const walkable=[
- {x:598,y:58,w:484,h:324},       // 北海道室内
- {x:58,y:538,w:484,h:1084},      // 西日本室内
- {x:1138,y:538,w:484,h:824},     // 東日本室内
- {x:598,y:1198,w:484,h:584},     // 九州沖縄室内
- {x:608,y:668,w:464,h:224},      // 中央ホール
- {x:730,y:330,w:220,h:390},      // 北通路
- {x:230,y:730,w:430,h:140},      // 西通路（中央縦通路へ到達）
- {x:1020,y:730,w:430,h:140},     // 東通路（中央縦通路へ到達）
- {x:730,y:830,w:220,h:430}       // 南通路
+ {x:598,y:58,w:484,h:324},
+ {x:58,y:538,w:484,h:1084},
+ {x:1138,y:538,w:484,h:824},
+ {x:598,y:1198,w:484,h:584},
+ {x:608,y:668,w:464,h:224},
+ {x:730,y:330,w:220,h:390},
+ {x:230,y:730,w:430,h:140},
+ {x:1020,y:730,w:430,h:140},
+ {x:730,y:830,w:220,h:430}
 ];
 function inside(x,y,r){return x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h}
 let signRects=[];
@@ -122,42 +122,20 @@ function rebuildSignRects(){
    return {l:l-8,r:l+w+8,t:t-8,b:t+h+stem+8};
  });
 }
-function hitsSign(x,y){
- const p={l:x-R,r:x+R,t:y-R,b:y+R};
- return signRects.some(rr=>p.r>rr.l&&p.l<rr.r&&p.b>rr.t&&p.t<rr.b);
-}
+function hitsSign(x,y){const p={l:x-R,r:x+R,t:y-R,b:y+R};return signRects.some(rr=>p.r>rr.l&&p.l<rr.r&&p.b>rr.t&&p.t<rr.b)}
 function canStand(x,y){return walkable.some(r=>inside(x,y,r))&&!hitsSign(x,y)}
 function connectivityCheck(){
  rebuildSignRects();
  const step=12,start={x:840,y:780};
- const goals=[
-  {name:'北海道',x:840,y:260},
-  {name:'西日本',x:282,y:1000},
-  {name:'東日本',x:1362,y:1000},
-  {name:'九州・沖縄',x:840,y:1450}
- ];
+ const goals=[{name:'北海道',x:840,y:260},{name:'西日本',x:282,y:1000},{name:'東日本',x:1362,y:1000},{name:'九州・沖縄',x:840,y:1450}];
  const key=(x,y)=>x+','+y,q=[start],seen=new Set([key(start.x,start.y)]);let qi=0;
- while(qi<q.length&&seen.size<50000){
-  const p=q[qi++];
-  for(const [dx,dy] of [[step,0],[-step,0],[0,step],[0,-step]]){
-   const nx=p.x+dx,ny=p.y+dy,k=key(nx,ny);
-   if(!seen.has(k)&&canStand(nx,ny)){seen.add(k);q.push({x:nx,y:ny})}
-  }
- }
+ while(qi<q.length&&seen.size<50000){const p=q[qi++];for(const [dx,dy] of [[step,0],[-step,0],[0,step],[0,-step]]){const nx=p.x+dx,ny=p.y+dy,k=key(nx,ny);if(!seen.has(k)&&canStand(nx,ny)){seen.add(k);q.push({x:nx,y:ny})}}}
  const reachable=g=>[...seen].some(k=>{const [x,y]=k.split(',').map(Number);return Math.abs(x-g.x)<=30&&Math.abs(y-g.y)<=30});
  const failed=goals.filter(g=>!reachable(g));
- if(failed.length){
-  const b=document.createElement('div');b.style.cssText='position:absolute;left:50%;top:62px;transform:translateX(-50%);z-index:100;background:#a62626;color:#fff;padding:8px 12px;border-radius:9px;font-size:11px;font-weight:900';
-  b.textContent='接続テストNG：'+failed.map(x=>x.name).join('／');vp.appendChild(b);return false;
- }
+ if(failed.length){const b=document.createElement('div');b.style.cssText='position:absolute;left:50%;top:62px;transform:translateX(-50%);z-index:100;background:#a62626;color:#fff;padding:8px 12px;border-radius:9px;font-size:11px;font-weight:900';b.textContent='接続テストNG：'+failed.map(x=>x.name).join('／');vp.appendChild(b);return false}
  return true;
 }
-function render(){
- playerEl.style.left=(player.x-16)+'px';playerEl.style.top=(player.y-20)+'px';
- const vw=vp.clientWidth,vh=vp.clientHeight,cx=clamp(vw/2-player.x,vw-1680,0),cy=clamp(vh/2-player.y,vh-1880,0);
- world.style.transform='translate('+cx+'px,'+cy+'px)';
- mini.style.left=(player.x/1680*98)+'px';mini.style.top=(player.y/1880*128)+'px';
-}
+function render(){playerEl.style.left=(player.x-16)+'px';playerEl.style.top=(player.y-20)+'px';const vw=vp.clientWidth,vh=vp.clientHeight,cx=clamp(vw/2-player.x,vw-1680,0),cy=clamp(vh/2-player.y,vh-1880,0);world.style.transform='translate('+cx+'px,'+cy+'px)';mini.style.left=(player.x/1680*98)+'px';mini.style.top=(player.y/1880*128)+'px'}
 function move(dx,dy){const step=12,nx=player.x+dx*step,ny=player.y+dy*step;if(canStand(nx,ny)){player.x=nx;player.y=ny}else if(dx&&canStand(nx,player.y))player.x=nx;else if(dy&&canStand(player.x,ny))player.y=ny;render()}
 function updateJoy(e,moveNow=false){const r=joy.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2),len=Math.hypot(x,y);if(len<14){joyDir=null;knob.style.transform='translate(-50%,-50%)';return}const m=Math.min(30,len),a=Math.atan2(y,x);knob.style.transform='translate(calc(-50% + '+(Math.cos(a)*m)+'px),calc(-50% + '+(Math.sin(a)*m)+'px))';const next=Math.abs(x)>Math.abs(y)?[Math.sign(x),0]:[0,Math.sign(y)];const changed=!joyDir||joyDir[0]!==next[0]||joyDir[1]!==next[1];joyDir=next;if(moveNow&&changed)move(...joyDir)}
 function stop(){if(repeat)clearInterval(repeat);repeat=null;joyDir=null;knob.style.transform='translate(-50%,-50%)'}
