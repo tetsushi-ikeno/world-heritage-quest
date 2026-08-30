@@ -23,7 +23,16 @@
         "アクションUI",
         "センター内基本レイアウト"
       ],
-      "note": "ピラミトン本部などセンター系UIを流用する場合の正本。"
+      "note": "ピラミトン本部などセンター系UIを流用する場合の正本。",
+      "effectiveStyleChain": [
+        "beta2-center-theme.css",
+        "beta2-center-theme-r04.css",
+        "beta2-center-theme-r05.css",
+        "beta3-center-overrides.css"
+      ],
+      "playerCanonicalSource": "beta2-center-theme-r04.css :: .player / .player:before / .player:after",
+      "joystickCanonicalSource": "research-center-beta3.html :: .joy / .knob / .mark plus beta3-center-overrides.css sizing",
+      "verificationNote": "Brown-hat player shown in Beta3 センター確認Lab r20260829-07 is canonical. Do not replace with simplified blue rectangle."
     },
     "headquarters": {
       "status": "current",
