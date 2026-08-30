@@ -1,5 +1,8 @@
 # 文化遺産 展示グラフィック基準 v0.1
 
+> **旧ルール / 参照用**  
+> この文書は初期SVG・Lab制作時の記録として保持する。2026-08-30以降の研究センター展示グラフィック制作では、`docs/heritage-graphics-style-guide.md` と `docs/heritage-graphics-decisions.md` を正本として優先する。内容が衝突した場合は新しい2文書を採用する。
+
 更新日: 2026-08-30  
 対応Lab: `cultural-heritage-center-placement-lab.html`
 
@@ -63,8 +66,6 @@ Revision: `LAB / r20260830-04`
 - 影: `stdDeviation=3`, `dy=5`, opacity 約0.30 を基準。
 - Lab上で白縁「細め/やや太め」、影「やわらか/やや強め/なし」を切り替えて比較可能。
 
-
-
 ## Batch 01（未確定・確認中）
 
 Revision: `LAB / r20260830-05`
@@ -79,7 +80,6 @@ Revision: `LAB / r20260830-05`
 確認Lab: `cultural-heritage-exhibit-batch01-lab.html`
 
 この5点は未確定。Lab確認後に修正し、確定時のみ個別SVGとして `docs/assets/heritage-exhibits/cultural/` へ保存する。
-
 
 ## Batch 01 確定（2026-08-30）
 
