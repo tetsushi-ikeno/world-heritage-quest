@@ -12,7 +12,23 @@ button{font:inherit}.game{height:100%;display:grid;grid-template-rows:52px 1fr}.
 .connector{position:absolute;background:#d9b278;border:8px solid #8b633f}.c1{left:600px;top:460px;width:120px;height:140px}.c2{left:420px;top:665px;width:40px;height:90px}.c3{left:860px;top:665px;width:40px;height:90px}.c4{left:600px;top:780px;width:120px;height:190px}
 .sign{position:absolute;width:145px;min-height:78px;background:#ecd9a9;color:#50361f;border:5px solid #76502e;border-radius:4px;box-shadow:0 5px 6px #38231655;padding:9px 8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:1000;line-height:1.25}
 .sign:after{content:"";position:absolute;left:50%;bottom:-30px;width:8px;height:30px;background:#76502e;transform:translateX(-50%)}
-.player{position:absolute;width:34px;height:40px;z-index:12;background:#3157a3;border:2px solid #243b69;box-shadow:0 -7px 0 -4px #f1c49e;filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 -1px 0 #fff)}
+.player{position:absolute!important;width:32px!important;height:40px!important;z-index:12!important;background:
+linear-gradient(#795039 0 0) 24px 22px/6px 9px no-repeat,
+linear-gradient(#765038 0 0) 8px 28px/16px 3px no-repeat,
+linear-gradient(#c4a263 0 0) 8px 19px/16px 13px no-repeat,
+linear-gradient(#684734 0 0) 9px 32px/6px 5px no-repeat,
+linear-gradient(#684734 0 0) 17px 33px/6px 5px no-repeat!important;
+border:0!important;box-shadow:none!important;
+filter:drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(0 -1.5px 0 #fff) drop-shadow(0 4px 1px #2b1a1266)!important;
+animation:beta2R04Idle .34s steps(2,end) infinite!important}
+.player:before{content:''!important;position:absolute!important;inset:0!important;width:auto!important;height:auto!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:
+radial-gradient(circle at center,#243247 0 1.3px,transparent 1.5px) 11px 14px/3px 3px no-repeat,
+radial-gradient(circle at center,#243247 0 1.3px,transparent 1.5px) 18px 14px/3px 3px no-repeat,
+linear-gradient(#efbd86 0 0) 10px 10px/12px 9px no-repeat,
+linear-gradient(#d0b16f 0 0) 8px 5px/16px 5px no-repeat,
+linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
+.player:after{content:''!important;position:absolute!important;left:0!important;top:0!important;width:32px!important;height:40px!important;border:0!important;background:linear-gradient(#b99a5e 0 0) 9px 20px/14px 3px no-repeat!important;box-shadow:none!important;pointer-events:none}
+@keyframes beta2R04Idle{0%{transform:translateY(0)}50%{transform:translateY(-1.5px)}100%{transform:translateY(0)}}
 .minimap{position:absolute;right:14px;top:14px;width:104px;height:136px;background:#fffdf2e8;border:2px solid #8c6b4b;border-radius:12px;z-index:30;padding:5px;box-shadow:0 4px 12px #24180f33}.miniWorld{position:relative;width:90px;height:122px;background:#bd8753}.m{position:absolute;border:2px solid #68462e;background:#c9955e}.m1{left:31px;top:3px;width:28px;height:30px}.m2{left:3px;top:35px;width:27px;height:74px}.m3{right:3px;top:35px;width:27px;height:60px}.m4{left:31px;bottom:3px;width:28px;height:42px}.miniP{position:absolute;width:6px;height:6px;border-radius:50%;background:#3157a3;border:1px solid #fff;transform:translate(-50%,-50%)}
 /* Latest center joystick language */
 .side{position:absolute;right:14px;bottom:14px;width:184px;height:auto;z-index:40;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}.side .joy{pointer-events:auto}
@@ -22,7 +38,7 @@ button{font:inherit}.game{height:100%;display:grid;grid-template-rows:52px 1fr}.
 @media(max-width:600px){.side{right:10px;bottom:10px;width:126px}.joy{width:108px;height:108px}.knob{width:46px;height:46px}.minimap{right:8px;top:8px}}
 @media(max-width:600px) and (orientation:portrait){.side{right:8px;bottom:8px;width:116px}.joy{width:96px;height:96px}.knob{width:40px;height:40px}.note{max-width:190px;white-space:normal;border-radius:10px}}
 </style></head><body>
-<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-05</span></header>
+<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-06</span></header>
 <main class="main" id="vp"><div class="world" id="world">
 <div class="area north" id="north"><h2>北海道エリア</h2></div>
 <div class="area west" id="west"><h2>西日本エリア</h2></div>
