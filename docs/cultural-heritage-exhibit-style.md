@@ -63,3 +63,19 @@ Revision: `LAB / r20260830-04`
 - 影: `stdDeviation=3`, `dy=5`, opacity 約0.30 を基準。
 - Lab上で白縁「細め/やや太め」、影「やわらか/やや強め/なし」を切り替えて比較可能。
 
+
+
+## Batch 01（未確定・確認中）
+
+Revision: `LAB / r20260830-05`
+
+対象:
+- 古都京都の文化財（金閣寺モチーフ）
+- 古都奈良の文化財（東大寺モチーフ）
+- 日光の社寺（陽明門モチーフ）
+- 原爆ドーム
+- 白川郷・五箇山の合掌造り集落
+
+確認Lab: `cultural-heritage-exhibit-batch01-lab.html`
+
+この5点は未確定。Lab確認後に修正し、確定時のみ個別SVGとして `docs/assets/heritage-exhibits/cultural/` へ保存する。
