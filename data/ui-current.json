@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-30",
+  "policy": {
+    "rule": "Do not infer the latest UI from filenames, dates, or surrounding files. Use only entries explicitly marked current in this registry.",
+    "changeProcess": [
+      "Confirm the candidate UI in its Lab.",
+      "Record the exact file and revision in this registry.",
+      "Only then update dependent Labs or production files."
+    ]
+  },
+  "current": {
+    "center": {
+      "status": "current",
+      "label": "Beta3 センター確認Lab",
+      "revision": "r20260829-07",
+      "labFile": "beta3-center-lab.html",
+      "implementationFile": "research-center-beta3.html",
+      "overrideFile": "beta3-center-overrides.css",
+      "frozenScope": [
+        "主人公表示",
+        "操作スティック",
+        "アクションUI",
+        "センター内基本レイアウト"
+      ],
+      "note": "ピラミトン本部などセンター系UIを流用する場合の正本。"
+    },
+    "headquarters": {
+      "status": "current",
+      "label": "ピラミトン本部 専用Lab",
+      "revision": "r20260830-04",
+      "labFile": "pyraminton-headquarters-lab.html",
+      "uiBase": {
+        "component": "center",
+        "revision": "r20260829-07"
+      },
+      "note": "本部レイアウト専用。遺産グラフィック制作・確定は別管理。"
+    },
+    "map": {
+      "status": "undesignated",
+      "note": "正本をこのレジストリ上ではまだ指定していない。推測して使用しない。"
+    },
+    "tutorial": {
+      "status": "undesignated",
+      "note": "正本をこのレジストリ上ではまだ指定していない。推測して使用しない。"
+    }
+  }
+}
