@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>文化遺産 展示グラフィックLab</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif;background:#e8eef4;color:#172238}
+header{height:54px;display:flex;align-items:center;gap:10px;padding:8px 14px;background:#fff;border-bottom:1px solid #c8d1db;position:sticky;top:0;z-index:5}header b{font-size:17px;margin-right:auto}.rev{font-size:11px;font-weight:900;background:#172238;color:#fff;border:1px solid #e3b53c;border-radius:999px;padding:5px 8px}
+main{max-width:1180px;margin:auto;padding:14px}.intro{font-size:13px;color:#566477;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:#fff;border:1px solid #c8d1db;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px #17223812}.card h2{font-size:16px;margin:0;padding:10px 12px;background:#f7f9fb;border-bottom:1px solid #d9e0e7}.stage{height:270px;display:flex;align-items:center;justify-content:center;padding:12px;background:#f1ede3}.stage svg{width:100%;height:100%}.note{padding:9px 12px;font-size:12px;line-height:1.6;color:#4d596a}.tag{font-weight:900;color:#172238}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.stage{height:300px}}
+</style></head><body>
+<header><b>文化遺産 展示グラフィックLab</b><span class="rev">LAB / r20260830-01</span></header>
+<main><p class="intro">文化遺産の展示物だけを比較するためのLabです。背景景観は描かず、形・色・情報量の違う3方向を同じ条件で確認します。</p>
+<div class="grid">
+<section class="card"><h2>A｜厳島神社 — シルエット重視</h2><div class="stage">
+<svg viewBox="0 0 420 280" role="img" aria-label="厳島神社のフラットな大鳥居">
+<rect width="420" height="280" fill="#f1ede3"/><rect y="224" width="420" height="56" fill="#64c5c1"/>
+<path d="M68 62 Q210 82 352 62 L342 82 Q210 98 78 82Z" fill="#2d5b50"/>
+<path d="M76 76 Q210 92 344 76 L333 101 Q210 111 87 101Z" fill="#e34b25"/>
+<rect x="94" y="106" width="232" height="15" rx="2" fill="#e34b25"/><rect x="108" y="121" width="204" height="10" fill="#b83720"/>
+<rect x="119" y="99" width="27" height="135" fill="#e85228"/><rect x="274" y="99" width="27" height="135" fill="#e85228"/>
+<rect x="113" y="94" width="39" height="9" fill="#262a29"/><rect x="268" y="94" width="39" height="9" fill="#262a29"/>
+<path d="M102 234h61l-8 9h-46zM257 234h61l-8 9h-46z" fill="#c84525"/>
+<path d="M44 251q42-8 84 0t84 0t84 0t84 0" fill="none" stroke="#e8f4ef" stroke-width="4"/>
+</svg></div><div class="note"><span class="tag">狙い：</span>一目で大鳥居と分かる形を最優先。水面だけ残し、山・空・遠景は置かない。</div></section>
+
+<section class="card"><h2>B｜姫路城 — 特徴量重視</h2><div class="stage">
+<svg viewBox="0 0 420 280" role="img" aria-label="姫路城のフラットな天守">
+<rect width="420" height="280" fill="#f1ede3"/><path d="M102 244 L129 188 H291 L318 244Z" fill="#b89564"/>
+<g fill="#f7f4e9" stroke="#65686b" stroke-width="3" stroke-linejoin="round">
+<path d="M137 190v-45h146v45z"/><path d="M153 147v-43h114v43z"/><path d="M172 106V70h76v36z"/><path d="M190 72V42h40v30z"/>
+</g>
+<g fill="#7b7e80"><path d="M124 146h172l-21 16H145z"/><path d="M142 104h136l-18 15h-100z"/><path d="M163 69h94l-14 14h-66z"/><path d="M182 42h56l-10 11h-36z"/></g>
+<g fill="#5e6264"><rect x="158" y="164" width="7" height="13"/><rect x="181" y="164" width="7" height="13"/><rect x="232" y="164" width="7" height="13"/><rect x="255" y="164" width="7" height="13"/><rect x="179" y="123" width="7" height="12"/><rect x="234" y="123" width="7" height="12"/><rect x="199" y="87" width="7" height="10"/><rect x="216" y="87" width="7" height="10"/></g>
+<g fill="#d88798"><circle cx="100" cy="230" r="23"/><circle cx="126" cy="237" r="26"/><circle cx="300" cy="235" r="28"/><circle cx="326" cy="230" r="20"/></g>
+</svg></div><div class="note"><span class="tag">狙い：</span>白い天守・重なる屋根・石垣で姫路城らしさを出す。装飾は細密化せず、桜は補助記号に留める。</div></section>
+
+<section class="card"><h2>C｜法隆寺 — 構成重視</h2><div class="stage">
+<svg viewBox="0 0 420 280" role="img" aria-label="法隆寺の五重塔と金堂をフラットに表現">
+<rect width="420" height="280" fill="#f1ede3"/>
+<g transform="translate(48,25)">
+<rect x="68" y="174" width="13" height="54" fill="#8b4932"/><rect x="23" y="176" width="103" height="10" fill="#613d31"/>
+<path d="M17 170h115l-18 16H35zM27 139h95l-15 14H42zM37 110h75l-13 13H50zM46 83h58L94 95H56zM55 58h41L88 69H63z" fill="#3c4544"/>
+<rect x="39" y="151" width="71" height="22" fill="#c76b42"/><rect x="48" y="123" width="53" height="18" fill="#c76b42"/><rect x="56" y="96" width="38" height="16" fill="#c76b42"/><rect x="63" y="70" width="25" height="15" fill="#c76b42"/>
+<rect x="74" y="37" width="3" height="24" fill="#4a4c49"/><circle cx="75.5" cy="35" r="4" fill="#4a4c49"/>
+</g>
+<g transform="translate(210,91)"><rect x="25" y="89" width="120" height="47" fill="#c76b42"/><rect x="39" y="103" width="10" height="33" fill="#704132"/><rect x="68" y="103" width="10" height="33" fill="#704132"/><rect x="97" y="103" width="10" height="33" fill="#704132"/><rect x="126" y="103" width="10" height="33" fill="#704132"/><path d="M6 88h158l-25 20H31z" fill="#3c4544"/><path d="M35 55h102l-18 18H53z" fill="#46504e"/><rect x="55" y="70" width="62" height="20" fill="#b9603e"/></g>
+<rect x="30" y="250" width="360" height="6" rx="3" fill="#b7aa91"/>
+</svg></div><div class="note"><span class="tag">狙い：</span>単一建物ではなく「五重塔＋金堂」の組み合わせで遺産を識別。今後の寺社系で同じ建物ばかりに見える問題を確認するための案。</div></section>
+</div></main></body></html>
