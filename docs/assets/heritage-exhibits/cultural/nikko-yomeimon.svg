@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280">
+<defs><filter id="fnikko" x="-30%" y="-30%" width="160%" height="180%"><feMorphology in="SourceAlpha" operator="dilate" radius="3" result="d"/><feFlood flood-color="#fff" result="w"/><feComposite in="w" in2="d" operator="in" result="o"/><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feOffset in="b" dy="5" result="off"/><feFlood flood-color="#2c1b12" flood-opacity=".30" result="sc"/><feComposite in="sc" in2="off" operator="in" result="s"/><feMerge><feMergeNode in="s"/><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g filter="url(#fnikko)">
+<path d="M76 87 Q108 84 132 71 Q210 58 288 71 Q312 84 344 87 L326 106 Q210 95 94 106Z" fill="#384744"/>
+<path d="M104 104 H316 L304 122 H116Z" fill="#e9e4d8"/>
+<path d="M118 120 H302 V145 H118Z" fill="#f3eee3"/>
+<path d="M128 145 H292 V216 H128Z" fill="#efe8da"/>
+<g fill="#a63f2a"><rect x="140" y="149" width="13" height="67"/><rect x="172" y="149" width="13" height="67"/><rect x="235" y="149" width="13" height="67"/><rect x="267" y="149" width="13" height="67"/></g>
+<g fill="#d4aa3b"><rect x="123" y="119" width="174" height="7"/><rect x="132" y="142" width="156" height="7"/><rect x="137" y="164" width="146" height="6"/><circle cx="148" cy="132" r="5"/><circle cx="181" cy="132" r="5"/><circle cx="210" cy="132" r="6"/><circle cx="239" cy="132" r="5"/><circle cx="272" cy="132" r="5"/></g>
+<g fill="#56866b"><rect x="132" y="127" width="20" height="10"/><rect x="161" y="127" width="20" height="10"/><rect x="239" y="127" width="20" height="10"/><rect x="268" y="127" width="20" height="10"/></g>
+<path d="M165 146 L180 133 L195 146 M225 146 L240 133 L255 146" fill="#d7b24f" stroke="#8b622b" stroke-width="2"/>
+<rect x="192" y="162" width="36" height="54" fill="#6b4430"/>
+<rect x="200" y="173" width="20" height="43" fill="#392b24"/>
+<path d="M115 216 H305 L290 232 H130Z" fill="#75513b"/>
+<path d="M133 74 Q210 50 287 74" fill="none" stroke="#6d3523" stroke-width="5"/>
+<path d="M154 103 Q210 92 266 103" fill="none" stroke="#b48836" stroke-width="4"/>
+</g></svg>
