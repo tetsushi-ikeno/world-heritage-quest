@@ -13,24 +13,24 @@ button{font:inherit}.game{height:100%;display:grid;grid-template-rows:52px 1fr}.
 #east{left:1120px;top:520px;width:520px;height:860px}
 #south{left:580px;top:1180px;width:520px;height:620px}
 .hub{position:absolute;left:590px;top:650px;width:500px;height:260px;background:#b87d47;border:18px solid var(--wall);box-shadow:inset 0 0 0 6px var(--wall2);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:1000;font-size:23px;color:#f6e0a5;z-index:3}
-.path{position:absolute;background:var(--path);z-index:2;box-shadow:inset 0 0 0 2px #c29a67}
-.pn{left:745px;top:400px;width:190px;height:250px}
-.pw{left:560px;top:720px;width:30px;height:120px}
-.pe{left:1090px;top:720px;width:30px;height:120px}
-.ps{left:745px;top:910px;width:190px;height:270px}
-.door{position:absolute;background:var(--path);z-index:6;box-shadow:none}
-.d-north-s{left:745px;top:382px;width:190px;height:40px}
-.d-hub-n{left:745px;top:632px;width:190px;height:40px}
-.d-hub-w{left:572px;top:720px;width:40px;height:120px}
-.d-west-e{left:542px;top:720px;width:40px;height:120px}
-.d-hub-e{left:1072px;top:720px;width:40px;height:120px}
-.d-east-w{left:1102px;top:720px;width:40px;height:120px}
-.d-hub-s{left:745px;top:892px;width:190px;height:40px}
-.d-south-n{left:745px;top:1162px;width:190px;height:40px}
-.sign{position:absolute;width:150px;min-height:74px;background:#ecd9a9;color:#50361f;border:5px solid #76502e;border-radius:4px;box-shadow:0 5px 6px #38231655;padding:9px 8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:1000;line-height:1.25;z-index:5}
+.path{position:absolute;background:var(--path);z-index:7;box-shadow:none}
+.pn{left:730px;top:370px;width:220px;height:310px}
+.pw{left:520px;top:700px;width:110px;height:160px}
+.pe{left:1050px;top:700px;width:110px;height:160px}
+.ps{left:730px;top:870px;width:220px;height:350px}
+.door{position:absolute;background:var(--path);z-index:9;box-shadow:none}
+.d-north-s{left:730px;top:370px;width:220px;height:70px}
+.d-hub-n{left:730px;top:625px;width:220px;height:70px}
+.d-hub-w{left:565px;top:700px;width:80px;height:160px}
+.d-west-e{left:525px;top:700px;width:80px;height:160px}
+.d-hub-e{left:1035px;top:700px;width:80px;height:160px}
+.d-east-w{left:1075px;top:700px;width:80px;height:160px}
+.d-hub-s{left:730px;top:875px;width:220px;height:70px}
+.d-south-n{left:730px;top:1150px;width:220px;height:70px}
+.sign{position:absolute;width:150px;min-height:74px;background:#ecd9a9;color:#50361f;border:5px solid #76502e;border-radius:4px;box-shadow:0 5px 6px #38231655;padding:9px 8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:1000;line-height:1.25;z-index:10}
 .sign:after{content:"";position:absolute;left:50%;bottom:-28px;width:8px;height:28px;background:#76502e;transform:translateX(-50%)}
 .aisle{position:absolute;left:190px;top:82px;bottom:46px;width:104px;background:#d4a56d55;border-radius:18px;pointer-events:none}
-.player{position:absolute!important;width:32px!important;height:40px!important;z-index:12!important;background:
+.player{position:absolute!important;width:32px!important;height:40px!important;z-index:20!important;background:
 linear-gradient(#795039 0 0) 24px 22px/6px 9px no-repeat,
 linear-gradient(#765038 0 0) 8px 28px/16px 3px no-repeat,
 linear-gradient(#c4a263 0 0) 8px 19px/16px 13px no-repeat,
@@ -53,7 +53,7 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 @media(max-width:600px){.side{right:10px;bottom:10px;width:126px}.joy{width:108px;height:108px}.knob{width:46px;height:46px}.minimap{right:8px;top:8px}}
 @media(max-width:600px) and (orientation:portrait){.side{right:8px;bottom:8px;width:116px}.joy{width:96px;height:96px}.knob{width:40px;height:40px}.note{max-width:200px;white-space:normal;border-radius:10px}}
 </style></head><body>
-<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-09</span></header>
+<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-10</span></header>
 <main class="main" id="vp"><div class="world" id="world">
 <div class="room" id="north"><h2>北海道エリア</h2><div class="aisle"></div></div>
 <div class="room" id="west"><h2>西日本エリア</h2><div class="aisle"></div></div>
@@ -65,7 +65,7 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 <div class="player" id="player"></div></div>
 <div class="minimap"><div class="miniWorld"><div class="m m1"></div><div class="m m2"></div><div class="m m3"></div><div class="m m4"></div><div class="m mh"></div><div class="miniP" id="miniP"></div></div></div>
 <aside class="side"><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div></aside>
-<div class="note">濃茶＝壁／薄茶＝通路・床。各部屋の中央に2マス以上の縦通路を確保。</div>
+<div class="note">濃茶＝壁／薄茶＝通路・床。通路は壁より手前に描画し、中央ホール→4エリアの接続を自動テスト。</div>
 </main></div>
 <script>
 const groups=[{"id":"north","title":"北海道エリア","items":["知床","北海道・北東北の縄文遺跡群"]},{"id":"west","title":"西日本エリア","items":["白川郷・五箇山","石見銀山","古都京都","姫路城","古都奈良","法隆寺地域","百舌鳥・古市古墳群","飛鳥・藤原の宮都","原爆ドーム","厳島神社","紀伊山地"]},{"id":"east","title":"東日本エリア","items":["白神山地","平泉","佐渡島の金山","日光の社寺","富岡製糸場","ル・コルビュジエ","富士山","小笠原諸島"]},{"id":"south","title":"九州・沖縄エリア","items":["宗像・沖ノ島","明治日本の産業革命遺産","長崎と天草地方の潜伏キリシタン関連遺産","屋久島","奄美・徳之島・沖縄島北部・西表島","琉球王国のグスク"]}];
@@ -89,27 +89,67 @@ const vp=document.getElementById('vp'),world=document.getElementById('world'),pl
 let player={x:840,y:780},joyDir=null,repeat=null;
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 const R=14;
+// 歩行可能領域は「部屋内床」と「通路」を1つの床面として定義する。
+// 部屋内床は壁厚を差し引いた座標、通路は両側へ60px以上食い込ませる。
+// canStand側では二重に余白を引かない（旧版の見えない隙間の原因だった）。
 const walkable=[
- {x:598,y:58,w:484,h:324},      // 北海道室内
- {x:58,y:538,w:484,h:1084},     // 西日本室内
- {x:1138,y:538,w:484,h:824},    // 東日本室内
- {x:598,y:1198,w:484,h:584},    // 九州沖縄室内
- {x:608,y:668,w:464,h:224},     // 中央ホール
- {x:745,y:370,w:190,h:300},     // 北通路＋敷居
- {x:530,y:700,w:90,h:160},      // 西通路＋敷居
- {x:1060,y:700,w:90,h:160},     // 東通路＋敷居
- {x:745,y:880,w:190,h:330}      // 南通路＋敷居
+ {x:598,y:58,w:484,h:324},       // 北海道 室内床
+ {x:58,y:538,w:484,h:1084},      // 西日本 室内床
+ {x:1138,y:538,w:484,h:824},     // 東日本 室内床
+ {x:598,y:1198,w:484,h:584},     // 九州沖縄 室内床
+ {x:608,y:668,w:464,h:224},      // 中央ホール 室内床
+ {x:730,y:330,w:220,h:390},      // 北通路（北海道床〜中央床へ深く重なる）
+ {x:480,y:690,w:180,h:180},      // 西通路（西日本床〜中央床）
+ {x:1020,y:690,w:180,h:180},     // 東通路（中央床〜東日本床）
+ {x:730,y:840,w:220,h:410}       // 南通路（中央床〜九州沖縄床）
 ];
-function inside(x,y,r){return x>=r.x+R&&x<=r.x+r.w-R&&y>=r.y+R&&y<=r.y+r.h-R}
-function hitsSign(x,y){
- const p={l:x-R,r:x+R,t:y-R,b:y+R};
- return [...document.querySelectorAll('.sign')].some(el=>{
+function inside(x,y,r){return x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h}
+let signRects=[];
+function rebuildSignRects(){
+ signRects=[...document.querySelectorAll('.sign')].map(el=>{
    const l=el.parentElement.offsetLeft+parseFloat(el.style.left), t=el.parentElement.offsetTop+parseFloat(el.style.top);
-   const rr={l:l-5,r:l+155,t:t-5,b:t+110};
-   return p.r>rr.l&&p.l<rr.r&&p.b>rr.t&&p.t<rr.b;
+   return {l:l-8,r:l+158,t:t-8,b:t+114};
  });
 }
+function hitsSign(x,y){
+ const p={l:x-R,r:x+R,t:y-R,b:y+R};
+ return signRects.some(rr=>p.r>rr.l&&p.l<rr.r&&p.b>rr.t&&p.t<rr.b);
+}
 function canStand(x,y){return walkable.some(r=>inside(x,y,r))&&!hitsSign(x,y)}
+
+// 公開前の回帰チェック：中央ホールから4エリアの中央通路へ実際に到達できるかを自動検証。
+// 失敗した版は画面上に赤い警告を出す。
+function connectivityCheck(){
+ rebuildSignRects();
+ const step=12, start={x:840,y:780};
+ const goals=[
+   {name:'北海道',x:840,y:300},
+   {name:'西日本',x:250,y:900},
+   {name:'東日本',x:1380,y:900},
+   {name:'九州・沖縄',x:840,y:1450}
+ ];
+ const key=(x,y)=>x+','+y, q=[start], seen=new Set([key(start.x,start.y)]);
+ let qi=0;
+ while(qi<q.length && seen.size<40000){
+   const p=q[qi++];
+   for(const [dx,dy] of [[step,0],[-step,0],[0,step],[0,-step]]){
+     const nx=p.x+dx,ny=p.y+dy,k=key(nx,ny);
+     if(!seen.has(k)&&canStand(nx,ny)){seen.add(k);q.push({x:nx,y:ny})}
+   }
+ }
+ const reachable=(g)=>[...seen].some(k=>{
+   const [x,y]=k.split(',').map(Number);return Math.abs(x-g.x)<=24&&Math.abs(y-g.y)<=24;
+ });
+ const failed=goals.filter(g=>!reachable(g));
+ if(failed.length){
+   const b=document.createElement('div');
+   b.style.cssText='position:absolute;left:50%;top:62px;transform:translateX(-50%);z-index:100;background:#a62626;color:#fff;padding:8px 12px;border-radius:9px;font-size:11px;font-weight:900';
+   b.textContent='接続テストNG：'+failed.map(x=>x.name).join('／');
+   vp.appendChild(b);
+   return false;
+ }
+ return true;
+}
 function render(){
  playerEl.style.left=(player.x-16)+'px';playerEl.style.top=(player.y-20)+'px';
  const vw=vp.clientWidth,vh=vp.clientHeight,cx=clamp(vw/2-player.x,vw-1680,0),cy=clamp(vh/2-player.y,vh-1880,0);
@@ -122,5 +162,5 @@ function stop(){if(repeat)clearInterval(repeat);repeat=null;joyDir=null;knob.sty
 joy.addEventListener('pointerdown',e=>{e.preventDefault();joy.setPointerCapture(e.pointerId);updateJoy(e,true);repeat=setInterval(()=>{if(joyDir)move(...joyDir)},75)});
 joy.addEventListener('pointermove',e=>{if(!repeat)return;e.preventDefault();updateJoy(e,true)});joy.addEventListener('pointerup',stop);joy.addEventListener('pointercancel',stop);
 ['selectstart','contextmenu','dragstart'].forEach(t=>joy.addEventListener(t,e=>{e.preventDefault();e.stopPropagation()},{capture:true}));
-window.addEventListener('keydown',e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m){e.preventDefault();move(...m)}});window.addEventListener('resize',render);render();
+window.addEventListener('keydown',e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m){e.preventDefault();move(...m)}});window.addEventListener('resize',()=>{rebuildSignRects();render()});rebuildSignRects();connectivityCheck();render();
 </script></body></html>
