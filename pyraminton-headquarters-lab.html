@@ -6,10 +6,10 @@
 button{font:inherit}.game{height:100%;display:grid;grid-template-rows:52px 1fr}.hud{display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#fff8e9;border-bottom:2px solid #8a6948;z-index:20}.hud b{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:15px}.hud span{font-size:10px;font-weight:900;color:#6b5b49}.revision{padding:5px 8px;border-radius:999px;background:#172238e8;border:1px solid #e3b53ce6;color:#fff!important;font-size:10px!important;font-weight:900;white-space:nowrap}
 .main{position:relative;min-height:0;overflow:hidden;background:linear-gradient(#c9ad7d,#ad8258)}
 .world{position:absolute;width:1320px;height:1650px;left:0;top:0;transform-origin:0 0}
-.hub{position:absolute;left:460px;top:600px;width:400px;height:180px;background:#b87d47;border:18px solid #68462e;box-shadow:inset 0 0 0 7px #3f2a1d;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:1000;font-size:22px;color:#f6e0a5}
+.hub{position:absolute;left:460px;top:600px;width:400px;height:180px;background:#b87d47;border:18px solid #68462e;box-shadow:inset 0 0 0 7px #3f2a1d;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:1000;font-size:22px;color:#f6e0a5;z-index:4}.door{position:absolute;background:#d9b278;z-index:6;box-shadow:inset 0 0 0 5px #8b633f}.door.n{left:580px;top:592px;width:160px;height:40px}.door.s{left:580px;top:748px;width:160px;height:40px}.door.w{left:452px;top:640px;width:70px;height:100px}.door.e{left:798px;top:640px;width:70px;height:100px}
 .area{position:absolute;background:#c58d55;border:18px solid #68462e;box-shadow:inset 0 0 0 7px #3f2a1d}.area h2{position:absolute;left:50%;top:16px;transform:translateX(-50%);margin:0;background:#4b3427;border:2px solid #d1ab60;border-radius:999px;padding:6px 16px;color:#f5df9d;font-size:15px;white-space:nowrap}
 .north{left:460px;top:40px;width:400px;height:420px}.west{left:30px;top:470px;width:390px;height:1010px}.east{left:900px;top:470px;width:390px;height:820px}.south{left:460px;top:970px;width:400px;height:610px}
-.connector{position:absolute;background:#d9b278;border:8px solid #8b633f}.c1{left:580px;top:460px;width:160px;height:140px}.c2{left:420px;top:640px;width:90px;height:140px}.c3{left:810px;top:640px;width:90px;height:140px}.c4{left:580px;top:780px;width:160px;height:190px}
+.connector{position:absolute;background:#d9b278;border:8px solid #8b633f;z-index:2}.c1{left:580px;top:460px;width:160px;height:140px}.c2{left:420px;top:640px;width:90px;height:140px}.c3{left:810px;top:640px;width:90px;height:140px}.c4{left:580px;top:780px;width:160px;height:190px}
 .sign{position:absolute;width:145px;min-height:78px;background:#ecd9a9;color:#50361f;border:5px solid #76502e;border-radius:4px;box-shadow:0 5px 6px #38231655;padding:9px 8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:1000;line-height:1.25}
 .sign:after{content:"";position:absolute;left:50%;bottom:-30px;width:8px;height:30px;background:#76502e;transform:translateX(-50%)}
 .player{position:absolute!important;width:32px!important;height:40px!important;z-index:12!important;background:
@@ -38,18 +38,18 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 @media(max-width:600px){.side{right:10px;bottom:10px;width:126px}.joy{width:108px;height:108px}.knob{width:46px;height:46px}.minimap{right:8px;top:8px}}
 @media(max-width:600px) and (orientation:portrait){.side{right:8px;bottom:8px;width:116px}.joy{width:96px;height:96px}.knob{width:40px;height:40px}.note{max-width:190px;white-space:normal;border-radius:10px}}
 </style></head><body>
-<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-07</span></header>
+<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-08</span></header>
 <main class="main" id="vp"><div class="world" id="world">
 <div class="area north" id="north"><h2>北海道エリア</h2></div>
 <div class="area west" id="west"><h2>西日本エリア</h2></div>
 <div class="area east" id="east"><h2>東日本エリア</h2></div>
 <div class="area south" id="south"><h2>九州・沖縄エリア</h2></div>
 <div class="connector c1"></div><div class="connector c2"></div><div class="connector c3"></div><div class="connector c4"></div>
-<div class="hub">ピラミトン本部<br>中央ホール</div><div class="player" id="player"></div>
+<div class="hub">ピラミトン本部<br>中央ホール</div><div class="door n"></div><div class="door s"></div><div class="door w"></div><div class="door e"></div><div class="player" id="player"></div>
 </div>
 <div class="minimap"><div class="miniWorld"><div class="m m1"></div><div class="m m2"></div><div class="m m3"></div><div class="m m4"></div><div class="miniP" id="miniP"></div></div></div>
 <aside class="side"><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div></aside>
-<div class="note">北にある遺産ほど上に配置。通路は2マス相当以上を確保。壁・区画外には進入不可。</div>
+<div class="note">北にある遺産ほど上に配置。通路は2マス相当以上を確保。壁・区画外には進入不可。中央ホールは4方向に開口。</div>
 </main></div>
 <script>
 const groups=[{"title":"北海道エリア","cls":"north","items":["知床","北海道・北東北の縄文遺跡群"]},{"title":"西日本エリア","cls":"west","items":["白川郷・五箇山","石見銀山","古都京都","姫路城","古都奈良","法隆寺地域","百舌鳥・古市古墳群","飛鳥・藤原の宮都","原爆ドーム","厳島神社","紀伊山地"]},{"title":"東日本エリア","cls":"east","items":["白神山地","平泉","佐渡島の金山","日光の社寺","富岡製糸場","ル・コルビュジエ","富士山","小笠原諸島"]},{"title":"九州・沖縄エリア","cls":"south","items":["宗像・沖ノ島","明治日本の産業革命遺産","長崎と天草地方の潜伏キリシタン関連遺産","屋久島","奄美・徳之島・沖縄島北部・西表島","琉球王国のグスク"]}];
@@ -65,21 +65,24 @@ let player={x:660,y:690},joyDir=null,repeat=null;
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 const PLAYER_R=14;
 const walkableRects=[
-  // 北海道
-  {x:478,y:58,w:364,h:384},
-  // 西日本
-  {x:48,y:488,w:354,h:974},
-  // 東日本
-  {x:918,y:488,w:354,h:784},
-  // 九州・沖縄
-  {x:478,y:988,w:364,h:574},
-  // 中央ホール
+  // 各エリア内部
+  {x:478,y:58,w:364,h:384},      // 北海道
+  {x:48,y:488,w:354,h:974},      // 西日本
+  {x:918,y:488,w:354,h:784},     // 東日本
+  {x:478,y:988,w:364,h:574},     // 九州・沖縄
+  // 中央ホール内部
   {x:478,y:618,w:364,h:144},
-  // 接続通路（すべて2マス相当以上）
-  {x:588,y:452,w:144,h:182},
-  {x:398,y:648,w:112,h:124},
-  {x:810,y:648,w:112,h:124},
-  {x:588,y:750,w:144,h:238}
+  // 4方向の通路。中央ホール側・各エリア側へ十分に重ねて
+  // 1歩の移動量(12px)で境界を飛び越えて塞がらないようにする。
+  {x:588,y:420,w:144,h:235},     // 北
+  {x:370,y:648,w:170,h:124},     // 西
+  {x:780,y:648,w:170,h:124},     // 東
+  {x:588,y:730,w:144,h:295},     // 南
+  // ドア敷居を独立した歩行可能領域として保証
+  {x:570,y:590,w:180,h:70},
+  {x:570,y:720,w:180,h:80},
+  {x:440,y:625,w:100,h:140},
+  {x:780,y:625,w:100,h:140}
 ];
 function insideRect(x,y,r){
   return x>=r.x+PLAYER_R && x<=r.x+r.w-PLAYER_R && y>=r.y+PLAYER_R && y<=r.y+r.h-PLAYER_R;
