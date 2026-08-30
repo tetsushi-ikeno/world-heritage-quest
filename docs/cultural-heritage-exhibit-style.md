@@ -1,7 +1,17 @@
 # 文化遺産 展示グラフィック基準 v0.1
 
 更新日: 2026-08-30  
-対応Lab: `cultural-heritage-center-placement-lab.html`  
+対応Lab: `cultural-heritage-center-placement-lab.html`
+
+## 2026-08-30 確定
+
+初期3遺産（厳島神社・姫路城・法隆寺）の展示グラフィックを確定し、以下を正本SVGとして保存した。
+
+- `docs/assets/heritage-exhibits/cultural/itsukushima-shrine.svg`
+- `docs/assets/heritage-exhibits/cultural/himeji-castle.svg`
+- `docs/assets/heritage-exhibits/cultural/horyuji.svg`
+
+以後の文化遺産はこの3点のフラットトーン、細い滑らかな白縁、柔らかな落ち影、4×4マス基準に合わせる。  
 Revision: `LAB / r20260830-04`
 
 ## 目的
