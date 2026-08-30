@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280">
+<defs><filter id="fshira" x="-30%" y="-30%" width="160%" height="180%"><feMorphology in="SourceAlpha" operator="dilate" radius="3" result="d"/><feFlood flood-color="#fff" result="w"/><feComposite in="w" in2="d" operator="in" result="o"/><feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/><feOffset in="b" dy="5" result="off"/><feFlood flood-color="#2c1b12" flood-opacity=".30" result="sc"/><feComposite in="sc" in2="off" operator="in" result="s"/><feMerge><feMergeNode in="s"/><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g filter="url(#fshira)">
+<path d="M50 228 H366" stroke="#788f5a" stroke-width="10"/>
+<g transform="translate(42,28)">
+<path d="M112 24 Q119 18 126 24 L191 138 Q195 145 187 148 H51 Q43 145 47 138Z" fill="#b99450"/>
+<path d="M113 32 Q119 28 125 32 L177 128 Q181 134 174 136 H64 Q57 134 61 128Z" fill="#c9a55c"/>
+<path d="M63 133 H175 L168 203 H70Z" fill="#5c3d29"/>
+<path d="M79 134 H159 V149 H79Z" fill="#4c3527"/>
+<rect x="105" y="158" width="28" height="45" fill="#35261f"/>
+<rect x="79" y="153" width="17" height="22" fill="#e5d5af"/><rect x="142" y="153" width="17" height="22" fill="#e5d5af"/>
+<path d="M83 95 H155 V113 H83Z" fill="#51382a"/><path d="M89 99h14v10H89zM112 99h14v10h-14zM135 99h14v10h-14z" fill="#ede0bd"/>
+<path d="M53 139 Q119 128 185 139" fill="none" stroke="#8d713f" stroke-width="5"/>
+</g>
+<g transform="translate(228,72) scale(.70)">
+<path d="M112 24 Q119 18 126 24 L191 138 Q195 145 187 148 H51 Q43 145 47 138Z" fill="#b99450"/>
+<path d="M113 32 Q119 28 125 32 L177 128 Q181 134 174 136 H64 Q57 134 61 128Z" fill="#c9a55c"/>
+<path d="M63 133 H175 L168 203 H70Z" fill="#5c3d29"/>
+<rect x="105" y="158" width="28" height="45" fill="#35261f"/>
+<rect x="79" y="153" width="17" height="22" fill="#e5d5af"/><rect x="142" y="153" width="17" height="22" fill="#e5d5af"/>
+<path d="M83 95 H155 V113 H83Z" fill="#51382a"/>
+</g>
+</g></svg>
