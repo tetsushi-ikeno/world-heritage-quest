@@ -79,3 +79,16 @@ Revision: `LAB / r20260830-05`
 確認Lab: `cultural-heritage-exhibit-batch01-lab.html`
 
 この5点は未確定。Lab確認後に修正し、確定時のみ個別SVGとして `docs/assets/heritage-exhibits/cultural/` へ保存する。
+
+
+## Batch 01 確定（2026-08-30）
+
+以下5点を確定し、正本SVGとして保存した。
+
+- 古都京都の文化財（金閣寺）: `docs/assets/heritage-exhibits/cultural/kyoto-kinkakuji.svg`
+- 古都奈良の文化財（東大寺大仏）: `docs/assets/heritage-exhibits/cultural/nara-todaiji-daibutsu.svg`
+- 日光の社寺（陽明門）: `docs/assets/heritage-exhibits/cultural/nikko-yomeimon.svg`
+- 原爆ドーム: `docs/assets/heritage-exhibits/cultural/hiroshima-genbaku-dome.svg`
+- 白川郷・五箇山の合掌造り集落: `docs/assets/heritage-exhibits/cultural/shirakawago-gokayama.svg`
+
+制作ルールは「実物の形状・プロポーションはできるだけ忠実に、表面表現だけフラットにする」を優先する。
