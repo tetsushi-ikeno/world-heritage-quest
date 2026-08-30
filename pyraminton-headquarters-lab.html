@@ -23,6 +23,9 @@ button{font:inherit}.game{height:100%;display:grid;grid-template-rows:52px 1fr}.
 .cross.e{left:0;right:180px;top:230px;height:100px}
 .sign{position:absolute;width:150px;min-height:74px;background:#ecd9a9;color:#50361f;border:5px solid #76502e;border-radius:4px;box-shadow:0 5px 6px #38231655;padding:9px 8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:1000;line-height:1.25;z-index:10}
 .sign:after{content:"";position:absolute;left:50%;bottom:-28px;width:8px;height:28px;background:#76502e;transform:translateX(-50%)}
+.sign.graphic{width:170px;height:150px;min-height:0;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;display:block;pointer-events:none;overflow:visible}
+.sign.graphic:after{display:none}
+.sign.graphic img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;pointer-events:none}
 .aisle{position:absolute;left:190px;top:82px;bottom:46px;width:104px;background:#d9b278;border-radius:0;pointer-events:none;z-index:4}
 .player{position:absolute!important;width:32px!important;height:40px!important;z-index:20!important;background:
 linear-gradient(#795039 0 0) 24px 22px/6px 9px no-repeat,
@@ -47,7 +50,7 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 @media(max-width:600px){.side{right:10px;bottom:10px;width:126px}.joy{width:108px;height:108px}.knob{width:46px;height:46px}.minimap{right:8px;top:8px}}
 @media(max-width:600px) and (orientation:portrait){.side{right:8px;bottom:8px;width:116px}.joy{width:96px;height:96px}.knob{width:40px;height:40px}.note{max-width:200px;white-space:normal;border-radius:10px}}
 </style></head><body>
-<div class="game"><header class="hud"><b>ピラミトン本部</b><span>4エリア構成・立て札レイアウト専用</span><span class="revision">HQ LAB / r20260830-11</span></header>
+<div class="game"><header class="hud"><b>ピラミトン本部</b><span>北海道エリア・遺産グラフィック反映確認</span><span class="revision">HQ LAB / r20260831-01</span></header>
 <main class="main" id="vp"><div class="world" id="world">
 <div class="room" id="north"><h2>北海道エリア</h2><div class="aisle"></div></div>
 <div class="room" id="west"><h2>西日本エリア</h2><div class="aisle"></div><div class="cross w"></div></div>
@@ -58,12 +61,16 @@ linear-gradient(#c3a260 0 0) 11px 0/10px 8px no-repeat!important}
 <div class="player" id="player"></div></div>
 <div class="minimap"><div class="miniWorld"><div class="m m1"></div><div class="m m2"></div><div class="m m3"></div><div class="m m4"></div><div class="m mh"></div><div class="miniP" id="miniP"></div></div></div>
 <aside class="side"><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div></aside>
-<div class="note">濃茶＝壁／薄茶＝床・通路。西日本・東日本は入口から部屋中央の縦通路へ直接つながる横通路を確保。</div>
+<div class="note">北海道エリアのみ確定グラフィックを反映。ほか3エリアは従来の立て札のまま。</div>
 </main></div>
 <script>
 const groups=[{"id":"north","title":"北海道エリア","items":["知床","北海道・北東北の縄文遺跡群"]},{"id":"west","title":"西日本エリア","items":["白川郷・五箇山","石見銀山","古都京都","姫路城","古都奈良","法隆寺地域","百舌鳥・古市古墳群","飛鳥・藤原の宮都","原爆ドーム","厳島神社","紀伊山地"]},{"id":"east","title":"東日本エリア","items":["白神山地","平泉","佐渡島の金山","日光の社寺","富岡製糸場","ル・コルビュジエ","富士山","小笠原諸島"]},{"id":"south","title":"九州・沖縄エリア","items":["宗像・沖ノ島","明治日本の産業革命遺産","長崎と天草地方の潜伏キリシタン関連遺産","屋久島","奄美・徳之島・沖縄島北部・西表島","琉球王国のグスク"]}];
+const graphicAssets={
+ "知床":"docs/assets/heritage-graphics/approved/shiretoko.webp",
+ "北海道・北東北の縄文遺跡群":"docs/assets/heritage-graphics/approved/jomon.webp"
+};
 const rowY={
- north:[110],
+ north:[94],
  west:[90,350,510,670,830,990],
  east:[90,350,510,670],
  south:[100,270,440]
@@ -71,11 +78,22 @@ const rowY={
 groups.forEach(g=>{
  const host=document.getElementById(g.id);
  g.items.forEach((name,i)=>{
-   const s=document.createElement('div');s.className='sign';
+   const s=document.createElement('div');
    const row=Math.floor(i/2),right=i%2===1;
-   s.style.left=(right?330:40)+'px';
-   s.style.top=rowY[g.id][row]+'px';
-   s.textContent=name;host.appendChild(s);
+   if(g.id==='north'){
+     s.className='sign graphic';
+     s.style.left=(right?314:20)+'px';
+     s.style.top=rowY.north[row]+'px';
+     const img=document.createElement('img');
+     img.src=graphicAssets[name];img.alt=name;img.draggable=false;
+     s.appendChild(img);
+   }else{
+     s.className='sign';
+     s.style.left=(right?330:40)+'px';
+     s.style.top=rowY[g.id][row]+'px';
+     s.textContent=name;
+   }
+   host.appendChild(s);
  });
 });
 const vp=document.getElementById('vp'),world=document.getElementById('world'),playerEl=document.getElementById('player'),mini=document.getElementById('miniP'),joy=document.getElementById('joy'),knob=document.getElementById('knob');
@@ -100,7 +118,8 @@ let signRects=[];
 function rebuildSignRects(){
  signRects=[...document.querySelectorAll('.sign')].map(el=>{
    const l=el.parentElement.offsetLeft+parseFloat(el.style.left),t=el.parentElement.offsetTop+parseFloat(el.style.top);
-   return {l:l-8,r:l+158,t:t-8,b:t+114};
+   const w=el.offsetWidth,h=el.offsetHeight,stem=el.classList.contains('graphic')?0:32;
+   return {l:l-8,r:l+w+8,t:t-8,b:t+h+stem+8};
  });
 }
 function hitsSign(x,y){
