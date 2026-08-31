@@ -1,0 +1,41 @@
+name: Assemble HQ retina assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/assets/heritage-graphics/staging/_ready'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Reassemble high quality WebP assets
+        run: |
+          mkdir -p docs/assets/heritage-graphics/approved
+          cat docs/assets/heritage-graphics/staging/shiretoko.part* | base64 -d > docs/assets/heritage-graphics/approved/shiretoko.webp
+          cat docs/assets/heritage-graphics/staging/jomon.part* | base64 -d > docs/assets/heritage-graphics/approved/jomon.webp
+          test "$(stat -c%s docs/assets/heritage-graphics/approved/shiretoko.webp)" -gt 70000
+          test "$(stat -c%s docs/assets/heritage-graphics/approved/jomon.webp)" -gt 40000
+          file docs/assets/heritage-graphics/approved/shiretoko.webp
+          file docs/assets/heritage-graphics/approved/jomon.webp
+
+      - name: Commit rebuilt assets
+        run: |
+          rm -rf docs/assets/heritage-graphics/staging
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/assets/heritage-graphics/approved/shiretoko.webp docs/assets/heritage-graphics/approved/jomon.webp docs/assets/heritage-graphics/staging
+          git commit -m "Replace Hokkaido graphics with retina assets"
+          git pull --rebase origin main
+          git push origin HEAD:main
