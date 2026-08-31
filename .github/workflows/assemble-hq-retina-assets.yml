@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'docs/assets/heritage-graphics/bundle512/_ready'
+      - 'docs/assets/heritage-graphics/bundle-hq/_ready'
 
 permissions:
   contents: write
@@ -23,23 +23,23 @@ jobs:
       - name: Rebuild approved image bundle
         run: |
           set -euo pipefail
-          cat docs/assets/heritage-graphics/bundle512/part* | base64 -d > /tmp/approved-graphics.zip
+          cat docs/assets/heritage-graphics/bundle-hq/part* | base64 -d > /tmp/approved-graphics.zip
           rm -rf /tmp/approved-graphics
           mkdir -p /tmp/approved-graphics docs/assets/heritage-graphics/approved
           unzip -q /tmp/approved-graphics.zip -d /tmp/approved-graphics
           count=$(find /tmp/approved-graphics -maxdepth 1 -type f -name '*.webp' | wc -l)
           test "$count" -eq 27
-          find /tmp/approved-graphics -maxdepth 1 -type f -name '*.webp' -size -50000c -print -quit | (! grep .)
+          find /tmp/approved-graphics -maxdepth 1 -type f -name '*.webp' -size -40000c -print -quit | (! grep .)
           rm -f docs/assets/heritage-graphics/approved/*.webp
           cp /tmp/approved-graphics/*.webp docs/assets/heritage-graphics/approved/
           test "$(find docs/assets/heritage-graphics/approved -maxdepth 1 -type f -name '*.webp' | wc -l)" -eq 27
-          rm -rf docs/assets/heritage-graphics/bundle512
+          rm -rf docs/assets/heritage-graphics/bundle-hq
 
       - name: Commit all 27 approved graphics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/assets/heritage-graphics/approved docs/assets/heritage-graphics/bundle512
+          git add docs/assets/heritage-graphics/approved docs/assets/heritage-graphics/bundle-hq
           git commit -m "Save all 27 approved heritage graphics in HQ quality"
           git pull --rebase origin main
           git push origin HEAD:main
