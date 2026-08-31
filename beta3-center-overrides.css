@@ -209,3 +209,9 @@ body.site-yakushima .obj.display:after{
 .result .quizStars{justify-content:center;flex:0 0 100%!important}
 #starHud{white-space:nowrap}
 @media(max-width:600px){#starHud{font-size:8px!important}.quizStars{font-size:21px}}
+
+/* Keep star totals visible beside the persistent revision badge. */
+@media(max-width:600px){
+  .hud{position:relative!important;justify-content:flex-start!important;align-items:flex-start!important;padding-top:7px!important}
+  .hud #starHud{position:absolute!important;left:14px!important;bottom:3px!important;font-size:8px!important;margin:0!important}
+}
