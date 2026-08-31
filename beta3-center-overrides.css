@@ -201,3 +201,11 @@ body.site-yakushima .obj.display:after{
 .result .source,.result strong,.result p{flex:0 0 100%!important}
 .result #again{order:1!important;margin-right:auto!important}
 .result #close{order:2!important;margin-left:auto!important}
+
+/* r20260831-01: star progress */
+.quizStars{display:flex;gap:6px;align-items:center;margin:8px 0 10px;font-size:24px;line-height:1}
+.quizStars .starOn{color:#f2b928;text-shadow:0 1px 0 #8f6b13}
+.quizStars .starOff{color:#c8cdd4}
+.result .quizStars{justify-content:center;flex:0 0 100%!important}
+#starHud{white-space:nowrap}
+@media(max-width:600px){#starHud{font-size:8px!important}.quizStars{font-size:21px}}
