@@ -25,8 +25,10 @@ jobs:
           mkdir -p docs/assets/heritage-graphics/approved
           cat docs/assets/heritage-graphics/staging/shiretoko.part* | base64 -d > docs/assets/heritage-graphics/approved/shiretoko.webp
           cat docs/assets/heritage-graphics/staging/jomon.part* | base64 -d > docs/assets/heritage-graphics/approved/jomon.webp
-          test "$(stat -c%s docs/assets/heritage-graphics/approved/shiretoko.webp)" -gt 70000
-          test "$(stat -c%s docs/assets/heritage-graphics/approved/jomon.webp)" -gt 40000
+          test "$(stat -c%s docs/assets/heritage-graphics/approved/shiretoko.webp)" -gt 60000
+          test "$(stat -c%s docs/assets/heritage-graphics/approved/jomon.webp)" -gt 35000
+          echo "1ef35b12e2a1fd2ff86decde0b0266a0fcaa34d830523f2217bf37964213561a  docs/assets/heritage-graphics/approved/shiretoko.webp" | sha256sum -c -
+          echo "a9ba1dc4afa76fd713e093b088b6ec89d812ed3103f00a4cd818dc91631bafc2  docs/assets/heritage-graphics/approved/jomon.webp" | sha256sum -c -
           file docs/assets/heritage-graphics/approved/shiretoko.webp
           file docs/assets/heritage-graphics/approved/jomon.webp
 
