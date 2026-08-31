@@ -21,7 +21,8 @@ function awardBranchStar(id,index){return awardStar('branches',id,index)}
 function starCount(kind){const s=load(),m=s.stars?.[kind]||{};return Object.values(m).reduce((n,a)=>n+(Array.isArray(a)?a.filter(Boolean).length:0),0)}
 function heritageStarCount(){return starCount('heritage')}
 function branchStarCount(){return starCount('branches')}
-window.WHQBetaSave={KEY,fresh,load,save,update,reset,centerState,setCenterState,discoverBranch,finishBranchQuiz,heritageStars,branchStars,awardHeritageStar,awardBranchStar,heritageStarCount,branchStarCount,BETA_REV};
+function totalStarCount(){return heritageStarCount()+branchStarCount()}
+window.WHQBetaSave={KEY,fresh,load,save,update,reset,centerState,setCenterState,discoverBranch,finishBranchQuiz,heritageStars,branchStars,awardHeritageStar,awardBranchStar,heritageStarCount,branchStarCount,totalStarCount,BETA_REV};
 
 function revisionBadge(){return document.getElementById('revisionBadge')}
 function setRevisionStatus(patch){const el=revisionBadge();if(el)el.textContent=`BETA ${BETA_REV} / PATCH ${patch}`}
