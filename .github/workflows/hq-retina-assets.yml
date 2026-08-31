@@ -1,0 +1,61 @@
+name: Build HQ retina assets
+
+on:
+  push:
+    branches: [hq-retina-stage]
+    paths:
+      - 'tmp-hq-assets/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Fetch staging branch
+        run: git fetch origin hq-retina-stage
+      - name: Rebuild retina images and update Lab
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, base64, hashlib
+          specs = [
+            ('shiretoko', 7, 'docs/assets/heritage-graphics/approved/shiretoko.webp', 64398, 'd22cf81ccb72fe89e406b09f966290dac6bdeb9a'),
+            ('jomon', 4, 'docs/assets/heritage-graphics/approved/jomon.webp', 37954, 'f8f2e214062f4dd2c8deb878ba55c7f5fc27a026'),
+          ]
+          for stem, count, target, expected_size, expected_blob_sha in specs:
+              parts=[]
+              for i in range(count):
+                  p=f'tmp-hq-assets/{stem}-{i:02d}.b64'
+                  parts.append(subprocess.check_output(['git','show',f'origin/hq-retina-stage:{p}'], text=True).strip())
+              raw=base64.b64decode(''.join(parts), validate=True)
+              if len(raw) != expected_size:
+                  raise SystemExit(f'{stem}: size mismatch {len(raw)} != {expected_size}')
+              hdr=b'blob '+str(len(raw)).encode()+b'\0'
+              sha=hashlib.sha1(hdr+raw).hexdigest()
+              if sha != expected_blob_sha:
+                  raise SystemExit(f'{stem}: blob sha mismatch {sha} != {expected_blob_sha}')
+              Path(target).parent.mkdir(parents=True, exist_ok=True)
+              Path(target).write_bytes(raw)
+          lab=Path('pyraminton-headquarters-lab.html')
+          txt=lab.read_text()
+          txt=txt.replace('HQ LAB / r20260831-02','HQ LAB / r20260831-03')
+          txt=txt.replace('北海道エリア・4×4実寸表示確認','北海道エリア・Retina高画質確認')
+          txt=txt.replace('docs/assets/heritage-graphics/approved/shiretoko.webp"','docs/assets/heritage-graphics/approved/shiretoko.webp?v=20260831-03"')
+          txt=txt.replace('docs/assets/heritage-graphics/approved/jomon.webp"','docs/assets/heritage-graphics/approved/jomon.webp?v=20260831-03"')
+          lab.write_text(txt)
+          PY
+      - name: Commit to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/assets/heritage-graphics/approved/shiretoko.webp docs/assets/heritage-graphics/approved/jomon.webp pyraminton-headquarters-lab.html
+          git commit -m "Upgrade Hokkaido heritage graphics for Retina display"
+          git pull --rebase origin main
+          git push origin HEAD:main
