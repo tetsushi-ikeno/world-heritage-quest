@@ -2,7 +2,7 @@
 
 ゲーム内で使用する世界遺産写真の出典・作者・ライセンス一覧です。画像はWikimedia Commonsから取得し、各ファイルページで再利用条件を確認しています。
 
-最終品質確認: 2026-08-31T09:49:48.124Z
+最終品質確認: 2026-09-01T01:58:46.033Z
 
 ## 法隆寺地域の仏教建造物
 
@@ -597,7 +597,7 @@
 ### 2. ② スケールや美しさに驚く景観
 
 - ファイル: `docs/assets/heritage/asuka-fujiwara/02.jpg`
-- Commons: [File:Public viewing of investigation World Heritage by Asuka - Fujiwara 01.jpg](https://commons.wikimedia.org/wiki/File:Public_viewing_of_investigation_World_Heritage_by_Asuka_-_Fujiwara_01.jpg)
+- Commons: [File:Public viewing of investigation World Heritage by Asuka - Fujiwara 03.jpg](https://commons.wikimedia.org/wiki/File:Public_viewing_of_investigation_World_Heritage_by_Asuka_-_Fujiwara_03.jpg)
 - 作者: 番記者
 - ライセンス: [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en)
 
