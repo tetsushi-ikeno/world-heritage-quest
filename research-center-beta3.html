@@ -20,11 +20,11 @@ body.site-yakushima .display:after{background:radial-gradient(circle at 50% 28%,
 <link rel="stylesheet" href="beta2-center-theme.css?v=r20260827-05">
 <link rel="stylesheet" href="beta2-center-theme-r04.css?v=r20260827-05">
 <link rel="stylesheet" href="beta2-center-theme-r05.css?v=r20260827-05">
-<link rel="stylesheet" href="beta3-center-overrides.css?v=r20260831-02">
+<link rel="stylesheet" href="beta3-center-overrides.css?v=r20260901-01">
 </head>
 <body><div class="game"><header class="hud"><b id="title">研究センター</b><span id="starHud">★ 0 / 100</span></header><main class="main"><section class="roomWrap"><div id="room" class="room"></div></section><aside class="side"><div><button id="action" class="action" disabled>アクション</button><div id="target" class="target">対象に近づこう</div></div><div id="joy" class="joy"><span class="mark u">▲</span><span class="mark d">▼</span><span class="mark l">◀</span><span class="mark r">▶</span><div id="knob" class="knob"></div></div><div class="hint">近づくだけでアクション可能<br>最も近い対象を自動選択</div></aside></main><footer id="message" class="message"><b>研究センター</b><p>気になる展示や人に近づいてみよう。</p></footer></div>
 <div id="modal" class="modal"><div id="card" class="card"></div></div><div id="loading" class="loading">研究センターを準備しています…</div>
-<script src="beta-save.js?v=r20260831-02"></script>
+<script src="beta-save.js?v=r20260901-01"></script>
 <script>
 (()=>{'use strict';
 const siteId=sessionStorage.getItem('whqActiveHeritageId')||'himeji',siteName=sessionStorage.getItem('whqActiveHeritageName')||'姫路城';
@@ -53,6 +53,30 @@ action.onclick=()=>{if(!target)return;if(target.type==='exit'){parent.postMessag
 let joyDir=null;function updateJoy(e,moveNow=false){const r=joy.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2),len=Math.hypot(x,y);if(len<14){joyDir=null;knob.style.transform='translate(-50%,-50%)';return}const m=Math.min(30,len),a=Math.atan2(y,x);knob.style.transform='translate(calc(-50% + '+(Math.cos(a)*m)+'px),calc(-50% + '+(Math.sin(a)*m)+'px))';const next=Math.abs(x)>Math.abs(y)?[Math.sign(x),0]:[0,Math.sign(y)];const changed=!joyDir||joyDir[0]!==next[0]||joyDir[1]!==next[1];joyDir=next;if(moveNow&&changed)move(...joyDir)}
 function stop(){if(repeat)clearInterval(repeat);repeat=null;joyDir=null;knob.style.transform='translate(-50%,-50%)'}
 joy.addEventListener('pointerdown',e=>{e.preventDefault();joy.setPointerCapture(e.pointerId);updateJoy(e,true);repeat=setInterval(()=>{if(joyDir)move(...joyDir)},135)});joy.addEventListener('pointermove',e=>{if(!repeat)return;e.preventDefault();updateJoy(e,true)});joy.addEventListener('pointerup',stop);joy.addEventListener('pointercancel',stop);['selectstart','contextmenu','dragstart'].forEach(type=>joy.addEventListener(type,e=>{e.preventDefault();e.stopPropagation()},{capture:true}));window.addEventListener('keydown',e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m){e.preventDefault();move(...m)}});
-fetch('data/beta3-vertical-slice.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{content=(j.sites||[]).find(s=>s.slug===siteId);if(!content){content=(j.sites||[])[0];setMsg('Beta3 Vertical Slice','現在は姫路城・白川郷/五箇山・屋久島の3遺産を作り込んでいます。')}document.body.className=document.body.className.replace(/site-[^\s]+/g,'').replace(/heritage-(natural|cultural)/g,'').trim();document.body.classList.add('site-'+content.slug);document.body.classList.add(content.kind==='natural'?'heritage-natural':'heritage-cultural');document.getElementById('loading').classList.add('hide');updateStarHud();render()}).catch(()=>{document.getElementById('loading').textContent='研究センターを読み込めませんでした'});
+Promise.all([
+ fetch('data/beta-heritage-content.json',{cache:'no-store'}).then(r=>r.json()),
+ fetch('data/beta3-vertical-slice.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>({sites:[]}))
+]).then(([base,slice])=>{
+ const raw=(base.sites||[]).find(s=>s.slug===siteId)||(base.sites||[]).find(s=>s.name===siteName);
+ if(!raw)throw new Error('site not found');
+ const special=(slice.sites||[]).find(s=>s.slug===siteId);
+ const slotSources=['本','展示','調査員'],slotDifficulty=['やさしい','ふつう','やや難しい'];
+ const fallback={
+   slug:raw.slug,
+   name:raw.name,
+   kind:(sessionStorage.getItem('whqActiveHeritageType')==='自然'?'natural':'cultural'),
+   book:{criteria:raw.criteria||[],text:(raw.year?raw.year+'年に世界遺産に登録。':'')+'登録基準と、その価値を確認しよう。'},
+   display:raw.display||'',
+   researcher:raw.researcher||'',
+   quiz:(raw.quiz||[]).map((q,i)=>({...q,source:slotSources[i]||'腕試し',difficulty:slotDifficulty[i]||'ふつう'}))
+ };
+ content=special?{...fallback,...special,book:special.book||fallback.book,quiz:special.quiz||fallback.quiz}:fallback;
+ document.body.className=document.body.className.replace(/site-[^\s]+/g,'').replace(/heritage-(natural|cultural)/g,'').trim();
+ document.body.classList.add('site-'+content.slug);
+ document.body.classList.add(content.kind==='natural'?'heritage-natural':'heritage-cultural');
+ document.getElementById('loading').classList.add('hide');
+ updateStarHud();
+ render();
+}).catch(()=>{document.getElementById('loading').textContent='研究センターを読み込めませんでした'});
 })();
 </script></body></html>
