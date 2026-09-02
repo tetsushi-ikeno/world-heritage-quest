@@ -47,7 +47,7 @@ index.html
       ├─ [互換registry] beta3-center-overrides.css
       │  └─ research-center.css
       │     ├─ research-center-theme.css
-      │     ├─ beta3-center-overrides-base-r20260902-01.css
+      │     ├─ research-center-runtime.css
       │     └─ beta3-center-approved-graphics.css
       │        └─ docs/assets/heritage-graphics/approved/*.webp
       ├─ data/beta-heritage-content.json
@@ -57,7 +57,9 @@ index.html
 
 全国マップの現行runtimeは `world-map-runtime.js` と `japan-map-runtime.html`。`world-map-runtime.js` がブラウザ実行時に日本地図iframeを `japan-map-runtime.html` へ差し替える。
 
-研究センターの確定済み木調テーマ・主人公・調査員・展示のr04/r05補正は `research-center-theme.css` に統合済み。`research-center.css` がBeta3調整と確定グラフィックを同じ順序で読み込む正式CSS入口である。
+研究センターは、確定済み木調テーマ・主人公・調査員・展示補正を `research-center-theme.css`、Beta3のレイアウト・操作・星表示等を `research-center-runtime.css` に分離した。`research-center.css` がこれらと確定グラフィックを従来と同じ順序で読み込む正式CSS入口である。
+
+`beta3-center-overrides-base-r20260902-01.css` はPhase 12移行確認のため一時的に残す比較元であり、現行runtimeからは参照しない。CIで `research-center-runtime.css` とコメント・空白を除いたCSS本体が一致することを確認する。
 
 ## 互換URL / 互換ローダー / 互換CSS
 
@@ -104,7 +106,7 @@ current指定:
 1. `phase*.js/css` や削除済み旧Betaファイルを正本として参照しない。
 2. Beta3本体からチュートリアルは `tutorial.html`、全国マップは `world-map.html` を呼ぶ。
 3. 全国マップの追加修正は `world-map-runtime.js` / `japan-map-runtime.html` を優先し、`beta2-r05-map-hotfix.js` / `japan-map-r05-wrapper.html` に新しい実装を足さない。
-4. 研究センターのスタイル修正は `research-center.css` とそこから参照される現行CSSを使用し、`beta2-center-theme*.css` へ実装を戻さない。
+4. 研究センターのスタイル修正は `research-center-theme.css` / `research-center-runtime.css` / `beta3-center-approved-graphics.css` を使用し、旧Beta2テーマCSSや日付Revisionファイルへ実装を戻さない。
 5. ファイル名に `beta2` / `hotfix` / `lab` が含まれることだけを理由に削除しない。まだ内部依存に残るものがある。
 6. `*-lab.html` を本番実装へ流用する場合は `data/ui-current.json` / `docs/ui-current.md` または本書で正本指定されているか確認する。
 7. 仕様判断は `docs/beta3-baseline.md` と `docs/heritage-graphics-decisions.md` を優先する。
@@ -131,3 +133,4 @@ current指定:
 - 正式画面入口追加後: `backup/post-canonical-entry-20260902`
 - マップ依存修復後: `backup/post-map-dependency-fix-20260902`
 - マップruntime正式名化後: `backup/post-map-runtime-names-20260902`
+- 研究センターCSS入口統合後: `backup/post-center-css-entry-20260902`

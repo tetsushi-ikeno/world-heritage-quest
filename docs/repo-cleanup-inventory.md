@@ -9,7 +9,7 @@
 - **RUNTIME**: 現行Beta3の実行に必要。削除禁止。
 - **CANONICAL / TOOLING**: 正本UI、仕様、制作・検証に必要。保持。
 - **CONSOLIDATE**: 現役だが旧世代名・lab名のまま。正式ファイルへ統合後に削除。
-- **COMPATIBILITY**: 過去URL・過去参照互換。実装本体として使用しない。
+- **COMPATIBILITY / MIGRATION**: 過去URL・過去参照互換、または移行比較用。実装本体として使用しない。
 
 ## RUNTIME / 削除禁止
 
@@ -38,9 +38,11 @@
 
 ### 研究センター内部
 - `research-center.css` — 正式CSS入口
-- `research-center-theme.css` — 木調テーマ＋確定r04/r05補正を統合
-- `beta3-center-overrides-base-r20260902-01.css` — Beta3レイアウト・操作・星表示等。現役内部
+- `research-center-theme.css` — 木調テーマ＋確定r04/r05補正
+- `research-center-runtime.css` — Beta3レイアウト・操作・近接UX・星表示等
 - `beta3-center-approved-graphics.css` — 27件の確定展示グラフィック割当
+
+`beta3-center-overrides-base-r20260902-01.css` はPhase 12の移行比較元として一時保持し、runtimeからは参照しない。CIで `research-center-runtime.css` とコメント・空白を除いたCSS本体が一致することを検査する。
 
 研究センターHTMLに残る `beta2-center-theme*.css` は互換stub、`beta3-center-overrides.css` は `research-center.css` への互換registryであり、実装本体ではない。
 
@@ -81,7 +83,7 @@
 - `.github/workflows/`
 - `scripts/`
 
-## COMPATIBILITY / 実装本体ではない
+## COMPATIBILITY / MIGRATION / 実装本体ではない
 
 - `tutorial-lab-final.html` → `tutorial.html`
 - `area-map-beta2-wrapper.html` → `world-map.html`
@@ -91,16 +93,16 @@
 - `beta2-center-theme-r04.css` → 互換stub
 - `beta2-center-theme-r05.css` → 互換stub
 - `beta3-center-overrides.css` → `research-center.css` を読み込む互換registry
+- `beta3-center-overrides-base-r20260902-01.css` → Phase 12移行比較元。現行runtimeからは未参照
 - `lab-pyraminton-headquarters.html` → current HQ Lab
 
-新規コード・新規スタイルを互換ファイルへ追加しない。
+新規コード・新規スタイルを互換／移行ファイルへ追加しない。
 
 ## CONSOLIDATE / 次に整理する現役内部
 
 - `area-map-beta-loader.html`
 - `japan-map-beta-loader.html`
 - `japan-6x-map-lab.html`
-- `beta3-center-overrides-base-r20260902-01.css`
 - `tutorial-lab.html`
 
 これらは現在実行中。名前だけを理由に削除しない。
@@ -118,6 +120,7 @@
 - **Phase 9後修復**: `beta2-r05-map-hotfix.js` の動的参照先 `japan-map-r05-wrapper.html` 欠落を発見し復元。CIに動的参照検査を追加。
 - **Phase 10**: 全国マップの現役 `hotfix` / `r05` 実装を `world-map-runtime.js` / `japan-map-runtime.html` へ移し、旧名を互換専用へ縮小。
 - **Phase 11**: 研究センターの木調テーマ＋r04/r05補正を `research-center-theme.css` に統合し、`research-center.css` を正式CSS入口化。旧Beta2テーマCSSは互換stubへ縮小。
+- **Phase 12A**: 日付Revision名のBeta3調整CSSを `research-center-runtime.css` へ複製し、正式入口を新名へ切替。旧ファイルとのCSS本体完全一致をCIで検証してから旧名をstub化する二段階移行とする。
 
 ## 保留ドキュメント・補助ページ
 
@@ -133,12 +136,12 @@
 ## 残る主要リスク
 
 1. 全国マップ内部が `area-map-beta-loader.html` / `japan-map-beta-loader.html` によるHTML文字列置換を使っている。
-2. 研究センターのBeta3調整本体が `beta3-center-overrides-base-r20260902-01.css` というRevision名のまま。
-3. `tutorial-lab.html` と `japan-6x-map-lab.html` が現役内部なのにLab名のまま。
-4. `research-center-beta3.html` 自体のlinkタグには互換CSS名が残るため、将来HTMLを安全に差分編集できる段階で `research-center.css` 1本へ直接切り替える。
+2. `tutorial-lab.html` と `japan-6x-map-lab.html` が現役内部なのにLab名のまま。
+3. `research-center-beta3.html` 自体のlinkタグには互換CSS名が残るため、将来HTMLを安全に差分編集できる段階で `research-center.css` 1本へ直接切り替える。
+4. Phase 12A完了後、移行比較元 `beta3-center-overrides-base-r20260902-01.css` を互換stubへ縮小する必要がある。
 
 ## 次の作業
 
-1. Phase 11をCIで確認しmainへ反映する。
-2. `beta3-center-overrides-base-r20260902-01.css` を正式名へ移し、研究センター内部からRevision名を外す。
+1. Phase 12Aで新旧CSSの完全一致をCI確認しmainへ反映する。
+2. Phase 12Bで旧Revision CSSをstub化し、正式runtimeのみを正本にする。
 3. 全国マップLoader群・Lab名の内部実装を、挙動を変えず段階統合する。
