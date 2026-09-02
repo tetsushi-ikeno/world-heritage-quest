@@ -1,1 +1,0 @@
-(()=>{'use strict';const natural=new Set(['shiretoko','shirakami','ogasawara','yakushima','amami-okinawa']);const id=sessionStorage.getItem('whqActiveHeritageId')||'shiretoko';document.body.classList.add(natural.has(id)?'heritage-natural':'heritage-cultural');})();
