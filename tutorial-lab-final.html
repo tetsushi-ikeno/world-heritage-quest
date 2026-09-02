@@ -2,73 +2,14 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>世界遺産クエスト TUTORIAL LAB FINAL</title>
-<style>
-html,body{margin:0;width:100%;height:100%;background:#eef2f6;overflow:hidden}
-#tutorialFrame{display:block;width:100%;height:100%;border:0;background:#eef2f6}
-</style>
-<script src="piramiton-expr.js"></script>
-</head>
-<body>
-<iframe id="tutorialFrame" src="tutorial-lab.html" title="世界遺産クエスト チュートリアル Lab"></iframe>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>世界遺産クエスト｜チュートリアル（旧URL）</title>
 <script>
-(function(){
-'use strict';
-const frame=document.getElementById('tutorialFrame');
-let observer=null;
-
-// Latest approved image-based Piramiton: normal expression crop from the
-// current character sheet. The tutorial layout/flow itself is not modified.
-const SPRITE={x:4,y:18,w:82,h:75,sheetW:240,sheetH:180};
-const DISPLAY_W=120;
-
-function patchPiramiton(){
-  const doc=frame.contentDocument;
-  if(!doc||!window.PIRAMITON_EXPR_SHEET)return;
-
-  let style=doc.getElementById('tutorialLatestPiramitonStyle');
-  if(!style){
-    style=doc.createElement('style');
-    style.id='tutorialLatestPiramitonStyle';
-    style.textContent=`
-      .pyraminton{
-        width:${DISPLAY_W}px!important;
-        height:${Math.round(DISPLAY_W*SPRITE.h/SPRITE.w)}px!important;
-        clip-path:none!important;
-        background-color:transparent!important;
-        background-repeat:no-repeat!important;
-        image-rendering:pixelated;
-        filter:drop-shadow(0 8px 0 rgba(0,0,0,.10))!important;
-      }
-      .pyraminton:after{content:none!important;display:none!important}
-    `;
-    doc.head.appendChild(style);
-  }
-
-  const scale=DISPLAY_W/SPRITE.w;
-  doc.querySelectorAll('.pyraminton').forEach(el=>{
-    el.style.backgroundImage=`url(${window.PIRAMITON_EXPR_SHEET})`;
-    el.style.backgroundSize=`${Math.round(SPRITE.sheetW*scale)}px ${Math.round(SPRITE.sheetH*scale)}px`;
-    el.style.backgroundPosition=`-${Math.round(SPRITE.x*scale)}px -${Math.round(SPRITE.y*scale)}px`;
-    el.style.backgroundRepeat='no-repeat';
-  });
-
-  doc.querySelectorAll('.small').forEach(el=>{
-    if(el.textContent.trim()==='ピラミトン（仮）')el.textContent='ピラミトン';
-  });
-}
-
-frame.addEventListener('load',()=>{
-  patchPiramiton();
-  observer?.disconnect();
-  const root=frame.contentDocument?.documentElement;
-  if(root){
-    observer=new MutationObserver(patchPiramiton);
-    observer.observe(root,{subtree:true,childList:true});
-  }
-});
+(() => {
+  const target = 'tutorial.html' + location.search + location.hash;
+  location.replace(target);
 })();
 </script>
-</body>
+</head>
+<body><p><a href="tutorial.html">現在のチュートリアルを開く</a></p></body>
 </html>
