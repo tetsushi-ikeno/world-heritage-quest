@@ -13,6 +13,7 @@
 
 ## RUNTIME / 削除禁止
 
+- `index.html` — GitHub Pagesの正式入口。`beta3.html` へのランチャー。
 - `beta3.html`
 - `beta-save.js`
 - `tutorial-lab-final.html`
@@ -114,19 +115,23 @@
 - `phase9-movement-ui-lab.html`
 - `coast-lab.html`
 
-各Phaseとも、現行Beta3の依存グラフ外であることを確認し、Beta3静的チェック成功後にmainへ反映する。
+### Phase 5: Pages入口統一
+- 旧α v17 / Phase 7.5の `index.html` 本体を廃止。
+- `index.html` は `beta3.html` へ遷移する薄いランチャーへ変更。
+- `scripts/validate-entry.mjs` を追加し、旧Phase依存がPages入口へ戻らないようCIで固定。
 
-## 次の整理候補
-
-### 旧Phase系
-- `index.html`（現在はα v17 Phase 7.5。Beta3入口ではない）
+### Phase 6: 旧α / Phase実装
 - `app.js` / `style.css`
 - `phase1.*` / `phase41.*` / `phase56.*` / `phase57.*` / `phase62.*`
 - `phase7.*` / `phase71.*` / `phase72.*` / `phase72fix.js`
 - `phase73.*` / `phase74.*` / `phase75.*`
 - `phase8-preview/`
+- `piramiton-action.js`
+- `tutorial-merge.js`
 
-これはGitHub Pages入口に関わるため、先に `index.html` を現行Beta3へ向けてから削除する。
+Phase 2〜6はいずれも現行依存を確認し、Beta3静的チェック成功後にmainへ反映する。
+
+## 次の整理候補
 
 ### 旧展示・プレビュー系
 - `approved-cultural/`
@@ -142,10 +147,9 @@
 - `piramiton-lab.css` / `piramiton-lab.html` / `piramiton-lab.js`
 - `tutorial-design-baseline.html`
 - `tutorial.html`
-- `tutorial-merge.js`
 - `test-links.html`
 
-制作確認に使う可能性があるため、旧Phase系より後に判断する。
+制作確認に使う可能性があるため、正本・設計記録との関係を確認してから判断する。
 
 ## COMPATIBILITY / 最後に判断
 
@@ -163,14 +167,12 @@
 
 ## 残る主要リスク
 
-1. `beta3.html` と旧 `index.html` が別アプリとして併存。
-2. 現行Beta3が `beta2-*` / `*-hotfix.js` / `*-lab.html` という誤解しやすい名称に依存。
-3. `area-map-beta-loader.html` / `japan-map-beta-loader.html` のHTML文字列置換が壊れやすい。
-4. 研究センターCSSがBeta2テーマ＋Beta3 registry/base/approved graphicsの多層構造。
+1. 現行Beta3が `beta2-*` / `*-hotfix.js` / `*-lab.html` という誤解しやすい名称に依存。
+2. `area-map-beta-loader.html` / `japan-map-beta-loader.html` のHTML文字列置換が壊れやすい。
+3. 研究センターCSSがBeta2テーマ＋Beta3 registry/base/approved graphicsの多層構造。
 
 ## 次の作業
 
-1. Phase 4削除をCIで確認しmainへ反映する。
-2. `index.html` を現行Beta3の入口へ統一する。
-3. 旧Phase系を削除する。
-4. 現行Loader/hotfix/CSS積層を正式ファイルへ段階統合する。
+1. Phase 6削除をCIで確認しmainへ反映する。
+2. 旧展示・プレビュー系を、正本や制作ワークフローとの関係を確認して整理する。
+3. 現行Loader/hotfix/CSS積層を正式ファイルへ段階統合する。
