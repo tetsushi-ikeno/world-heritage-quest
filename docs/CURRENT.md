@@ -59,8 +59,6 @@ index.html
 
 研究センターは、確定済み木調テーマ・主人公・調査員・展示補正を `research-center-theme.css`、Beta3のレイアウト・操作・星表示等を `research-center-runtime.css` に分離した。`research-center.css` がこれらと確定グラフィックを従来と同じ順序で読み込む正式CSS入口である。
 
-`beta3-center-overrides-base-r20260902-01.css` はPhase 12移行確認のため一時的に残す比較元であり、現行runtimeからは参照しない。CIで `research-center-runtime.css` とコメント・空白を除いたCSS本体が一致することを確認する。
-
 ## 互換URL / 互換ローダー / 互換CSS
 
 次は実装本体ではない。過去URL・過去参照の互換維持専用。
@@ -73,6 +71,7 @@ index.html
 - `beta2-center-theme-r04.css` → 互換stub
 - `beta2-center-theme-r05.css` → 互換stub
 - `beta3-center-overrides.css` → `research-center.css` を読み込む互換registry
+- `beta3-center-overrides-base-r20260902-01.css` → 互換stub。現行実装は `research-center-runtime.css`
 
 新規実装・新規修正を互換ファイルへ追加しない。
 
@@ -134,3 +133,4 @@ current指定:
 - マップ依存修復後: `backup/post-map-dependency-fix-20260902`
 - マップruntime正式名化後: `backup/post-map-runtime-names-20260902`
 - 研究センターCSS入口統合後: `backup/post-center-css-entry-20260902`
+- 研究センターruntime移行検証後: `backup/post-center-runtime-verified-20260902`
