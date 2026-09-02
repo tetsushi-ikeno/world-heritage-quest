@@ -1,0 +1,37 @@
+/* Beta3 research center approved heritage graphics — r20260902-02
+   Visual-only layer. Existing center layout, collisions, interactions, badges and quiz behavior stay unchanged. */
+
+.obj.display:after{
+  background-position:center!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+  filter:drop-shadow(0 3px 1px rgba(58,44,31,.32))!important;
+}
+
+body.site-horyuji .obj.display:after{background:url('docs/assets/heritage-graphics/approved/horyuji.webp') center/contain no-repeat!important}
+body.site-himeji .obj.display:after{background:url('docs/assets/heritage-graphics/approved/himeji.webp') center/contain no-repeat!important}
+body.site-yakushima .obj.display:after{background:url('docs/assets/heritage-graphics/approved/yakushima.webp') center/contain no-repeat!important}
+body.site-shirakami .obj.display:after{background:url('docs/assets/heritage-graphics/approved/shirakami.webp') center/contain no-repeat!important}
+body.site-kyoto .obj.display:after{background:url('docs/assets/heritage-graphics/approved/kyoto.webp') center/contain no-repeat!important}
+body.site-shirakawago .obj.display:after{background:url('docs/assets/heritage-graphics/approved/gokayama.webp') center/contain no-repeat!important}
+body.site-hiroshima .obj.display:after{background:url('docs/assets/heritage-graphics/approved/hiroshima.webp') center/contain no-repeat!important}
+body.site-itsukushima .obj.display:after{background:url('docs/assets/heritage-graphics/approved/itsukushima.webp') center/contain no-repeat!important}
+body.site-nara .obj.display:after{background:url('docs/assets/heritage-graphics/approved/nara.webp') center/contain no-repeat!important}
+body.site-nikko .obj.display:after{background:url('docs/assets/heritage-graphics/approved/nikko.webp') center/contain no-repeat!important}
+body.site-ryukyu .obj.display:after{background:url('docs/assets/heritage-graphics/approved/ryukyu.webp') center/contain no-repeat!important}
+body.site-kii .obj.display:after{background:url('docs/assets/heritage-graphics/approved/kii.webp') center/contain no-repeat!important}
+body.site-shiretoko .obj.display:after{background:url('docs/assets/heritage-graphics/approved/shiretoko.webp') center/contain no-repeat!important}
+body.site-iwami .obj.display:after{background:url('docs/assets/heritage-graphics/approved/iwami.webp') center/contain no-repeat!important}
+body.site-ogasawara .obj.display:after{background:url('docs/assets/heritage-graphics/approved/ogasawara.webp') center/contain no-repeat!important}
+body.site-hiraizumi .obj.display:after{background:url('docs/assets/heritage-graphics/approved/hiraizumi.webp') center/contain no-repeat!important}
+body.site-fujisan .obj.display:after{background:url('docs/assets/heritage-graphics/approved/fujisan.webp') center/contain no-repeat!important}
+body.site-tomioka .obj.display:after{background:url('docs/assets/heritage-graphics/approved/tomioka.webp') center/contain no-repeat!important}
+body.site-meiji-industrial .obj.display:after{background:url('docs/assets/heritage-graphics/approved/meiji-industrial.webp') center/contain no-repeat!important}
+body.site-le-corbusier .obj.display:after{background:url('docs/assets/heritage-graphics/approved/le-corbusier.webp') center/contain no-repeat!important}
+body.site-okinoshima .obj.display:after{background:url('docs/assets/heritage-graphics/approved/okinoshima.webp') center/contain no-repeat!important}
+body.site-hidden-christian .obj.display:after{background:url('docs/assets/heritage-graphics/approved/hidden-christian.webp') center/contain no-repeat!important}
+body.site-mozu-furuichi .obj.display:after{background:url('docs/assets/heritage-graphics/approved/mozu-furuichi.webp') center/contain no-repeat!important}
+body.site-amami-okinawa .obj.display:after{background:url('docs/assets/heritage-graphics/approved/amami-okinawa.webp') center/contain no-repeat!important}
+body.site-jomon .obj.display:after{background:url('docs/assets/heritage-graphics/approved/jomon.webp') center/contain no-repeat!important}
+body.site-sado .obj.display:after{background:url('docs/assets/heritage-graphics/approved/sado.webp') center/contain no-repeat!important}
+body.site-asuka-fujiwara .obj.display:after{background:url('docs/assets/heritage-graphics/approved/asuka-fujiwara.webp') center/contain no-repeat!important}
