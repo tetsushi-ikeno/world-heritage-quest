@@ -8,6 +8,7 @@ const tutorial=read('tutorial.html');
 const oldTutorial=read('tutorial-lab-final.html');
 const map=read('world-map.html');
 const oldMap=read('area-map-beta2-wrapper.html');
+const mapHotfix=read('beta2-r05-map-hotfix.js');
 const credits=read('heritage-image-credits.html');
 
 if(!beta3.includes("game.src='tutorial.html?beta=3'"))fail('Beta3が正式tutorial入口を使用していません');
@@ -23,7 +24,14 @@ for(const marker of ['id="game"','area-map-beta-loader.html','beta-save.js','pir
 }
 if(!oldMap.includes("'world-map.html' + location.search + location.hash")||!oldMap.includes('location.replace'))fail('旧map URLの互換転送が不正です');
 
+// Browser-side map hotfix can dynamically replace iframe src values. Every local HTML target must exist.
+const dynamicTargets=[...mapHotfix.matchAll(/\.src='([^']+\.html)(?:\?[^']*)?'/g)].map(m=>m[1]);
+for(const target of dynamicTargets){
+  if(!fs.existsSync(target))fail(`map hotfixの動的参照先が存在しません: ${target}`);
+}
+if(!dynamicTargets.includes('japan-map-r05-wrapper.html'))fail('r05 map wrapper参照を検出できません');
+
 if(credits.includes('href="beta.html"'))fail('画像クレジットに削除済みbeta.htmlリンクがあります');
 if(!credits.includes('href="index.html"'))fail('画像クレジットの戻り先が現行入口ではありません');
 
-console.log('✓ canonical Beta3 runtime entries and compatibility redirects');
+console.log('✓ canonical Beta3 runtime entries, redirects, and dynamic map targets');
