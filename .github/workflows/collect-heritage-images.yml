@@ -1,8 +1,8 @@
 name: Collect heritage images
 
+# Licensed-photo collection writes generated assets back to main.
+# Run it only when intentionally refreshing the image set; do not run on ordinary PRs.
 on:
-  pull_request:
-    types: [opened, synchronize]
   workflow_dispatch:
 
 permissions:
