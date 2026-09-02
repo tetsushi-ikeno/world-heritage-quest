@@ -37,12 +37,12 @@
 `world-map-runtime.js` がブラウザ実行時に日本地図iframeを `japan-map-runtime.html` へ差し替える。CIでこの動的参照先も検査する。
 
 ### 研究センター内部
-- `beta2-center-theme.css`
-- `beta2-center-theme-r04.css`
-- `beta2-center-theme-r05.css`
-- `beta3-center-overrides.css`
-- `beta3-center-overrides-base-r20260902-01.css`
-- `beta3-center-approved-graphics.css`
+- `research-center.css` — 正式CSS入口
+- `research-center-theme.css` — 木調テーマ＋確定r04/r05補正を統合
+- `beta3-center-overrides-base-r20260902-01.css` — Beta3レイアウト・操作・星表示等。現役内部
+- `beta3-center-approved-graphics.css` — 27件の確定展示グラフィック割当
+
+研究センターHTMLに残る `beta2-center-theme*.css` は互換stub、`beta3-center-overrides.css` は `research-center.css` への互換registryであり、実装本体ではない。
 
 ### データ・素材
 - `data/beta-heritage-content.json`
@@ -87,18 +87,19 @@
 - `area-map-beta2-wrapper.html` → `world-map.html`
 - `japan-map-r05-wrapper.html` → `japan-map-runtime.html`
 - `beta2-r05-map-hotfix.js` → `world-map-runtime.js` を読み込む互換ローダー
+- `beta2-center-theme.css` → 互換stub
+- `beta2-center-theme-r04.css` → 互換stub
+- `beta2-center-theme-r05.css` → 互換stub
+- `beta3-center-overrides.css` → `research-center.css` を読み込む互換registry
 - `lab-pyraminton-headquarters.html` → current HQ Lab
 
-新規コードから互換ファイルを直接参照しない。
+新規コード・新規スタイルを互換ファイルへ追加しない。
 
 ## CONSOLIDATE / 次に整理する現役内部
 
 - `area-map-beta-loader.html`
 - `japan-map-beta-loader.html`
 - `japan-6x-map-lab.html`
-- `beta2-center-theme.css`
-- `beta2-center-theme-r04.css`
-- `beta2-center-theme-r05.css`
 - `beta3-center-overrides-base-r20260902-01.css`
 - `tutorial-lab.html`
 
@@ -116,6 +117,7 @@
 - **Phase 9**: 正式入口へ実装シェルを移し、旧入口を互換リダイレクト化。
 - **Phase 9後修復**: `beta2-r05-map-hotfix.js` の動的参照先 `japan-map-r05-wrapper.html` 欠落を発見し復元。CIに動的参照検査を追加。
 - **Phase 10**: 全国マップの現役 `hotfix` / `r05` 実装を `world-map-runtime.js` / `japan-map-runtime.html` へ移し、旧名を互換専用へ縮小。
+- **Phase 11**: 研究センターの木調テーマ＋r04/r05補正を `research-center-theme.css` に統合し、`research-center.css` を正式CSS入口化。旧Beta2テーマCSSは互換stubへ縮小。
 
 ## 保留ドキュメント・補助ページ
 
@@ -131,11 +133,12 @@
 ## 残る主要リスク
 
 1. 全国マップ内部が `area-map-beta-loader.html` / `japan-map-beta-loader.html` によるHTML文字列置換を使っている。
-2. 研究センターCSSがBeta2テーマ3枚＋Beta3 registry/base/approved graphicsの多層構造。
+2. 研究センターのBeta3調整本体が `beta3-center-overrides-base-r20260902-01.css` というRevision名のまま。
 3. `tutorial-lab.html` と `japan-6x-map-lab.html` が現役内部なのにLab名のまま。
+4. `research-center-beta3.html` 自体のlinkタグには互換CSS名が残るため、将来HTMLを安全に差分編集できる段階で `research-center.css` 1本へ直接切り替える。
 
 ## 次の作業
 
-1. Phase 10をCIで確認しmainへ反映する。
-2. 研究センターCSSの読み込み入口を一本化する。
+1. Phase 11をCIで確認しmainへ反映する。
+2. `beta3-center-overrides-base-r20260902-01.css` を正式名へ移し、研究センター内部からRevision名を外す。
 3. 全国マップLoader群・Lab名の内部実装を、挙動を変えず段階統合する。
