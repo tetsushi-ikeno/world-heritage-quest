@@ -25,6 +25,7 @@ on:
       - 'research-center-beta3.html'
       - 'research-center.css'
       - 'research-center-theme.css'
+      - 'research-center-runtime.css'
       - 'beta2-center-theme.css'
       - 'beta2-center-theme-r04.css'
       - 'beta2-center-theme-r05.css'
