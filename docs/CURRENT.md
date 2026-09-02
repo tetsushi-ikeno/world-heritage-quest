@@ -7,7 +7,7 @@
 ## 現行バージョンと入口
 
 - 現行: Beta3
-- GitHub Pages入口: `index.html`
+- GitHub Pagesのルート入口: `index.html`
 - 実装本体: `beta3.html`
 - チュートリアル正式入口: `tutorial.html`
 - 全国マップ正式入口: `world-map.html`
