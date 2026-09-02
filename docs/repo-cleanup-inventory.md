@@ -98,13 +98,7 @@
 - `beta2-r1.html`
 - `beta.html`
 - `beta2.html`
-- `beta2-center-interior-lab.html`
-- `beta2-center-object-lab.html`
-- `beta2-center-theme.js`
-- `research-center-beta2-wrapper.html`
-- `research-center-beta2.html`
-- `research-center-game.html`
-- `research-center-style-lab.html`
+- 旧Beta2研究センター／試作一式
 
 ### Phase 4: 旧マップ・Phase9試作
 - `area-map-lab.html`
@@ -117,23 +111,17 @@
 
 ### Phase 5: Pages入口統一
 - 旧α v17 / Phase 7.5の `index.html` 本体を廃止。
-- `index.html` は `beta3.html` へ遷移する薄いランチャーへ変更。
-- `scripts/validate-entry.mjs` を追加し、旧Phase依存がPages入口へ戻らないようCIで固定。
+- `index.html` は `beta3.html` へ遷移するランチャーへ変更。
+- `scripts/validate-entry.mjs` により旧Phase依存の復帰をCIで検知。
 
 ### Phase 6: 旧α / Phase実装
 - `app.js` / `style.css`
-- `phase1.*` / `phase41.*` / `phase56.*` / `phase57.*` / `phase62.*`
-- `phase7.*` / `phase71.*` / `phase72.*` / `phase72fix.js`
-- `phase73.*` / `phase74.*` / `phase75.*`
+- `phase1.*` ～ `phase75.*` / `phase72fix.js`
 - `phase8-preview/`
 - `piramiton-action.js`
 - `tutorial-merge.js`
 
-Phase 2〜6はいずれも現行依存を確認し、Beta3静的チェック成功後にmainへ反映する。
-
-## 次の整理候補
-
-### 旧展示・プレビュー系
+### Phase 7: 確定成果物へ置換済みの旧制作・プレビューLab
 - `approved-cultural/`
 - `cultural-heritage-approved-gallery.html`
 - `cultural-heritage-center-placement-lab.html`
@@ -145,19 +133,23 @@ Phase 2〜6はいずれも現行依存を確認し、Beta3静的チェック成�
 - `criteria-branch-lab.html`
 - `integrated-preview.html`
 - `piramiton-lab.css` / `piramiton-lab.html` / `piramiton-lab.js`
+- `docs/piramiton-lab.md`
 - `tutorial-design-baseline.html`
 - `tutorial.html`
 - `test-links.html`
 
-制作確認に使う可能性があるため、正本・設計記録との関係を確認してから判断する。
+Phase 7の展示グラフィック旧Labは、27件すべて確定済みの `docs/heritage-graphics-decisions.md` と `docs/assets/heritage-graphics/approved/` に置き換わっている。旧ピラミトンLabはPhase 7.5画像版との比較用で、current UIレジストリの対象外。
+
+Phase 2〜7はいずれも現行依存を確認し、Beta3静的チェック成功後にmainへ反映する。
 
 ## COMPATIBILITY / 最後に判断
 
 - `lab-pyraminton-headquarters.html` — current HQ Labへのリダイレクト。過去URL互換用として保持。
 
-## 保留ドキュメント
+## 保留ドキュメント・補助ページ
 
-- `docs/piramiton-lab.md`
+実行時不要でも、ライセンス確認・設計経緯として有用な可能性があるため現段階では削除しない。
+
 - `docs/design-baseline.md`
 - `docs/phase9-map-ux-decisions.md`
 - `docs/ipad-verification-hub.md`
@@ -173,6 +165,6 @@ Phase 2〜6はいずれも現行依存を確認し、Beta3静的チェック成�
 
 ## 次の作業
 
-1. Phase 6削除をCIで確認しmainへ反映する。
-2. 旧展示・プレビュー系を、正本や制作ワークフローとの関係を確認して整理する。
+1. Phase 7削除をCIで確認しmainへ反映する。
+2. 残る補助ページ・ドキュメントは、ライセンス・設計用途を確認して必要最小限にする。
 3. 現行Loader/hotfix/CSS積層を正式ファイルへ段階統合する。
