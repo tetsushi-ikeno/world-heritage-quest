@@ -1,6 +1,6 @@
 /* Compatibility registry. The canonical current research-center stylesheet entry is research-center.css.
-   Legacy validator markers are intentionally retained here; these files are now imported indirectly by research-center.css:
-   beta3-center-overrides-base-r20260902-01.css
-   beta3-center-approved-graphics.css
+   The following filenames are retained as legacy-validator markers only:
+   beta3-center-overrides-base-r20260902-01.css (compatibility stub)
+   beta3-center-approved-graphics.css (imported by research-center.css)
 */
 @import url('research-center.css?v=r20260902-01');
