@@ -4,20 +4,33 @@ on:
   push:
     branches: [main]
     paths:
-      - 'beta.html'
-      - 'beta2.html'
+      - 'beta3.html'
       - 'beta-save.js'
-      - 'area-map-game.html'
+      - 'tutorial-lab-final.html'
+      - 'tutorial-lab.html'
+      - 'piramiton-expr.js'
+      - 'area-map-beta2-wrapper.html'
       - 'area-map-beta-loader.html'
-      - 'research-center-game.html'
-      - 'research-center-beta2.html'
-      - 'heritage-discovery-effect-lab.html'
+      - 'area-map-game.html'
+      - 'japan-map-beta-loader.html'
+      - 'japan-6x-map-lab.html'
+      - 'piramiton-svg.js'
+      - 'beta2-r05-map-hotfix.js'
+      - 'research-center-beta3.html'
+      - 'beta2-center-theme.css'
+      - 'beta2-center-theme-r04.css'
+      - 'beta2-center-theme-r05.css'
+      - 'beta3-center-overrides.css'
+      - 'beta3-center-overrides-base-r20260902-01.css'
+      - 'beta3-center-approved-graphics.css'
       - 'data/beta-heritage-content.json'
+      - 'data/beta3-vertical-slice.json'
       - 'data/branch-sites.json'
       - 'data/branch-quiz-data.json'
       - 'data/heritage-images.json'
       - 'docs/assets/heritage/**'
       - 'docs/assets/branch-sites/**'
+      - 'docs/assets/heritage-graphics/approved/**'
       - 'scripts/validate-beta.mjs'
       - '.github/workflows/beta-check.yml'
   pull_request:
@@ -35,5 +48,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate beta data and runtime syntax
+      - name: Validate Beta3 data and runtime syntax
         run: node scripts/validate-beta.mjs
