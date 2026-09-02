@@ -1,12 +1,8 @@
-name: Collect Beta2 branch site images
+name: Collect Piramiton spot images
 
+# Image collection writes generated assets back to main.
+# Run it only when intentionally refreshing the spot image set; do not run on ordinary PRs.
 on:
-  push:
-    paths:
-      - '.github/workflows/collect-branch-site-images.yml'
-      - 'scripts/collect-branch-site-images.mjs'
-  pull_request:
-    types: [opened]
   workflow_dispatch:
 
 permissions:
@@ -38,6 +34,6 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Add 19 curated Beta2 branch site photos [skip ci]"
+          git commit -m "Add 19 curated Piramiton spot photos [skip ci]"
           git pull --rebase origin main
           git push origin HEAD:main
