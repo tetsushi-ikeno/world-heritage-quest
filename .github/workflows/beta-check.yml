@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'index.html'
       - 'beta3.html'
       - 'beta-save.js'
       - 'tutorial-lab-final.html'
@@ -28,9 +29,11 @@ on:
       - 'data/branch-sites.json'
       - 'data/branch-quiz-data.json'
       - 'data/heritage-images.json'
+      - 'docs/CURRENT.md'
       - 'docs/assets/heritage/**'
       - 'docs/assets/branch-sites/**'
       - 'docs/assets/heritage-graphics/approved/**'
+      - 'scripts/validate-entry.mjs'
       - 'scripts/validate-beta.mjs'
       - '.github/workflows/beta-check.yml'
   pull_request:
@@ -48,5 +51,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Validate Pages entry
+        run: node scripts/validate-entry.mjs
       - name: Validate Beta3 data and runtime syntax
         run: node scripts/validate-beta.mjs
