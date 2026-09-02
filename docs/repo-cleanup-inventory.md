@@ -8,8 +8,8 @@
 
 - **RUNTIME**: 現行Beta3の実行に必要。削除禁止。
 - **CANONICAL / TOOLING**: 正本UI、仕様、制作・検証に必要。保持。
-- **CONSOLIDATE**: 現役だが旧世代名・hotfix・lab名のまま。正式ファイルへ統合後に削除。
-- **COMPATIBILITY**: 過去URL互換のリダイレクト。実装本体として使用しない。
+- **CONSOLIDATE**: 現役だが旧世代名・lab名のまま。正式ファイルへ統合後に削除。
+- **COMPATIBILITY**: 過去URL・過去参照互換。実装本体として使用しない。
 
 ## RUNTIME / 削除禁止
 
@@ -28,13 +28,13 @@
 ### 全国マップ内部
 - `area-map-beta-loader.html`
 - `area-map-game.html`
+- `world-map-runtime.js`
+- `japan-map-runtime.html`
 - `japan-map-beta-loader.html`
-- `japan-map-r05-wrapper.html`
 - `japan-6x-map-lab.html`
 - `piramiton-svg.js`
-- `beta2-r05-map-hotfix.js`
 
-`beta2-r05-map-hotfix.js` はブラウザ実行時に `japan-map-r05-wrapper.html` を動的指定する。両方とも現役であり削除禁止。CIで動的参照先の存在も検査する。
+`world-map-runtime.js` がブラウザ実行時に日本地図iframeを `japan-map-runtime.html` へ差し替える。CIでこの動的参照先も検査する。
 
 ### 研究センター内部
 - `beta2-center-theme.css`
@@ -85,17 +85,17 @@
 
 - `tutorial-lab-final.html` → `tutorial.html`
 - `area-map-beta2-wrapper.html` → `world-map.html`
+- `japan-map-r05-wrapper.html` → `japan-map-runtime.html`
+- `beta2-r05-map-hotfix.js` → `world-map-runtime.js` を読み込む互換ローダー
 - `lab-pyraminton-headquarters.html` → current HQ Lab
 
-新規コードから互換URLを直接参照しない。
+新規コードから互換ファイルを直接参照しない。
 
 ## CONSOLIDATE / 次に整理する現役内部
 
 - `area-map-beta-loader.html`
 - `japan-map-beta-loader.html`
-- `japan-map-r05-wrapper.html`
 - `japan-6x-map-lab.html`
-- `beta2-r05-map-hotfix.js`
 - `beta2-center-theme.css`
 - `beta2-center-theme-r04.css`
 - `beta2-center-theme-r05.css`
@@ -106,36 +106,20 @@
 
 ## 整理履歴（2026-09-02）
 
-### Phase 2 — 中間生成物・旧hotfix
-画像アップロード用 `staging/`、`approved-sheet/`、旧Beta hotfixを削除。
-
-### Phase 3 — 旧Beta入口・旧研究センター
-旧Beta1/2入口と旧研究センター実装を削除。現行Beta3が使うBeta2名CSSは保持。
-
-### Phase 4 — 旧マップ・Phase9試作
-旧マップLab群を削除。この際 `japan-map-r05-wrapper.html` も削除したが、後に現役hotfixからの動的参照が判明したため復元。
-
-### Phase 5 — Pages入口統一
-`index.html` を旧αアプリから `beta3.html` ランチャーへ変更。CIで旧Phase依存の復帰を防止。
-
-### Phase 6 — 旧α / Phase実装
-`app.js` / `style.css` / `phase*.js/css` / `phase8-preview/` 等を削除。
-
-### Phase 7 — 確定成果物へ置換済みの旧制作Lab
-旧展示グラフィックLab、旧ピラミトン比較Lab、旧プレビューを削除。旧 `tutorial.html` もこの段階で削除したが、Phase 8で正式入口として新規作成。
-
-### Phase 8 — 正式画面入口
-`tutorial.html` / `world-map.html` を正式入口として追加し、`beta3.html` から旧内部名の直接参照を廃止。クレジットページの削除済み `beta.html` リンクも修正。
-
-### Phase 9 — 正式シェルへの昇格
-従来 `tutorial-lab-final.html` / `area-map-beta2-wrapper.html` にあった現行シェルを `tutorial.html` / `world-map.html` へ移し、旧名は互換リダイレクトへ縮小。
-
-### Phase 9後の依存修復
-`beta2-r05-map-hotfix.js` が削除済み `japan-map-r05-wrapper.html` を動的に指定していることを発見。バックアップから復元し、CIに動的HTML参照先の存在検査を追加。
+- **Phase 2**: 中間生成物・旧hotfixを削除。
+- **Phase 3**: 旧Beta1/2入口・旧研究センターを削除。
+- **Phase 4**: 旧マップLab・Phase9試作を削除。
+- **Phase 5**: `index.html` をBeta3ランチャーへ統一。
+- **Phase 6**: 旧α / `phase*.js/css` 等を削除。
+- **Phase 7**: 確定成果物へ置換済みの旧制作Lab・旧プレビューを削除。
+- **Phase 8**: `tutorial.html` / `world-map.html` を正式入口として追加。
+- **Phase 9**: 正式入口へ実装シェルを移し、旧入口を互換リダイレクト化。
+- **Phase 9後修復**: `beta2-r05-map-hotfix.js` の動的参照先 `japan-map-r05-wrapper.html` 欠落を発見し復元。CIに動的参照検査を追加。
+- **Phase 10**: 全国マップの現役 `hotfix` / `r05` 実装を `world-map-runtime.js` / `japan-map-runtime.html` へ移し、旧名を互換専用へ縮小。
 
 ## 保留ドキュメント・補助ページ
 
-実行時不要でも、ライセンス確認・設計経緯として有用な可能性があるため現段階では削除しない。
+実行時不要でもライセンス確認・設計経緯として有用な可能性があるため現段階では削除しない。
 
 - `docs/design-baseline.md`
 - `docs/phase9-map-ux-decisions.md`
@@ -146,12 +130,12 @@
 
 ## 残る主要リスク
 
-1. 全国マップ内部がLoaderによるHTML文字列置換＋hotfixによるiframe差し替えで複雑。
+1. 全国マップ内部が `area-map-beta-loader.html` / `japan-map-beta-loader.html` によるHTML文字列置換を使っている。
 2. 研究センターCSSがBeta2テーマ3枚＋Beta3 registry/base/approved graphicsの多層構造。
-3. `tutorial-lab.html` と `japan-6x-map-lab.html` が実装内部なのにLab名のまま。
+3. `tutorial-lab.html` と `japan-6x-map-lab.html` が現役内部なのにLab名のまま。
 
 ## 次の作業
 
-1. 復元した `japan-map-r05-wrapper.html` を含むCIを通し、mainへ反映する。
-2. 全国マップ内部の動的差し替えを、挙動を変えず段階的に正式ファイルへ統合する。
-3. 研究センターCSSの読み込み入口を一本化し、最終的に旧世代CSSを統合する。
+1. Phase 10をCIで確認しmainへ反映する。
+2. 研究センターCSSの読み込み入口を一本化する。
+3. 全国マップLoader群・Lab名の内部実装を、挙動を変えず段階統合する。

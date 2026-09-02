@@ -7,13 +7,13 @@
 ## 現行バージョンと入口
 
 - 現行: Beta3
-- 実装本体: `beta3.html`
 - GitHub Pagesのルート入口: `index.html`
-- チュートリアル正式入口・実装シェル: `tutorial.html`
-- 全国マップ正式入口・実装シェル: `world-map.html`
+- 実装本体: `beta3.html`
+- チュートリアル正式入口: `tutorial.html`
+- 全国マップ正式入口: `world-map.html`
 - 研究センター正式入口: `research-center-beta3.html`
-- `index.html` はゲーム実装を持たず、`beta3.html` へ移動するだけのランチャーとする。
-- `beta3.html` から旧世代名・Lab名の内部実装を直接呼ばず、正式入口を介する。
+
+`index.html` は `beta3.html` へ移動するだけのランチャー。Beta3本体から旧世代名・Lab名を直接呼ばず、正式入口を介する。
 
 ## Beta3 実行時の主要依存関係
 
@@ -34,12 +34,10 @@ index.html
    │  │  └─ data/branch-quiz-data.json
    │  ├─ beta-save.js
    │  ├─ piramiton-svg.js
-   │  └─ beta2-r05-map-hotfix.js
-   │     └─ [browser runtimeでiframe srcを差替]
-   │        japan-map-r05-wrapper.html
+   │  └─ world-map-runtime.js
+   │     └─ japan-map-runtime.html
    │        └─ japan-map-beta-loader.html
    │           └─ japan-6x-map-lab.html
-   │
    └─ research-center-beta3.html
       ├─ beta-save.js
       ├─ beta2-center-theme.css
@@ -54,26 +52,25 @@ index.html
       └─ docs/assets/heritage/<site>/01.jpg～03.jpg
 ```
 
-`area-map-game.html` 自体にも `japan-6x-map-lab.html` の初期srcがあるが、現行 `beta2-r05-map-hotfix.js` がブラウザ実行時に `japan-map-r05-wrapper.html` へ差し替える。したがって `japan-map-r05-wrapper.html` は**現役runtime**であり、名前だけを見て削除してはいけない。
+全国マップの現行runtimeは `world-map-runtime.js` と `japan-map-runtime.html`。`world-map-runtime.js` がブラウザ実行時に日本地図iframeを `japan-map-runtime.html` へ差し替える。
 
-### 互換URL
+## 互換URL / 互換ローダー
 
-次の旧URLは実装本体ではなく、正式入口へ転送するだけの互換ファイルとする。
+次は実装本体ではない。過去URL・過去参照の互換維持専用。
 
 - `tutorial-lab-final.html` → `tutorial.html`
 - `area-map-beta2-wrapper.html` → `world-map.html`
+- `japan-map-r05-wrapper.html` → `japan-map-runtime.html`
+- `beta2-r05-map-hotfix.js` → `world-map-runtime.js` を読み込む互換ローダー
 
-旧URLを新規実装から参照しない。
+新規実装から互換ファイルを直接参照しない。
 
 ## UI正本
-
-UIの正本判定は次を使用する。
 
 - `data/ui-current.json`
 - `docs/ui-current.md`
 
-現在current指定されているもの:
-
+current指定:
 - 研究センター確認Lab: `beta3-center-lab.html`
 - ピラミトン本部Lab: `pyraminton-headquarters-lab.html`
 
@@ -95,24 +92,21 @@ UIの正本判定は次を使用する。
 
 ## 実装時の禁止事項
 
-1. `phase*.js/css` や削除済み旧BetaファイルをBeta3の正本として参照しない。
+1. `phase*.js/css` や削除済み旧Betaファイルを正本として参照しない。
 2. Beta3本体からチュートリアルは `tutorial.html`、全国マップは `world-map.html` を呼ぶ。
-3. `tutorial-lab-final.html` / `area-map-beta2-wrapper.html` は互換URLとしてのみ扱い、新規参照を追加しない。
-4. `beta2-r05-map-hotfix.js` のような動的iframe差し替えコードを含むファイルは、参照文字列だけでなく実行時の遷移先まで確認してから整理する。
-5. ファイル名に `beta2` / `hotfix` / `lab` が含まれることだけを理由に削除・置換しない。現行内部依存に残っているものがある。
-6. `*-lab.html` を本番実装へ流用する場合は、`data/ui-current.json` / `docs/ui-current.md` またはこのCURRENTで正本指定されているか確認する。
-7. 仕様判断は `docs/beta3-baseline.md` と `docs/heritage-graphics-decisions.md` を優先する。
-8. 確定遺産グラフィックは `docs/assets/heritage-graphics/approved/` を正とし、仮グラフィックへ戻さない。
-9. runtimeの統合・名称変更は、Beta3静的チェックと表示確認を通した後で旧ファイルを削除する。
+3. 全国マップの追加修正は `world-map-runtime.js` / `japan-map-runtime.html` を優先し、`beta2-r05-map-hotfix.js` / `japan-map-r05-wrapper.html` に新しい実装を足さない。
+4. ファイル名に `beta2` / `hotfix` / `lab` が含まれることだけを理由に削除しない。まだ内部依存に残るものがある。
+5. `*-lab.html` を本番実装へ流用する場合は `data/ui-current.json` / `docs/ui-current.md` または本書で正本指定されているか確認する。
+6. 仕様判断は `docs/beta3-baseline.md` と `docs/heritage-graphics-decisions.md` を優先する。
+7. 確定遺産グラフィックは `docs/assets/heritage-graphics/approved/` を正とし、仮グラフィックへ戻さない。
+8. runtimeの統合・名称変更はCIと表示確認を通してから旧ファイルを削除する。
 
 ## 整理方針
 
 - mainには現行実装・現行データ・必要な制作ツールだけを残す。
 - 過去版はGit履歴と退避ブランチから復元する。
-- `index.html` は常に現行版への入口だけを担い、過去実装を内包しない。
-- Beta3本体は正式な画面入口名だけを参照する。
-- 旧URLは必要な間だけ互換リダイレクトとして残し、実装コードを持たせない。
-- JavaScriptが動的に参照するローカルHTMLについてもCIで存在確認する。
+- 正式実装と互換ファイルを明確に分離する。
+- JavaScriptが動的に参照するローカルHTMLもCIで存在確認する。
 - mainへ書き込む生成系GitHub Actionsは手動実行のみとする。
 
 ## 退避地点
@@ -124,3 +118,4 @@ UIの正本判定は次を使用する。
 - 旧α/Phase削除後: `backup/post-alpha-cleanup-20260902`
 - 旧プレビュー削除後: `backup/post-preview-cleanup-20260902`
 - 正式画面入口追加後: `backup/post-canonical-entry-20260902`
+- マップ依存修復後: `backup/post-map-dependency-fix-20260902`
