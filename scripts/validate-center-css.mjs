@@ -2,7 +2,6 @@ import fs from 'node:fs';
 
 const read=p=>fs.readFileSync(p,'utf8');
 const fail=m=>{throw new Error(m)};
-const normalizeCss=s=>s.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,'');
 
 const entry=read('research-center.css');
 const theme=read('research-center-theme.css');
@@ -34,15 +33,17 @@ for(const [i,css] of legacy.entries()){
   if(css.includes('.player{')||css.includes('.obj.researcher{'))fail(`旧センターCSS ${i+1} に実装ルールが残っています`);
 }
 
+if(!oldRuntime.includes('Compatibility stub'))fail('旧Revision center runtimeが互換stubではありません');
+for(const marker of ['.badge{','.obj.display{','.quizStars{']){
+  if(oldRuntime.includes(marker))fail(`旧Revision center runtimeに実装ルールが残っています: ${marker}`);
+}
+
 if(!registry.includes("@import url('research-center.css"))fail('beta3-center-overrides.css が正式CSS入口を参照していません');
 for(const marker of [':root{--cell:40px','@keyframes beta2R04Idle','.obj.researcher{\n  filter:drop-shadow']){
   if(!theme.includes(marker))fail(`research-center-theme.css に確定テーマ要素が不足: ${marker}`);
 }
-
-const a=normalizeCss(oldRuntime),b=normalizeCss(runtime);
-if(a!==b){
-  let i=0;while(i<a.length&&i<b.length&&a[i]===b[i])i++;
-  fail(`research-center-runtime.css が移行元と不一致です: index ${i}, old=${a.slice(i,i+80)}, new=${b.slice(i,i+80)}`);
+for(const marker of ['.badge{','.obj.display.near{','.main{position:relative!important','.quizStars{']){
+  if(!runtime.includes(marker))fail(`research-center-runtime.css に現行Beta3要素が不足: ${marker}`);
 }
 
-console.log('✓ canonical research-center CSS entry; runtime migration is semantically identical');
+console.log('✓ canonical research-center CSS entry; all dated/legacy CSS files are compatibility-only');
