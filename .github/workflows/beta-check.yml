@@ -23,6 +23,8 @@ on:
       - 'piramiton-svg.js'
       - 'beta2-r05-map-hotfix.js'
       - 'research-center-beta3.html'
+      - 'research-center.css'
+      - 'research-center-theme.css'
       - 'beta2-center-theme.css'
       - 'beta2-center-theme-r04.css'
       - 'beta2-center-theme-r05.css'
@@ -41,6 +43,7 @@ on:
       - 'docs/assets/heritage-graphics/approved/**'
       - 'scripts/validate-entry.mjs'
       - 'scripts/validate-canonical-runtime.mjs'
+      - 'scripts/validate-center-css.mjs'
       - 'scripts/validate-beta.mjs'
       - '.github/workflows/beta-check.yml'
   pull_request:
@@ -62,5 +65,7 @@ jobs:
         run: node scripts/validate-entry.mjs
       - name: Validate canonical Beta3 entries
         run: node scripts/validate-canonical-runtime.mjs
+      - name: Validate research center CSS entry
+        run: node scripts/validate-center-css.mjs
       - name: Validate Beta3 data and runtime syntax
         run: node scripts/validate-beta.mjs
