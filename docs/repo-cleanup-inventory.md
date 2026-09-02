@@ -9,9 +9,8 @@
 - **RUNTIME**: 現行Beta3の実行に必要。削除禁止。
 - **CANONICAL / TOOLING**: 正本UI、仕様、制作・検証に必要。保持。
 - **CONSOLIDATE**: 現役だが旧世代名・hotfix・lab名のまま。正式ファイルへ統合後に削除。
-- **SAFE DELETE**: 現行参照なし・完成物あり・Git履歴から復元可能。削除してよい。
 - **LEGACY CANDIDATE**: 現行参照なしの旧版・試作。関連グループを確認してから削除。
-- **COMPATIBILITY**: リダイレクトなど。現在の内部参照は不要だが、外部ブックマーク互換を考えて最後に判断。
+- **COMPATIBILITY**: リダイレクトなど。外部ブックマーク互換を考えて最後に判断。
 
 ## RUNTIME / 削除禁止
 
@@ -74,19 +73,14 @@
 - `docs/development-roadmap.md`
 - `docs/post-beta-improvement-backlog.md`
 
-### 過去問データ
+### 過去問・素材・自動化
 - `data/sekaken_4_2024_03_rpg.json`
 - `data/sekaken_4_2024_07_rpg.json`
 - `data/sekaken_4_2024_12_rpg.json`
-
-### 素材・自動化
 - `docs/heritage-image-credits.md`
 - `docs/branch-site-image-credits.md`
 - `data/branch-site-images.json`
-- `.github/workflows/assemble-hq-retina-assets.yml`
-- `.github/workflows/collect-heritage-images.yml`
-- `.github/workflows/collect-branch-site-images.yml`
-- `.github/workflows/beta-check.yml`
+- `.github/workflows/`
 - `scripts/`
 
 ## CONSOLIDATE / 現役だが名称・構造を整理したいもの
@@ -105,33 +99,21 @@
 - `tutorial-lab-final.html`
 - `tutorial-lab.html`
 
-## SAFE DELETE / 第1回削除対象
+## 削除済み（2026-09-02）
 
-### 中間アップロード断片
+### Phase 2: 中間生成物・旧hotfix
 - `docs/assets/heritage-graphics/staging/`
-  - `*.partXX` など承認済みWebP作成前の中間断片。
-  - 現在の実装・workflowから参照なし。
-  - 完成物は `docs/assets/heritage-graphics/approved/*.webp` に存在し、CIで27件を検証済み。
 - `docs/assets/approved-sheet/`
-  - `ref600.part0.txt` / `ref600.part1.txt` の分割中間ファイル。
-  - 現在のコードから参照なし。
-
-### 旧Beta r8/r9 hotfix
 - `beta-hotfix-loader.js`
 - `beta-hotfix.js`
-  - `beta-hotfix-loader.js` は `beta-hotfix.js?source=r9` を動的evalする旧互換処理。
-  - 現行Beta3依存グラフには含まれず、リポジトリ検索でも参照元なし。
-  - 現行のピラミトン・マップ処理はBeta3側の正式経路で実装済み。
 
-## LEGACY CANDIDATE / 次段階
+理由: 現行参照なし。中間断片には完成済み正本が存在し、Beta3 CI通過後に削除。
 
-### 旧Beta入口
+### Phase 3: 旧Beta入口・旧研究センター
 - `beta-r4.html` ～ `beta-r9.html`
 - `beta2-r1.html`
 - `beta.html`
 - `beta2.html`
-
-### 旧研究センター・試作
 - `beta2-center-interior-lab.html`
 - `beta2-center-object-lab.html`
 - `beta2-center-theme.js`
@@ -140,7 +122,9 @@
 - `research-center-game.html`
 - `research-center-style-lab.html`
 
-※ `beta3-center-lab.html` は current UI Lab のためこのグループから除外。
+理由: `beta3.html → research-center-beta3.html` の現行経路とは独立した旧Beta1/2系。現行Beta3が使用する `beta2-center-theme.css` / `r04` / `r05` は削除対象から明示的に除外。
+
+## LEGACY CANDIDATE / 次段階
 
 ### 旧マップ・試作
 - `area-map-lab.html`
@@ -179,12 +163,12 @@
 ## COMPATIBILITY / 最後に判断
 
 - `lab-pyraminton-headquarters.html`
-  - 内容は `pyraminton-headquarters-lab.html` への即時リダイレクトのみ。
-  - 内部正本ではないが、過去URLのブックマーク互換として残す価値はあるため、初期整理では削除しない。
+  - `pyraminton-headquarters-lab.html` への即時リダイレクト。
+  - currentではないが過去URL互換用として初期整理では保持。
 
 ## まだ保留するドキュメント
 
-以下は実行時不要でも、確定判断・設計経緯として有用な可能性があるため今回の削除対象から外す。
+実行時不要でも確定判断・設計経緯として有用な可能性があるため、現段階では削除しない。
 
 - `docs/piramiton-lab.md`
 - `docs/design-baseline.md`
@@ -201,11 +185,11 @@
 3. `area-map-beta-loader.html` / `japan-map-beta-loader.html` がHTML文字列置換で機能注入しており壊れやすい。
 4. 研究センターCSSがBeta2テーマ＋Beta3 registry/base/approved graphicsの多層構造。
 5. 画像収集ActionsはPRからmainへ書き込む構成だったが、2026-09-02に手動実行専用へ修正済み。
-6. Beta3静的チェックは2026-09-02に現行依存・27グラフィック・登録基準問題まで拡張済み。
+6. Beta3静的チェックは現行依存・27グラフィック・登録基準問題まで拡張済み。
 
 ## 次の作業
 
-1. SAFE DELETEを整理ブランチで削除し、Beta3静的チェックを通す。
-2. 旧Beta/旧Phase群の相互参照を確認し、グループ単位で削除する。
-3. Loader/hotfix/CSS積層を正式ファイルへ段階統合する。
-4. 最後に `index.html` を現行Beta3入口へ統一する。
+1. Phase 3削除をCIで確認しmainへ反映する。
+2. 旧マップLab群の相互参照を確認する。
+3. `index.html` を現行Beta3入口に統一した後、旧Phase群を削除する。
+4. Loader/hotfix/CSS積層を正式ファイルへ段階統合する。
