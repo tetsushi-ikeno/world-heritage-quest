@@ -16,6 +16,7 @@ on:
       - 'area-map-beta-loader.html'
       - 'area-map-game.html'
       - 'japan-map-beta-loader.html'
+      - 'japan-map-r05-wrapper.html'
       - 'japan-6x-map-lab.html'
       - 'piramiton-svg.js'
       - 'beta2-r05-map-hotfix.js'
