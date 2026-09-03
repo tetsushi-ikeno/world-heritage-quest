@@ -70,6 +70,9 @@ function enhanceFrame(){
   transform:translate(-41.6667%,-41.6667%)!important;
   z-index:4!important;
 }
+.obj.display.near{
+  transform:translate(-41.6667%,-41.6667%)!important;
+}
 .obj.display:after{
   left:3%!important;
   top:1%!important;
@@ -115,7 +118,8 @@ function enhanceFrame(){
   const action=d.getElementById('action'),card=d.getElementById('card');
   if(!action||!card)return;
   function clearDetailClass(){if(!card.querySelector('.labHero'))card.classList.remove('labDisplayDetail')}
-  const observer=new MutationObserver(clearDetailClass);observer.observe(card,{childList:true,subtree:true});
+  const Observer=f.contentWindow.MutationObserver||MutationObserver;
+  const observer=new Observer(clearDetailClass);observer.observe(card,{childList:true,subtree:true});
   function enhanceDisplayModal(){
     if(!card||card.querySelector('.labHero'))return;
     const h2=card.querySelector('h2');if(!h2||h2.textContent.trim()!=='展示')return;
@@ -128,7 +132,7 @@ function enhanceFrame(){
     stage.appendChild(img);hero.append(label,stage);card.append(hero,wrap);card.classList.add('labDisplayDetail');
   }
   d.addEventListener('click',e=>{
-    const t=e.target instanceof Element?e.target:null;if(!t)return;
+    const t=e.target&&typeof e.target.closest==='function'?e.target:null;if(!t)return;
     const displayTap=t.closest('.obj.display');
     const actionTap=t.closest('#action');
     if(displayTap||(actionTap&&actionTap.textContent.trim()==='みる'))setTimeout(enhanceDisplayModal,0);
