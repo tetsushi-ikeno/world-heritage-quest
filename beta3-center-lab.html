@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Beta3 センター確認Lab</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif;background:#e8eef4;color:#1d2940}.wrap{height:100%;display:grid;grid-template-rows:auto 1fr}.bar{display:flex;gap:8px;align-items:center;padding:10px 190px 10px 10px;background:#fff;border-bottom:1px solid #c8d1db}.bar b{white-space:nowrap}.bar small{font-size:11px;font-weight:800;color:#65748a;white-space:nowrap}.bar select{min-width:0;flex:1;max-width:480px;border:1px solid #b9c4d1;border-radius:9px;background:#fff;padding:8px 10px;font-weight:900}iframe{width:100%;height:100%;border:0}.revision{position:fixed;right:max(8px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));z-index:9999;padding:5px 8px;border-radius:999px;background:#172238e8;border:1px solid #e3b53ce6;color:#fff;font-size:10px;font-weight:900;pointer-events:none}@media(max-width:760px){.bar{padding:8px 150px 8px 8px}.bar b,.bar small{display:none}}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif;background:#e8eef4;color:#1d2940}.wrap{height:100%;display:grid;grid-template-rows:auto 1fr}.bar{display:grid;grid-template-columns:auto minmax(220px,1fr) auto;grid-template-areas:"title site themes";gap:8px 12px;align-items:center;padding:9px 190px 9px 10px;background:#fff;border-bottom:1px solid #c8d1db}.titleBlock{grid-area:title;min-width:0}.titleBlock b{display:block;white-space:nowrap}.titleBlock small{display:block;margin-top:2px;font-size:10px;font-weight:800;color:#65748a;white-space:nowrap}.bar select{grid-area:site;min-width:0;width:100%;max-width:520px;border:1px solid #b9c4d1;border-radius:9px;background:#fff;padding:8px 10px;font-weight:900}.themeSwitch{grid-area:themes;display:flex;gap:5px;padding:3px;border:1px solid #c8d1db;border-radius:10px;background:#eef2f6;white-space:nowrap}.themeBtn{min-height:34px;padding:5px 9px;border:0;border-radius:7px;background:transparent;color:#435168;font-size:11px;font-weight:1000;cursor:pointer}.themeBtn.active{background:#172238;color:#fff;box-shadow:0 1px 3px #0002}.themeBtn:focus-visible{outline:2px solid #e3b53c;outline-offset:1px}iframe{width:100%;height:100%;border:0}.revision{position:fixed;right:max(8px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));z-index:9999;padding:5px 8px;border-radius:999px;background:#172238e8;border:1px solid #e3b53ce6;color:#fff;font-size:10px;font-weight:900;pointer-events:none}@media(max-width:900px){.bar{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"site themes";padding:8px 158px 8px 8px}.titleBlock{display:none}.themeBtn{padding:5px 7px;font-size:10px}}@media(max-width:620px){.bar{grid-template-columns:1fr;grid-template-areas:"site" "themes";padding:7px 132px 7px 7px;gap:5px}.themeSwitch{justify-self:start}.themeBtn{min-height:30px;padding:4px 6px;font-size:9px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="bar">
-    <b>Beta3 全27センター確認Lab</b>
-    <small>6×6展示＋「みる」で大型表示</small>
+    <div class="titleBlock"><b>Beta3 全27センター確認Lab</b><small>6×6展示＋大型表示＋内装3案比較</small></div>
     <select id="siteSelect" aria-label="世界遺産を選択">
       <option value="horyuji" data-name="法隆寺地域の仏教建造物" data-type="文化">01 法隆寺地域の仏教建造物</option>
       <option value="himeji" data-name="姫路城" data-type="文化">02 姫路城</option>
@@ -42,15 +41,30 @@
       <option value="sado" data-name="佐渡島の金山" data-type="文化">26 佐渡島の金山</option>
       <option value="asuka-fujiwara" data-name="飛鳥・藤原の宮都" data-type="文化">27 飛鳥・藤原の宮都</option>
     </select>
+    <div class="themeSwitch" role="group" aria-label="研究センター内装を選択">
+      <button type="button" class="themeBtn active" data-theme="a" aria-pressed="true">A クラシック</button>
+      <button type="button" class="themeBtn" data-theme="b" aria-pressed="false">B 調査基地</button>
+      <button type="button" class="themeBtn" data-theme="c" aria-pressed="false">C 現代展示館</button>
+    </div>
   </div>
   <iframe id="f" title="Beta3 center"></iframe>
 </div>
-<div class="revision">CENTER LAB / r20260903-01</div>
+<div class="revision">CENTER LAB / r20260904-01</div>
 <script>
 (()=>{'use strict';
-const f=document.getElementById('f'),sel=document.getElementById('siteSelect');
+const f=document.getElementById('f'),sel=document.getElementById('siteSelect'),themeButtons=[...document.querySelectorAll('.themeBtn')];
+let currentTheme=sessionStorage.getItem('whqCenterLabTheme')||'a';
+if(!['a','b','c'].includes(currentTheme))currentTheme='a';
 const approvedSlug=id=>id==='shirakawago'?'gokayama':id;
 function selected(){return sel.selectedOptions[0]}
+function syncThemeButtons(){themeButtons.forEach(b=>{const on=b.dataset.theme===currentTheme;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))})}
+function applyTheme(){
+  let d;try{d=f.contentDocument}catch(_){return}if(!d||!d.body)return;
+  d.body.classList.remove('center-theme-a','center-theme-b','center-theme-c');
+  d.body.classList.add('center-theme-'+currentTheme);
+  sessionStorage.setItem('whqCenterLabTheme',currentTheme);
+  syncThemeButtons();
+}
 function openSite(){
   const o=selected();
   sessionStorage.setItem('whqCenterLabSite',o.value);
@@ -63,84 +77,35 @@ function enhanceFrame(){
   let d;try{d=f.contentDocument}catch(_){return}if(!d)return;
   const old=d.getElementById('centerLab6x6Style');if(old)old.remove();
   const style=d.createElement('style');style.id='centerLab6x6Style';style.textContent=`
-/* Center Lab r20260903-01: 6x6 exhibit visual only. Collision remains the current 2x2 footprint for this visual test. */
-.obj.display{
-  width:calc(var(--cell)*6)!important;
-  height:calc(var(--cell)*6)!important;
-  transform:translate(-41.6667%,-41.6667%)!important;
-  z-index:4!important;
-}
-.obj.display.near{
-  transform:translate(-41.6667%,-41.6667%)!important;
-}
-.obj.display:after{
-  left:3%!important;
-  top:1%!important;
-  width:94%!important;
-  height:84%!important;
-  background-position:center!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
-}
-.obj.display:before{
-  left:34%!important;
-  right:34%!important;
-  bottom:4%!important;
-  height:10%!important;
-  border-width:3px!important;
-}
-.obj.display .badge{
-  right:29%!important;
-  top:auto!important;
-  bottom:5%!important;
-  z-index:20!important;
-}
-.card.labDisplayDetail{width:min(1040px,96vw)!important;padding:16px!important}
-.labHero{min-width:0;display:grid;grid-template-rows:auto 1fr;gap:8px;background:#f4efe4;border:2px solid #d4b05a;border-radius:14px;padding:12px;overflow:hidden}
-.labHeroLabel{font-size:11px;font-weight:1000;color:#655638;letter-spacing:.04em}
-.labHeroStage{min-height:260px;display:grid;place-items:center;background:linear-gradient(#f8f4eb,#e7dac5);border-radius:10px;overflow:hidden}
-.labHeroStage img{display:block;width:100%;height:100%;max-height:520px;object-fit:contain;filter:drop-shadow(0 8px 5px rgba(38,29,20,.28))}
-.labDetailText{min-width:0}
-@media (orientation:landscape) and (min-width:700px){
-  .card.labDisplayDetail{display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr)!important;gap:16px!important;overflow:hidden!important}
-  .labHeroStage{min-height:390px}
-  .labDetailText{overflow:auto;max-height:calc(88vh - 38px);padding-right:3px}
-  .labDetailText .photoGrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  .labDetailText .photoGrid img{height:105px!important}
-}
-@media (orientation:portrait),(max-width:699px){
-  .card.labDisplayDetail{display:block!important;overflow:auto!important}
-  .labHero{margin-bottom:14px}
-  .labHeroStage{min-height:240px;max-height:45vh}
-}
+/* Center Lab r20260904-01: 6x6 exhibit + three interior mood studies. Collision remains current footprint for visual comparison. */
+.roomWrap{position:relative!important;isolation:isolate!important;transition:background .22s ease!important}.roomWrap:before,.roomWrap:after{content:'';position:absolute;inset:0;pointer-events:none;transition:background .22s ease,opacity .22s ease!important}.roomWrap:before{z-index:0}.roomWrap:after{z-index:2}.room{position:relative!important;z-index:1!important;transition:box-shadow .22s ease,background .22s ease!important}.cell.wall,.cell.floor,.exit{transition:background .22s ease,box-shadow .22s ease,border-color .22s ease!important}
+.obj.display{width:calc(var(--cell)*6)!important;height:calc(var(--cell)*6)!important;transform:translate(-41.6667%,-41.6667%)!important;z-index:4!important}.obj.display.near{transform:translate(-41.6667%,-41.6667%)!important}.obj.display:after{left:3%!important;top:1%!important;width:94%!important;height:84%!important;background-position:center!important;background-size:contain!important;background-repeat:no-repeat!important}.obj.display:before{left:34%!important;right:34%!important;bottom:4%!important;height:10%!important;border-width:3px!important}.obj.display .badge{right:29%!important;top:auto!important;bottom:5%!important;z-index:20!important}
+.card.labDisplayDetail{width:min(1040px,96vw)!important;padding:16px!important}.labHero{min-width:0;display:grid;grid-template-rows:auto 1fr;gap:8px;background:#f4efe4;border:2px solid #d4b05a;border-radius:14px;padding:12px;overflow:hidden}.labHeroLabel{font-size:11px;font-weight:1000;color:#655638;letter-spacing:.04em}.labHeroStage{min-height:260px;display:grid;place-items:center;background:linear-gradient(#f8f4eb,#e7dac5);border-radius:10px;overflow:hidden}.labHeroStage img{display:block;width:100%;height:100%;max-height:520px;object-fit:contain;filter:drop-shadow(0 8px 5px rgba(38,29,20,.28))}.labDetailText{min-width:0}
+/* A: classic museum — mahogany, navy, brass and warm gallery lighting. */
+body.center-theme-a .roomWrap{background:linear-gradient(#8e6849,#6f4d36)!important}body.center-theme-a .roomWrap:before{background:radial-gradient(ellipse at 50% 20%,rgba(255,235,174,.42) 0 12%,rgba(255,226,146,.13) 34%,transparent 58%),linear-gradient(90deg,rgba(28,17,13,.18),transparent 16% 84%,rgba(28,17,13,.18))!important}body.center-theme-a .roomWrap:after{background:radial-gradient(ellipse at center,transparent 48%,rgba(31,19,13,.14) 100%)!important}body.center-theme-a .room{box-shadow:0 15px 34px #1c100c7a,inset 0 0 0 5px #3b261c,inset 0 0 0 8px #b58b4b!important;background:#4d3327!important}body.center-theme-a .cell.wall{background:linear-gradient(90deg,#3d291f 0 9%,#684a35 10% 42%,#79583d 43% 55%,#5a3e2d 56% 90%,#34231b 91%),linear-gradient(#7b5a40,#3e2a20)!important;box-shadow:inset 0 -5px #281b15,inset 0 3px #96704b!important}body.center-theme-a .cell.floor{background:linear-gradient(90deg,transparent 0 48%,rgba(101,66,38,.24) 49% 51%,transparent 52%),linear-gradient(0deg,transparent 0 48%,rgba(103,67,39,.18) 49% 51%,transparent 52%),linear-gradient(135deg,#d1a56e,#c2925d)!important;box-shadow:inset 0 1px #efd09c55!important}body.center-theme-a .exit{background:linear-gradient(#674a32,#463124)!important;border-color:#2f2119!important}body.center-theme-a .obj.display:before{background:linear-gradient(#d2ac60 0 14%,#8e663e 15% 72%,#5a3c29 73%)!important;border-color:#34241c!important;box-shadow:inset 0 3px #edcf83,0 4px 0 #37261e!important}body.center-theme-a .quiz:before{background:linear-gradient(#e3ce94,#bf9657)!important;border-color:#4d3928!important;color:#67425c!important}body.center-theme-a .side{background:#f4ead8ee!important;border-left-color:#7f5b3b!important}body.center-theme-a .message{background:#fff5df!important;border-top-color:#b78d4b!important}
+/* B: expedition research base — stone, timber, olive accents and practical task lighting. */
+body.center-theme-b .roomWrap{background:linear-gradient(#6d7168,#4f554e)!important}body.center-theme-b .roomWrap:before{background:radial-gradient(circle at 32% 22%,rgba(242,224,167,.24) 0 9%,transparent 32%),radial-gradient(circle at 68% 22%,rgba(242,224,167,.20) 0 8%,transparent 30%),repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 38px)!important}body.center-theme-b .roomWrap:after{background:linear-gradient(180deg,rgba(28,37,31,.10),transparent 35% 76%,rgba(20,28,23,.18))!important}body.center-theme-b .room{box-shadow:0 13px 28px #1f28237a,inset 0 0 0 5px #354038,inset 0 0 0 8px #7a775e!important;background:#454d46!important}body.center-theme-b .cell.wall{background:linear-gradient(90deg,#41483f 0 13%,#596052 14% 46%,#3b423a 47% 56%,#606554 57% 88%,#333a34 89%),repeating-linear-gradient(0deg,transparent 0 12px,rgba(24,31,26,.22) 13px 15px)!important;box-shadow:inset 0 -5px #29302b,inset 0 2px #7d806c!important}body.center-theme-b .cell.floor{background:linear-gradient(135deg,rgba(255,255,255,.06) 25%,transparent 25% 75%,rgba(48,55,49,.08) 75%),linear-gradient(#b69a70,#a98961)!important;background-size:18px 18px,auto!important;box-shadow:inset 0 1px #d3bd95!important}body.center-theme-b .exit{background:linear-gradient(#4d5a4d,#364339)!important;border-color:#27312a!important}body.center-theme-b .obj.display:before{background:linear-gradient(#a89b73 0 12%,#6c6048 13% 70%,#454438 71%)!important;border-color:#31342e!important;box-shadow:inset 0 3px #c8bb8a,0 4px 0 #32352f!important}body.center-theme-b .book:before{filter:saturate(.8) brightness(.9)!important}body.center-theme-b .quiz:before{background:linear-gradient(#c7c1a1,#8f8c69)!important;border-color:#414438!important;color:#465747!important}body.center-theme-b .side{background:#edf0e7ee!important;border-left-color:#687064!important}body.center-theme-b .message{background:#f2f0e3!important;border-top-color:#7a7862!important}
+/* C: contemporary gallery — pale stone, charcoal details and clean indirect lighting. */
+body.center-theme-c .roomWrap{background:linear-gradient(#e7e6df,#c9cbc7)!important}body.center-theme-c .roomWrap:before{background:radial-gradient(ellipse at 50% 18%,rgba(255,255,255,.92) 0 16%,rgba(255,255,255,.38) 42%,transparent 68%),linear-gradient(90deg,rgba(255,255,255,.15),transparent 28% 72%,rgba(255,255,255,.15))!important}body.center-theme-c .roomWrap:after{background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 60%,rgba(63,70,74,.07))!important}body.center-theme-c .room{box-shadow:0 14px 30px #47505740,inset 0 0 0 5px #5f6668,inset 0 0 0 8px #d8d8d1!important;background:#9ba09d!important}body.center-theme-c .cell.wall{background:linear-gradient(90deg,#575d60 0 8%,#737a7c 9% 44%,#676d70 45% 56%,#7e8484 57% 91%,#555b5d 92%),linear-gradient(#7d8383,#555b5d)!important;box-shadow:inset 0 -4px #454b4e,inset 0 2px #a9aeac!important}body.center-theme-c .cell.floor{background:radial-gradient(circle at 24% 30%,rgba(115,120,116,.16) 0 1px,transparent 2px),radial-gradient(circle at 70% 72%,rgba(115,120,116,.13) 0 1px,transparent 2px),linear-gradient(#ddd8cb,#d2cec3)!important;background-size:18px 18px,21px 21px,auto!important;box-shadow:inset 0 1px rgba(255,255,255,.65)!important}body.center-theme-c .exit{background:linear-gradient(#686f72,#50575a)!important;border-color:#41484b!important}body.center-theme-c .obj.display:before{background:linear-gradient(#f7f5ee 0 12%,#d8d6ce 13% 73%,#aeb1ae 74%)!important;border-color:#72787a!important;box-shadow:inset 0 3px #fff,0 4px 0 #747a7c!important}body.center-theme-c .quiz:before{background:linear-gradient(#f5f2e8,#d9d7cd)!important;border-color:#737a7c!important;color:#4d5866!important;box-shadow:0 5px 0 #8a8f8d!important}body.center-theme-c .side{background:#f8f8f5ee!important;border-left-color:#a0a5a4!important}body.center-theme-c .message{background:#fbfaf4!important;border-top-color:#aeb0aa!important}
+@media (orientation:landscape) and (min-width:700px){.card.labDisplayDetail{display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr)!important;gap:16px!important;overflow:hidden!important}.labHeroStage{min-height:390px}.labDetailText{overflow:auto;max-height:calc(88vh - 38px);padding-right:3px}.labDetailText .photoGrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.labDetailText .photoGrid img{height:105px!important}}
+@media (orientation:portrait),(max-width:699px){.card.labDisplayDetail{display:block!important;overflow:auto!important}.labHero{margin-bottom:14px}.labHeroStage{min-height:240px;max-height:45vh}}
 `;
   d.head.appendChild(style);
-  const action=d.getElementById('action'),card=d.getElementById('card');
-  if(!action||!card)return;
+  applyTheme();
+  const action=d.getElementById('action'),card=d.getElementById('card');if(!action||!card)return;
   function clearDetailClass(){if(!card.querySelector('.labHero'))card.classList.remove('labDisplayDetail')}
-  const Observer=f.contentWindow.MutationObserver||MutationObserver;
-  const observer=new Observer(clearDetailClass);observer.observe(card,{childList:true,subtree:true});
+  const Observer=f.contentWindow.MutationObserver||MutationObserver;const observer=new Observer(clearDetailClass);observer.observe(card,{childList:true,subtree:true});
   function enhanceDisplayModal(){
     if(!card||card.querySelector('.labHero'))return;
     const h2=card.querySelector('h2');if(!h2||h2.textContent.trim()!=='展示')return;
-    const o=selected(),wrap=d.createElement('div');wrap.className='labDetailText';
-    while(card.firstChild)wrap.appendChild(card.firstChild);
-    const hero=d.createElement('div');hero.className='labHero';
-    const label=d.createElement('div');label.className='labHeroLabel';label.textContent=o.dataset.name+'｜確定グラフィック';
-    const stage=d.createElement('div');stage.className='labHeroStage';
-    const img=d.createElement('img');img.src='docs/assets/heritage-graphics/approved/'+approvedSlug(o.value)+'.webp';img.alt=o.dataset.name+'の確定グラフィック';
-    stage.appendChild(img);hero.append(label,stage);card.append(hero,wrap);card.classList.add('labDisplayDetail');
+    const o=selected(),wrap=d.createElement('div');wrap.className='labDetailText';while(card.firstChild)wrap.appendChild(card.firstChild);
+    const hero=d.createElement('div');hero.className='labHero';const label=d.createElement('div');label.className='labHeroLabel';label.textContent=o.dataset.name+'｜確定グラフィック';
+    const stage=d.createElement('div');stage.className='labHeroStage';const img=d.createElement('img');img.src='docs/assets/heritage-graphics/approved/'+approvedSlug(o.value)+'.webp';img.alt=o.dataset.name+'の確定グラフィック';stage.appendChild(img);hero.append(label,stage);card.append(hero,wrap);card.classList.add('labDisplayDetail');
   }
-  d.addEventListener('click',e=>{
-    const t=e.target&&typeof e.target.closest==='function'?e.target:null;if(!t)return;
-    const displayTap=t.closest('.obj.display');
-    const actionTap=t.closest('#action');
-    if(displayTap||(actionTap&&actionTap.textContent.trim()==='みる'))setTimeout(enhanceDisplayModal,0);
-  },true);
+  d.addEventListener('click',e=>{const t=e.target&&typeof e.target.closest==='function'?e.target:null;if(!t)return;const displayTap=t.closest('.obj.display'),actionTap=t.closest('#action');if(displayTap||(actionTap&&actionTap.textContent.trim()==='みる'))setTimeout(enhanceDisplayModal,0)},true);
 }
-const saved=sessionStorage.getItem('whqCenterLabSite')||sessionStorage.getItem('whqActiveHeritageId');
-if(saved&&[...sel.options].some(o=>o.value===saved))sel.value=saved;
-sel.addEventListener('change',openSite);f.addEventListener('load',enhanceFrame);openSite();
+const saved=sessionStorage.getItem('whqCenterLabSite')||sessionStorage.getItem('whqActiveHeritageId');if(saved&&[...sel.options].some(o=>o.value===saved))sel.value=saved;
+themeButtons.forEach(b=>b.addEventListener('click',()=>{currentTheme=b.dataset.theme;applyTheme()}));syncThemeButtons();sel.addEventListener('change',openSite);f.addEventListener('load',enhanceFrame);openSite();
 })();
 </script>
 </body>
