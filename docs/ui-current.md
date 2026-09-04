@@ -13,25 +13,30 @@
 ## 現在の正本
 
 ### 研究センター
-- **正本名:** Beta3 センター確認Lab
-- **Revision:** `r20260829-07`
+- **正本名:** Beta3 研究センター
+- **Revision:** `r20260904-02`
 - **Lab:** `beta3-center-lab.html`
 - **実装:** `research-center-beta3.html`
-- **追加UI:** `beta3-center-overrides.css`
-- **固定対象:** 主人公表示 / 操作スティック / アクションUI / センター内基本レイアウト
-- **主人公の正本:** 茶色い帽子・ベージュ系の服のドット風主人公。`beta2-center-theme-r04.css` の `.player` / `.player:before` / `.player:after` を正本とする。
-- **操作スティックの正本:** `research-center-beta3.html` の `.joy` / `.knob` / `.mark` と `beta3-center-overrides.css` の現行サイズ指定。
-- **実効CSSチェーン:** `beta2-center-theme.css` → `beta2-center-theme-r04.css` → `beta2-center-theme-r05.css` → `beta3-center-overrides.css`
-- **禁止:** 青い単純矩形など、正本と異なる代替主人公を手作業で再構成しない。
+- **CSS入口:** `beta3-center-overrides.css` → `research-center.css`
+- **現在の内装:** 明るい現代ミュージアム。白〜薄グレーの石調、紺・金、暖色の間接照明を基調とする。
+- **内装正本CSS:** `research-center-modern-museum.css`
+- **展示:** `docs/assets/heritage-graphics/approved/` の確定グラフィックを使用。操作・接触判定は従来の2×2相当を維持しつつ、見た目は6×6相当で大きく表示する。
+- **「みる」詳細:** iPad横向きでは左側に確定グラフィックを大型表示し、右側に説明文＋実写写真3枚を表示する。縦向き・小画面では上下配置へ切り替える。
+- **内装装飾:** 左右の縦バナー・展示ケース、上部説明パネル、中央の「？」展示、入口ベンチ・サイン、間接照明を非インタラクティブ装飾として扱う。
+- **固定対象:** 主人公表示 / 操作スティック / アクションUI / センター内基本レイアウト / 本・展示・調査員・腕試し・出口の機能
+- **主人公の正本:** 茶色い帽子・ベージュ系の服のドット風主人公。`research-center-theme.css` 内の統合済み `.player` / `.player:before` / `.player:after` を正本とする。
+- **操作スティックの正本:** `research-center-beta3.html` の `.joy` / `.knob` / `.mark` と `research-center-runtime.css` の現行配置・サイズ指定。
+- **実効CSSチェーン:** `research-center-theme.css` → `research-center-runtime.css` → `beta3-center-approved-graphics.css` → `research-center-modern-museum.css`
+- **禁止:** 青い単純矩形など、正本と異なる代替主人公を手作業で再構成しない。旧木造資料室風の内装へ戻さない。
 
-ピラミトン本部など、センターと操作UIを共通化する画面ではこのUIを参照する。
+ピラミトン本部など、センターと操作UIを共通化する画面では主人公・操作系の正本を参照する。ただし研究センター専用の現代ミュージアム内装は本部へ自動流用しない。
 
 ### ピラミトン本部
 - **専用Lab:** `pyraminton-headquarters-lab.html`
 - **Revision:** `r20260830-04`
-- **UI BASE:** Beta3 センター確認Lab `r20260829-07`
+- **UI BASE:** Beta3 センター確認Lab `r20260829-07` の主人公・操作系
 - **管理対象:** 本部レイアウト / 動線 / 操作UI
-- **管理対象外:** 遺産グラフィックの制作・確定
+- **管理対象外:** 遺産グラフィックの制作・確定 / 研究センター専用内装
 
 ### 全国マップ
 - **状態:** 正本未指定
