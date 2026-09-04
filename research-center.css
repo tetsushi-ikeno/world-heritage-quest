@@ -1,5 +1,6 @@
 /* Canonical stylesheet entry for the current Beta3 research center.
-   Preserve this import order: confirmed center theme -> Beta3 behavior/layout -> approved heritage graphics. */
+   Preserve this import order: confirmed center theme -> Beta3 behavior/layout -> approved heritage graphics -> current museum finish. */
 @import url('research-center-theme.css?v=r20260902-01');
 @import url('research-center-runtime.css?v=r20260902-01');
 @import url('beta3-center-approved-graphics.css?v=r20260902-02');
+@import url('research-center-modern-museum.css?v=r20260904-02');
