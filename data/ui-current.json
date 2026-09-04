@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-30",
+  "updatedAt": "2026-09-04",
   "policy": {
     "rule": "Do not infer the latest UI from filenames, dates, or surrounding files. Use only entries explicitly marked current in this registry.",
     "changeProcess": [
-      "Confirm the candidate UI in its Lab.",
+      "Confirm the candidate UI in its Lab or approved visual direction.",
       "Record the exact file and revision in this registry.",
       "Only then update dependent Labs or production files."
     ]
@@ -12,27 +12,43 @@
   "current": {
     "center": {
       "status": "current",
-      "label": "Beta3 センター確認Lab",
-      "revision": "r20260829-07",
+      "label": "Beta3 研究センター",
+      "revision": "r20260904-02",
       "labFile": "beta3-center-lab.html",
       "implementationFile": "research-center-beta3.html",
       "overrideFile": "beta3-center-overrides.css",
+      "canonicalStyleEntry": "research-center.css",
+      "interiorStyleFile": "research-center-modern-museum.css",
+      "interiorDirection": "明るい現代ミュージアム。白〜薄グレーの石調、紺・金、暖色の間接照明。",
+      "exhibitVisual": {
+        "artSource": "docs/assets/heritage-graphics/approved/",
+        "visualFootprint": "6x6相当",
+        "interactionFootprint": "従来2x2相当を維持",
+        "detailView": "iPad横向きでは左に大型確定グラフィック、右に説明文と実写写真3枚。小画面は上下配置。"
+      },
+      "decor": [
+        "左右の縦バナーと展示ケース",
+        "上部説明パネル",
+        "中央の？展示",
+        "入口ベンチとサイン",
+        "間接照明"
+      ],
       "frozenScope": [
         "主人公表示",
         "操作スティック",
         "アクションUI",
-        "センター内基本レイアウト"
+        "センター内基本レイアウト",
+        "本・展示・調査員・腕試し・出口の機能"
       ],
-      "note": "ピラミトン本部などセンター系UIを流用する場合の正本。",
       "effectiveStyleChain": [
-        "beta2-center-theme.css",
-        "beta2-center-theme-r04.css",
-        "beta2-center-theme-r05.css",
-        "beta3-center-overrides.css"
+        "research-center-theme.css",
+        "research-center-runtime.css",
+        "beta3-center-approved-graphics.css",
+        "research-center-modern-museum.css"
       ],
-      "playerCanonicalSource": "beta2-center-theme-r04.css :: .player / .player:before / .player:after",
-      "joystickCanonicalSource": "research-center-beta3.html :: .joy / .knob / .mark plus beta3-center-overrides.css sizing",
-      "verificationNote": "Brown-hat player shown in Beta3 センター確認Lab r20260829-07 is canonical. Do not replace with simplified blue rectangle."
+      "playerCanonicalSource": "research-center-theme.css :: .player / .player:before / .player:after",
+      "joystickCanonicalSource": "research-center-beta3.html :: .joy / .knob / .mark plus research-center-runtime.css positioning/sizing",
+      "verificationNote": "Brown-hat player remains canonical. Do not replace with a simplified blue rectangle. Do not revert the research center to the old wooden archive-room interior."
     },
     "headquarters": {
       "status": "current",
@@ -40,10 +56,10 @@
       "revision": "r20260830-04",
       "labFile": "pyraminton-headquarters-lab.html",
       "uiBase": {
-        "component": "center",
+        "component": "center-control-system",
         "revision": "r20260829-07"
       },
-      "note": "本部レイアウト専用。遺産グラフィック制作・確定は別管理。"
+      "note": "本部レイアウト専用。研究センターの現代ミュージアム内装は自動流用しない。遺産グラフィック制作・確定は別管理。"
     },
     "map": {
       "status": "undesignated",
